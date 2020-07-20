@@ -1,0 +1,21 @@
+extends ../layouts/_layout_main_bootstrap
+
+block custom_stylesheets
+    link(type="text/css", rel="stylesheet", href="/stylesheets/admin-main.css")
+
+block content
+    #layoutError
+      #layoutError_content
+        main
+          .container
+            .row.justify-content-center
+              .col-lg-6
+                .text-center.mt-4
+                  img.mb-4.img-fluid(src='/images/errors/error-500.png')
+                  p.lead Lỗi máy chủ
+                  p.small URL: #{url}
+                  p.small #{error}
+                  a(href='/') Trở về trang chủ
+
+block custom_javascripts
+    script(type="text/javascript", src="/javascripts/admin-main.js")
