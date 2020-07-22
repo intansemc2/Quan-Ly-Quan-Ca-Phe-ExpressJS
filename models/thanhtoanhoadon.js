@@ -9,3 +9,5 @@ class ThanhToanHoaDon {
         this.soTienThanhToan = null;
     }
 }
+
+module.exports = ThanhToanHoaDon;

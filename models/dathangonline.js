@@ -7,3 +7,5 @@ class DatHangOnline {
         this.sdt = null;
     }
 }
+
+module.exports = DatHangOnline;

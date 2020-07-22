@@ -7,3 +7,5 @@ class Cthd {
         this.diemTichLuy = null;
     }
 }
+
+module.exports = Cthd;

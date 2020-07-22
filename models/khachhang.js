@@ -7,3 +7,5 @@ class KhachHang {
         this.diemTichLuy = null;
     }
  }
+
+ module.exports = KhachHang;

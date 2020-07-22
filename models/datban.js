@@ -8,3 +8,5 @@ class DatBan {
         this.idHoaDon = null;
     }
 }
+
+module.exports = DatBan;

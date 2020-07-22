@@ -6,3 +6,5 @@ class KhuyenMai {
         this.thoiGianKetThuc = null;
     }
 }
+
+module.exports = KhuyenMai;

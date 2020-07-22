@@ -7,3 +7,5 @@ class Ctkm {
         this.diemTichLuy = null;
     }
 }
+
+module.exports = Ctkm;

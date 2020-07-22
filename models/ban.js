@@ -2,6 +2,8 @@ class Ban {
     constructor() {
         this.idBan = null;
         this.ten = null;
-        this.trangThai = null;
+        this.ghiChu = null;
     }
 }
+
+module.exports = Ban;

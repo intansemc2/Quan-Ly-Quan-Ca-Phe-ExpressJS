@@ -7,3 +7,5 @@ class HoaDon {
         this.thoiGianLap = null;
     }
 }
+
+module.exports = HoaDon;

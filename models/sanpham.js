@@ -9,3 +9,5 @@ class SanPham {
         this.linkAnh = null;
     }
 }
+
+module.exports = SanPham;

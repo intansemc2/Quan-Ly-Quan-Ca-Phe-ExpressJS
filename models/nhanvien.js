@@ -7,3 +7,5 @@ class NhanVien {
         this.idTaiKhoan = null;
     }
 }
+
+module.exports = NhanVien;

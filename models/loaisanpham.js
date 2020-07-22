@@ -6,3 +6,5 @@ class LoaiSanPham {
         this.ghiChu = null;
     }
 }
+
+module.exports = LoaiSanPham;
