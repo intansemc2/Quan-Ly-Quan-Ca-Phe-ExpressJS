@@ -10,5 +10,6 @@ class TaiKhoan {
 TaiKhoan.LOAI_ADMIN = 0;
 TaiKhoan.LOAI_STAFF = 1;
 TaiKhoan.LOAI_USER = 2;
+TaiKhoan.LOAI_NAMES = ["ADMIN", "STAFF", "USER"];
 
 module.exports = TaiKhoan;

@@ -6,18 +6,18 @@ const baseDatabase = require('./base.database');
 const TaiKhoan = require('../models/taikhoan');
 
 module.exports.createWHEREPart = function (input, isPrimarykeyOnly = false) {
-    let query = ` WHERE 1=1 `;
+    let query = '';
     if (input) {
         //Input is the id
         if (typeof input === 'number' || typeof input === 'string') {
             query += ` AND ID_TAI_KHOAN = ${mysql.escape(input)} `;
         }
         //Input is object
-        else if (typeof input === 'object' && input.constructor === TaiKhoan) {
+        else if (typeof input === 'object') {
             if (input.idTaiKhoan) {
                 query += ` AND ID_TAI_KHOAN = ${mysql.escape(input.idTaiKhoan)} `;
                 if (isPrimarykeyOnly) {
-                    return query;
+                    return ` WHERE 1=1 ${query}`;
                 }
             }
 
@@ -47,6 +47,13 @@ module.exports.createWHEREPart = function (input, isPrimarykeyOnly = false) {
             query += ')';
         }
     }
+
+    if (query !== '') {
+        query = ` WHERE 1=1 ${query}`;
+    } else {
+        query = ' WHERE 1=0 ';
+    }
+
     return query;
 };
 
@@ -57,6 +64,22 @@ module.exports.createQueryGet = function (input) {
 };
 
 module.exports.createQueryPost = function (input) {
+    if (!input.idTaiKhoan) {
+        input.idTaiKhoan = null;
+    }
+
+    if (!input.username) {
+        input.username = null;
+    }
+
+    if (!input.password) {
+        input.password = null;
+    }
+
+    if (!input.loai) {
+        input.loai = null;
+    }
+
     let query = `INSERT INTO tai_khoan (ID_TAI_KHOAN,USERNAME,PASSWORD,LOAI) VALUES ( ${mysql.escape(input.idTaiKhoan)},${mysql.escape(input.username)},${mysql.escape(input.password)},${mysql.escape(input.loai)} )`;
     return query;
 };
@@ -77,8 +100,12 @@ module.exports.createQueryPatch = function (input) {
         queryChanges.push(` LOAI = ${mysql.escape(input.loai)} `);
     }
 
+    if (!input.oldIdTaiKhoan) {
+        input.oldIdTaiKhoan = input.idTaiKhoan;
+    }
+
     query += queryChanges.join(',');
-    query += module.exports.createWHEREPart(input.idTaiKhoan);
+    query += module.exports.createWHEREPart({ idTaiKhoan: input.oldIdTaiKhoan, username: input.oldUsername, password: input.oldPassword, loai: input.oldLoai });
 
     return query;
 };
@@ -89,10 +116,15 @@ module.exports.createQueryDelete = function (input) {
     return query;
 };
 
-module.exports.createQueryExists = function (input) {
+module.exports.createQueryExists = function (input, isPrimarykeyOnly) {
     let query = `SELECT COUNT(*) AS NUMBER_ROWS FROM tai_khoan `;
 
-    query += module.exports.createWHEREPart(input, true);
+    if (isPrimarykeyOnly) {
+        query += module.exports.createWHEREPart({ idTaiKhoan: input.idTaiKhoan }, true);
+    } else {
+        query += module.exports.createWHEREPart(input, true);
+    }
+
     return query;
 };
 
@@ -115,6 +147,9 @@ module.exports.get = function (input) {
 };
 
 module.exports.post = function (input) {
+    if (!input) {
+        throw new Error('Missing the input');
+    }
     return baseDatabase.post(input, module.exports.createQueryPost);
 };
 
@@ -123,6 +158,12 @@ module.exports.put = function (input) {
 };
 
 module.exports.patch = function (input) {
+    if (!input) {
+        throw new Error('Missing the input');
+    }
+    if (!input.idTaiKhoan && !input.oldIdTaiKhoan) {
+        throw new Error('Missing the identity properties');
+    }
     return baseDatabase.patch(input, module.exports.createQueryPatch);
 };
 

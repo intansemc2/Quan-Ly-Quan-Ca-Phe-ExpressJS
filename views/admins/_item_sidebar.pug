@@ -1,0 +1,42 @@
+#layoutSidenav_nav
+    nav#sidenavAccordion.sb-sidenav.accordion.sb-sidenav-dark
+        // Menu của sidebar
+        .sb-sidenav-menu.d-flex.flex-column.justtify-content-between
+            .nav
+                .sb-sidenav-menu-heading Nội dung chính 
+                a.nav-link(class=sidebarActiveTongquat, href='/admin/tong-quat')
+                    .sb-nav-link-icon
+                        i.fas.fa-tachometer-alt
+                    | Tổng quát 
+                a.nav-link(class=sidebarActiveQuanlytaikhoan, href='/admin/quan-ly-tai-khoan')
+                    .sb-nav-link-icon
+                        i.fas.fa-user
+                    | Quản lý tài khoản 
+                a.nav-link(class=sidebarActiveQuanlynhanvien, href='/admin/quan-ly-nhan-vien')
+                    .sb-nav-link-icon
+                        i.fas.fa-users
+                    | Quản lý nhân viên 
+                a.nav-link(class=sidebarActiveQuanlyhoadon, href='/admin/quan-ly-hoa-don')
+                    .sb-nav-link-icon
+                        i.fas.fa-shopping-cart
+                    | Quản lý hóa đơn 
+                a.nav-link(class=sidebarActiveQuanlykhachhang, href='/admin/quan-ly-khach-hang')
+                    .sb-nav-link-icon
+                        i.fas.fa-users
+                    | Quản lý khách hàng 
+                a.nav-link(class=sidebarActiveQuanlyban, href='/admin/quan-ly-ban')
+                    .sb-nav-link-icon
+                        i.fas.fa-table
+                    | Quản lý bàn 
+                a.nav-link(class=sidebarActiveQuanlyloaisanpham, href='/admin/quan-ly-loai-san-pham')
+                    .sb-nav-link-icon
+                        i.fas.fa-beer
+                    | Quản lý sản phẩm 
+                a.nav-link(class=sidebarActiveQuanlykhuyenmai, href='/admin/quan-ly-khuyen-mai')
+                    .sb-nav-link-icon
+                        i.fas.fa-credit-card
+                    | Quản lý khuyến mãi 
+        // Thông tin người dùng đăng nhập
+        .sb-sidenav-footer
+                .small Bạn đã đăng nhập bằng tài khoản 
+                span#loginInfo(idTaiKhoan=taikhoan.idTaiKhoan, username=taikhoan.username) username

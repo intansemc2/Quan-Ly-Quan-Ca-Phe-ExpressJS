@@ -87,7 +87,7 @@ module.exports.patch = function (input, createQueryPatch) {
 
             //Handle finish
             connection.end();
-            reslove(results.changedRows);
+            reslove(results.affectedRows);
         });
     });
 };
@@ -117,8 +117,8 @@ module.exports.delete = function (input, createQueryDelete) {
     });
 };
 
-module.exports.exists = function (input, createQueryExists) {
-    let query = createQueryExists(input);
+module.exports.exists = function (input, createQueryExists, isPrimarykeyOnly = false) {
+    let query = createQueryExists(input, isPrimarykeyOnly);
     return new Promise(function (reslove, reject) {
         //Post configs
         const connection = module.exports.createConnection();
@@ -143,7 +143,7 @@ module.exports.exists = function (input, createQueryExists) {
 };
 
 module.exports.put = async function (input, createQueryExists, createQueryPatch, createQueryPost) {
-    let isExists = await module.exports.exists(input, createQueryExists);
+    let isExists = await module.exports.exists(input, createQueryExists, true);
     let result = undefined;
     if (isExists) {
         result = await module.exports.patch(input, createQueryPatch);

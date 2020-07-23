@@ -6,18 +6,18 @@ const baseDatabase = require('./base.database');
 const SanPham = require('../models/sanpham');
 
 module.exports.createWHEREPart = function (input, isPrimarykeyOnly = false) {
-    let query = ` WHERE 1=1 `;
+    let query = '';
     if (input) {
         //Input is the id
         if (typeof input === 'number' || typeof input === 'string') {
             query += ` AND ID_SAN_PHAM = ${mysql.escape(input)} `;
         }
         //Input is object
-        else if (typeof input === 'object' && input.constructor === SanPham) {
+        else if (typeof input === 'object') {
             if (input.idSanPham) {
                 query += ` AND ID_SAN_PHAM = ${mysql.escape(input.idSanPham)} `;
                 if (isPrimarykeyOnly) {
-                    return query;
+                    return ` WHERE 1=1 ${query}`;
                 }
             }
 
@@ -59,6 +59,13 @@ module.exports.createWHEREPart = function (input, isPrimarykeyOnly = false) {
             query += ')';
         }
     }
+
+    if (query !== '') {
+        query = ` WHERE 1=1 ${query}`;
+    } else {
+        query = ' WHERE 1=0 ';
+    }
+
     return query;
 };
 
@@ -69,6 +76,34 @@ module.exports.createQueryGet = function (input) {
 };
 
 module.exports.createQueryPost = function (input) {
+    if (!input.idSanPham) {
+        input.idSanPham = null;
+    }
+
+    if (!input.idLoaiSanPham) {
+        input.idLoaiSanPham = null;
+    }
+
+    if (!input.ten) {
+        input.ten = null;
+    }
+
+    if (!input.gia) {
+        input.gia = null;
+    }
+
+    if (!input.diemTichLuy) {
+        input.diemTichLuy = null;
+    }
+
+    if (!input.ghiChu) {
+        input.ghiChu = null;
+    }
+
+    if (!input.linkAnh) {
+        input.linkAnh = null;
+    }
+
     let query = `INSERT INTO san_pham (ID_SAN_PHAM,ID_LOAI_SAN_PHAM,TEN,GIA,DIEM_TICH_LUY,GHI_CHU,LINK_ANH) VALUES ( ${mysql.escape(input.idSanPham)},${mysql.escape(input.idLoaiSanPham)},${mysql.escape(input.ten)},${mysql.escape(input.gia)},${mysql.escape(input.diemTichLuy)},${mysql.escape(input.ghiChu)},${mysql.escape(input.linkAnh)} )`;
     return query;
 };
@@ -101,8 +136,12 @@ module.exports.createQueryPatch = function (input) {
         queryChanges.push(` LINK_ANH = ${mysql.escape(input.linkAnh)} `);
     }
 
+    if (!input.oldIdSanPham) {
+        input.oldIdSanPham = input.idSanPham;
+    }
+
     query += queryChanges.join(',');
-    query += module.exports.createWHEREPart(input.idSanPham);
+    query += module.exports.createWHEREPart({ idSanPham: input.oldIdSanPham, idLoaiSanPham: input.oldIdLoaiSanPham, ten: input.oldTen, gia: input.oldGia, diemTichLuy: input.oldDiemTichLuy, ghiChu: input.oldGhiChu, linkAnh: input.oldLinkAnh });
 
     return query;
 };
@@ -113,10 +152,15 @@ module.exports.createQueryDelete = function (input) {
     return query;
 };
 
-module.exports.createQueryExists = function (input) {
+module.exports.createQueryExists = function (input, isPrimarykeyOnly) {
     let query = `SELECT COUNT(*) AS NUMBER_ROWS FROM san_pham `;
 
-    query += module.exports.createWHEREPart(input, true);
+    if (isPrimarykeyOnly) {
+        query += module.exports.createWHEREPart({ idSanPham: input.idSanPham }, true);
+    } else {
+        query += module.exports.createWHEREPart(input, true);
+    }
+
     return query;
 };
 
@@ -145,6 +189,9 @@ module.exports.get = function (input) {
 };
 
 module.exports.post = function (input) {
+    if (!input) {
+        throw new Error('Missing the input');
+    }
     return baseDatabase.post(input, module.exports.createQueryPost);
 };
 
@@ -153,6 +200,12 @@ module.exports.put = function (input) {
 };
 
 module.exports.patch = function (input) {
+    if (!input) {
+        throw new Error('Missing the input');
+    }
+    if (!input.idSanPham && !input.oldIdSanPham) {
+        throw new Error('Missing the identity properties');
+    }
     return baseDatabase.patch(input, module.exports.createQueryPatch);
 };
 

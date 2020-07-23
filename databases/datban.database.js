@@ -6,7 +6,7 @@ const baseDatabase = require('./base.database');
 const DatBan = require('../models/datban');
 
 module.exports.createWHEREPart = function (input, isPrimarykeyOnly = false) {
-    let query = ` WHERE 1=1 `;
+    let query = '';
     if (input) {
         //Input is object
         if (typeof input === 'object') {
@@ -24,9 +24,9 @@ module.exports.createWHEREPart = function (input, isPrimarykeyOnly = false) {
                 query += ` AND THOI_GIAN_LAP = ${mysql.escape(input.thoiGianLap)} `;
             }
 
-            if (input.thoiGianLap) {
+            if (input.idTaiKhoan || input.idBan || input.thoiGianLap) {
                 if (isPrimarykeyOnly) {
-                    return query;
+                    return ` WHERE 1=1 ${query}`;
                 }
             }
 
@@ -49,6 +49,13 @@ module.exports.createWHEREPart = function (input, isPrimarykeyOnly = false) {
             query += ')';
         }
     }
+
+    if (query !== '') {
+        query = ` WHERE 1=1 ${query}`;
+    } else {
+        query = ' WHERE 1=0 ';
+    }
+
     return query;
 };
 
@@ -59,6 +66,30 @@ module.exports.createQueryGet = function (input) {
 };
 
 module.exports.createQueryPost = function (input) {
+    if (!input.idTaiKhoan) {
+        input.idTaiKhoan = null;
+    }
+
+    if (!input.idBan) {
+        input.idBan = null;
+    }
+
+    if (!input.thoiGianLap) {
+        input.thoiGianLap = null;
+    }
+
+    if (!input.thoiGianNhan) {
+        input.thoiGianNhan = null;
+    }
+
+    if (!input.ghiChu) {
+        input.ghiChu = null;
+    }
+
+    if (!input.idHoaDon) {
+        input.idHoaDon = null;
+    }
+
     let query = `INSERT INTO dat_ban (ID_TAI_KHOAN,ID_BAN,THOI_GIAN_LAP,THOI_GIAN_NHAN,GHI_CHU,ID_HOA_DON) VALUES ( ${mysql.escape(input.idTaiKhoan)},${mysql.escape(input.idBan)},${mysql.escape(input.thoiGianLap)},${mysql.escape(input.thoiGianNhan)},${mysql.escape(input.ghiChu)},${mysql.escape(input.idHoaDon)} )`;
     return query;
 };
@@ -91,8 +122,20 @@ module.exports.createQueryPatch = function (input) {
         queryChanges.push(` AND ID_HOA_DON = ${mysql.escape(input.idHoaDon)} `);
     }
 
+    if (!input.oldIdTaiKhoan) {
+        input.oldIdTaiKhoan = input.idTaiKhoan;
+    }
+
+    if (!input.oldIdBan) {
+        input.oldIdBan = input.idBan;
+    }
+
+    if (!input.oldThoiGianLap) {
+        input.oldThoiGianLap = input.thoiGianLap;
+    }
+
     query += queryChanges.join(',');
-    query += module.exports.createWHEREPart({ idTaiKhoan: input.idTaiKhoan, idBan: input.idBan, thoiGianLap: input.thoiGianLap });
+    query += module.exports.createWHEREPart({ idTaiKhoan: input.oldIdTaiKhoan, idBan: input.oldIdBan, thoiGianLap: input.oldThoiGianLap, thoiGianNhan: input.oldThoiGianNhan, ghiChu: input.oldGhiChu, idHoaDon: input.oldIdHoaDon });
 
     return query;
 };
@@ -103,10 +146,15 @@ module.exports.createQueryDelete = function (input) {
     return query;
 };
 
-module.exports.createQueryExists = function (input) {
+module.exports.createQueryExists = function (input, isPrimarykeyOnly) {
     let query = `SELECT COUNT(*) AS NUMBER_ROWS FROM dat_ban `;
 
-    query += module.exports.createWHEREPart(input, true);
+    if (isPrimarykeyOnly) {
+        query += module.exports.createWHEREPart({ idTaiKhoan: input.idTaiKhoan, idBan: input.idBan, thoiGianLap: input.thoiGianLap }, true);
+    } else {
+        query += module.exports.createWHEREPart(input, true);
+    }
+
     return query;
 };
 
@@ -133,6 +181,9 @@ module.exports.get = function (input) {
 };
 
 module.exports.post = function (input) {
+    if (!input) {
+        throw new Error('Missing the input');
+    }
     return baseDatabase.post(input, module.exports.createQueryPost);
 };
 
@@ -141,6 +192,12 @@ module.exports.put = function (input) {
 };
 
 module.exports.patch = function (input) {
+    if (!input) {
+        throw new Error('Missing the input');
+    }
+    if ((!input.idTaiKhoan && !input.oldIdTaiKhoan) || (!input.idBan && !input.oldIdBan) || (!input.thoiGianLap && !input.oldThoiGianLap)) {
+        throw new Error('Missing the identity properties');
+    }
     return baseDatabase.patch(input, module.exports.createQueryPatch);
 };
 

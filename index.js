@@ -11,6 +11,7 @@ const staffRouters = require("./routers/staff.router");
 const loginRouters = require("./routers/login.router");
 const infoRouters = require("./routers/info.router");
 const errorRouters = require("./routers/error.router");
+const apiRouters = require("./routers/api.router");
 
 //DotENV
 dotenv.config();
@@ -43,6 +44,7 @@ app.use("/user", userRouters);
 app.use("/staff", staffRouters);
 app.use("/login", loginRouters);
 app.use("/info", infoRouters);
+app.use("/api", apiRouters);
 
 //Handle other request
 app.use(errorRouters);

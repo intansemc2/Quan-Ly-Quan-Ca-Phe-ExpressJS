@@ -6,18 +6,18 @@ const baseDatabase = require('./base.database');
 const Ban = require('../models/ban');
 
 module.exports.createWHEREPart = function (input, isPrimarykeyOnly = false) {
-    let query = ` WHERE 1=1 `;
+    let query = '';
     if (input) {
         //Input is the id
         if (typeof input === 'number' || typeof input === 'string') {
             query += ` AND ID_BAN = ${mysql.escape(input)} `;
         }
         //Input is object
-        else if (typeof input === 'object' && input.constructor === Ban) {
+        else if (typeof input === 'object') {
             if (input.idBan) {
                 query += ` AND ID_BAN = ${mysql.escape(input.idBan)} `;
                 if (isPrimarykeyOnly) {
-                    return query;
+                    return ` WHERE 1=1 ${query}`;
                 }
             }
 
@@ -25,8 +25,8 @@ module.exports.createWHEREPart = function (input, isPrimarykeyOnly = false) {
                 query += ` AND TEN = ${mysql.escape(input.ten)} `;
             }
 
-            if (input.trangThai) {
-                query += ` AND TRANG_THAI = ${mysql.escape(input.trangThai)} `;
+            if (input.ghiChu) {
+                query += ` AND GHI_CHU = ${mysql.escape(input.ghiChu)} `;
             }
         }
         //Input is Array
@@ -43,6 +43,13 @@ module.exports.createWHEREPart = function (input, isPrimarykeyOnly = false) {
             query += ')';
         }
     }
+
+    if (query !== '') {
+        query = ` WHERE 1=1 ${query}`;
+    } else {
+        query = ' WHERE 1=0 ';
+    }
+
     return query;
 };
 
@@ -53,7 +60,19 @@ module.exports.createQueryGet = function (input) {
 };
 
 module.exports.createQueryPost = function (input) {
-    let query = `INSERT INTO ban (ID_BAN,TEN,TRANG_THAI) VALUES ( ${mysql.escape(input.idBan)},${mysql.escape(input.ten)},${mysql.escape(input.trangThai)} )`;
+    if (!input.idBan) {
+        input.idBan = null;
+    }
+
+    if (!input.ten) {
+        input.ten = null;
+    }
+
+    if (!input.ghiChu) {
+        input.ghiChu = null;
+    }
+
+    let query = `INSERT INTO ban (ID_BAN,TEN,GHI_CHU) VALUES ( ${mysql.escape(input.idBan)},${mysql.escape(input.ten)},${mysql.escape(input.ghiChu)} )`;
     return query;
 };
 
@@ -65,12 +84,16 @@ module.exports.createQueryPatch = function (input) {
         queryChanges.push(` TEN = ${mysql.escape(input.ten)} `);
     }
 
-    if (input.trangThai) {
-        queryChanges.push(` TRANG_THAI = ${mysql.escape(input.trangThai)} `);
+    if (input.ghiChu) {
+        queryChanges.push(` GHI_CHU = ${mysql.escape(input.ghiChu)} `);
+    }
+
+    if (!input.oldIdBan) {
+        input.oldIdBan = input.idBan;
     }
 
     query += queryChanges.join(',');
-    query += module.exports.createWHEREPart(input.idBan);
+    query += module.exports.createWHEREPart({ idBan: input.oldIdBan, ten: input.oldTen, ghiChu: input.oldGhiChu });
 
     return query;
 };
@@ -81,10 +104,15 @@ module.exports.createQueryDelete = function (input) {
     return query;
 };
 
-module.exports.createQueryExists = function (input) {
+module.exports.createQueryExists = function (input, isPrimarykeyOnly) {
     let query = `SELECT COUNT(*) AS NUMBER_ROWS FROM ban `;
 
-    query += module.exports.createWHEREPart(input, true);
+    if (isPrimarykeyOnly) {
+        query += module.exports.createWHEREPart({ idBan: input.idBan }, true);
+    } else {
+        query += module.exports.createWHEREPart(input, true);
+    }
+
     return query;
 };
 
@@ -95,7 +123,7 @@ module.exports.converResultGet = function (input) {
 
     output.ten = input.TEN;
 
-    output.trangThai = input.TRANG_THAI;
+    output.ghiChu = input.GHI_CHU;
 
     return output;
 };
@@ -105,6 +133,9 @@ module.exports.get = function (input) {
 };
 
 module.exports.post = function (input) {
+    if (!input) {
+        throw new Error('Missing the input');
+    }
     return baseDatabase.post(input, module.exports.createQueryPost);
 };
 
@@ -113,6 +144,12 @@ module.exports.put = function (input) {
 };
 
 module.exports.patch = function (input) {
+    if (!input) {
+        throw new Error('Missing the input');
+    }
+    if (!input.idBan && !input.oldIdBan) {
+        throw new Error('Missing the identity properties');
+    }
     return baseDatabase.patch(input, module.exports.createQueryPatch);
 };
 

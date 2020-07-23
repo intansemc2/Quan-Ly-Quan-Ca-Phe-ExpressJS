@@ -52,7 +52,7 @@
 				properties: [
 					{name: "ID_BAN", type: "int", speak:"id bàn"},
 					{name: "TEN", type: "String", speak:"tên bàn"},
-					{name: "TRANG_THAI", type: "int", speak:"loại bàn"}
+					{name: "GHI_CHU", type: "int", speak:"loại bàn"}
 				],
 				keys: ["ID_BAN"]
 			},
@@ -111,7 +111,7 @@
 					{name: "SO_LUONG_DIEM_DOI", type: "int", speak:"số lượng điểm đổi"},
 					{name: "TY_GIA_DIEM_DOI", type: "float", speak:"tỷ giá quy đổi"}
 				],
-				keys: ["ID_HOA_DON"]
+				keys: ["ID_HOA_DON", "ID_TAI_KHOAN_THANH_TOAN", "THOI_GIAN_THANH_TOAN"]
 			},
 			{
 				classname: "khach_hang", 
@@ -210,7 +210,7 @@ const baseDatabase = require('./base.database');
 const ${tablenameClass} = require('../models/${tablenameFile}');
 
 module.exports.createWHEREPart = function (input, isPrimarykeyOnly = false) {
-    let query = \` WHERE 1=1 \`;
+    let query = "";
     if (input) {
     	${
     		(data.keys.length <= 1) ? `
@@ -219,11 +219,11 @@ module.exports.createWHEREPart = function (input, isPrimarykeyOnly = false) {
             query += \` AND ${data.keys[0]} = \${mysql.escape(input)} \`;
         }
         //Input is object
-        else if (typeof input === 'object' && input.constructor === ${tablenameClass}) {
+        else if (typeof input === 'object') {
             if (input.${convertNameToJSProperty(data.keys[0])}) {
                 query += \` AND ${data.keys[0]} = \${mysql.escape(input.${convertNameToJSProperty(data.keys[0])})} \`;
                 if (isPrimarykeyOnly) {
-                    return query;
+                    return \` WHERE 1=1 \${query}\`;
                 }
             }
             ${
@@ -262,9 +262,9 @@ module.exports.createWHEREPart = function (input, isPrimarykeyOnly = false) {
             }
             ${ 
             	`
-            if (input.${convertNameToJSProperty(tableKeysProperties[tableKeysProperties.length-1].name)}) {
+            if (${tableKeysProperties.map(item => `input.${convertNameToJSProperty(item.name)}`).join(" || ")}) {
                 if (isPrimarykeyOnly) {
-                    return query;
+                    return \` WHERE 1=1 \${query}\`;
                 }
             }
             	`
@@ -288,8 +288,15 @@ module.exports.createWHEREPart = function (input, isPrimarykeyOnly = false) {
         }
         `
     	}
-
     }
+
+    if (query !== "") {
+        query = \` WHERE 1=1 \${query}\`;
+    }
+    else {
+        query = " WHERE 1=0 "
+    }
+
     return query;
 };
 
@@ -300,6 +307,13 @@ module.exports.createQueryGet = function (input) {
 };
 
 module.exports.createQueryPost = function (input) {
+	${
+		data.properties.map(item => `
+    if (!input.${convertNameToJSProperty(item.name)}) {
+        input.${convertNameToJSProperty(item.name)} = null;
+    }
+			`).join("\n")
+	}
     let query = \`INSERT INTO ${data.classname.toLowerCase()} (${data.properties.map(item => item.name).join(",")}) VALUES ( ${data.properties.map(item => `\${mysql.escape(input.${convertNameToJSProperty(item.name)})}`).join(",")} )\`;
     return query;
 };
@@ -316,8 +330,17 @@ module.exports.createQueryPatch = function (input) {
     }
     			`).join("\n")
     	}
+
+    	${
+    		tableKeysProperties.map(item => `
+    if (!input.old${convertNameToJSClass(item.name)}) {
+    	input.old${convertNameToJSClass(item.name)} = input.${convertNameToJSProperty(item.name)};
+    }
+    			`).join("\n")
+    	}
+
     query += queryChanges.join(',');
-    query += module.exports.createWHEREPart(input.${convertNameToJSProperty(data.keys[0])});
+    query += module.exports.createWHEREPart({${data.properties.map(item => `${convertNameToJSProperty(item.name)}: input.old${convertNameToJSClass(item.name)}`).join(",")}});
     	`
     	:
     	`
@@ -328,8 +351,17 @@ module.exports.createQueryPatch = function (input) {
     }
     			`).join("\n")
     	}
+
+    ${
+    		tableKeysProperties.map(item => `
+    if (!input.old${convertNameToJSClass(item.name)}) {
+    	input.old${convertNameToJSClass(item.name)} = input.${convertNameToJSProperty(item.name)};
+    }
+    			`).join("\n")
+    	}
+
     query += queryChanges.join(',');
-    query += module.exports.createWHEREPart({${tableKeysProperties.map(item => `${convertNameToJSProperty(item.name)}: input.${convertNameToJSProperty(item.name)}`).join(",")}});
+    query += module.exports.createWHEREPart({${data.properties.map(item => `${convertNameToJSProperty(item.name)}: input.old${convertNameToJSClass(item.name)}`).join(",")}});
     	`
     }
 
@@ -342,10 +374,15 @@ module.exports.createQueryDelete = function (input) {
     return query;
 };
 
-module.exports.createQueryExists = function (input) {
+module.exports.createQueryExists = function (input, isPrimarykeyOnly) {
     let query = \`SELECT COUNT(*) AS NUMBER_ROWS FROM ${data.classname.toLowerCase()} \`;
 
-    query += module.exports.createWHEREPart(input, true);
+    if (isPrimarykeyOnly) {
+        query += module.exports.createWHEREPart({ ${tableKeysProperties.map(item =>`${convertNameToJSProperty(item.name)}: input.${convertNameToJSProperty(item.name)}`).join(",")} }, true);
+    } else {
+        query += module.exports.createWHEREPart(input, true);
+    }
+
     return query;
 };
 
@@ -364,6 +401,9 @@ module.exports.get = function (input) {
 };
 
 module.exports.post = function (input) {
+	if (!input) {
+        throw new Error("Missing the input");
+    }
     return baseDatabase.post(input, module.exports.createQueryPost);
 };
 
@@ -372,6 +412,12 @@ module.exports.put = function (input) {
 };
 
 module.exports.patch = function (input) {
+	if (!input) {
+        throw new Error("Missing the input");
+    }
+    if (${tableKeysProperties.map(item => `!input.${convertNameToJSProperty(item.name)} && !input.old${convertNameToJSClass(item.name)}`).join(" || ")}) {
+        throw new Error("Missing the identity properties");
+    }
     return baseDatabase.patch(input, module.exports.createQueryPatch);
 };
 

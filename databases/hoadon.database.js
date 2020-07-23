@@ -6,18 +6,18 @@ const baseDatabase = require('./base.database');
 const HoaDon = require('../models/hoadon');
 
 module.exports.createWHEREPart = function (input, isPrimarykeyOnly = false) {
-    let query = ` WHERE 1=1 `;
+    let query = '';
     if (input) {
         //Input is the id
         if (typeof input === 'number' || typeof input === 'string') {
             query += ` AND ID_HOA_DON = ${mysql.escape(input)} `;
         }
         //Input is object
-        else if (typeof input === 'object' && input.constructor === HoaDon) {
+        else if (typeof input === 'object') {
             if (input.idHoaDon) {
                 query += ` AND ID_HOA_DON = ${mysql.escape(input.idHoaDon)} `;
                 if (isPrimarykeyOnly) {
-                    return query;
+                    return ` WHERE 1=1 ${query}`;
                 }
             }
 
@@ -51,6 +51,13 @@ module.exports.createWHEREPart = function (input, isPrimarykeyOnly = false) {
             query += ')';
         }
     }
+
+    if (query !== '') {
+        query = ` WHERE 1=1 ${query}`;
+    } else {
+        query = ' WHERE 1=0 ';
+    }
+
     return query;
 };
 
@@ -61,6 +68,26 @@ module.exports.createQueryGet = function (input) {
 };
 
 module.exports.createQueryPost = function (input) {
+    if (!input.idHoaDon) {
+        input.idHoaDon = null;
+    }
+
+    if (!input.idKhachHang) {
+        input.idKhachHang = null;
+    }
+
+    if (!input.idBan) {
+        input.idBan = null;
+    }
+
+    if (!input.idNhanVien) {
+        input.idNhanVien = null;
+    }
+
+    if (!input.thoiGianLap) {
+        input.thoiGianLap = null;
+    }
+
     let query = `INSERT INTO hoa_don (ID_HOA_DON,ID_KHACH_HANG,ID_BAN,ID_NHAN_VIEN,THOI_GIAN_LAP) VALUES ( ${mysql.escape(input.idHoaDon)},${mysql.escape(input.idKhachHang)},${mysql.escape(input.idBan)},${mysql.escape(input.idNhanVien)},${mysql.escape(input.thoiGianLap)} )`;
     return query;
 };
@@ -85,8 +112,12 @@ module.exports.createQueryPatch = function (input) {
         queryChanges.push(` THOI_GIAN_LAP = ${mysql.escape(input.thoiGianLap)} `);
     }
 
+    if (!input.oldIdHoaDon) {
+        input.oldIdHoaDon = input.idHoaDon;
+    }
+
     query += queryChanges.join(',');
-    query += module.exports.createWHEREPart(input.idHoaDon);
+    query += module.exports.createWHEREPart({ idHoaDon: input.oldIdHoaDon, idKhachHang: input.oldIdKhachHang, idBan: input.oldIdBan, idNhanVien: input.oldIdNhanVien, thoiGianLap: input.oldThoiGianLap });
 
     return query;
 };
@@ -97,10 +128,15 @@ module.exports.createQueryDelete = function (input) {
     return query;
 };
 
-module.exports.createQueryExists = function (input) {
+module.exports.createQueryExists = function (input, isPrimarykeyOnly) {
     let query = `SELECT COUNT(*) AS NUMBER_ROWS FROM hoa_don `;
 
-    query += module.exports.createWHEREPart(input, true);
+    if (isPrimarykeyOnly) {
+        query += module.exports.createWHEREPart({ idHoaDon: input.idHoaDon }, true);
+    } else {
+        query += module.exports.createWHEREPart(input, true);
+    }
+
     return query;
 };
 
@@ -125,6 +161,9 @@ module.exports.get = function (input) {
 };
 
 module.exports.post = function (input) {
+    if (!input) {
+        throw new Error('Missing the input');
+    }
     return baseDatabase.post(input, module.exports.createQueryPost);
 };
 
@@ -133,6 +172,12 @@ module.exports.put = function (input) {
 };
 
 module.exports.patch = function (input) {
+    if (!input) {
+        throw new Error('Missing the input');
+    }
+    if (!input.idHoaDon && !input.oldIdHoaDon) {
+        throw new Error('Missing the identity properties');
+    }
     return baseDatabase.patch(input, module.exports.createQueryPatch);
 };
 

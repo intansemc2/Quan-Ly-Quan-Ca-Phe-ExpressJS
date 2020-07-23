@@ -1,0 +1,7 @@
+ol.breadcrumb.mb-4
+    each breadcrumb in breadcrumbs
+        li.breadcrumb-item(class=breadcrumb.isActive)
+            if (breadcrumb.isActive)    
+                span(href=breadcrumb.link) #{breadcrumb.name}
+            else    
+                a(href=breadcrumb.link) #{breadcrumb.name}

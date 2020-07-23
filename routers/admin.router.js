@@ -6,7 +6,9 @@ const router = express.Router();
 const adminController = require('../controllers/admin.controller');
 
 //Router for get
-router.get('/', adminController.index);
+router.get('/', adminController.tongquat);
+router.get('/tong-quat', adminController.tongquat);
+router.get('/quan-ly-tai-khoan', adminController.quanlytaikhoan);
 
 //Module export
 module.exports = router;

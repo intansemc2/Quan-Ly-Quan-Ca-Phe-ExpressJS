@@ -39,12 +39,12 @@ module.exports = {
 
         //Respond with json
         if (request.accepts('json')) {
-            response.send({ error: {code: 500, message: 'Internal Server Error'} });
+            response.send({ error: {code: 500, message: `Internal Server Error`, detail: `${error}`} });
             return;
         }
 
         //Default to plain-text. send()
-        response.type('txt').send('500: Internal Server Error');
+        response.type('txt').send(`Error 500: Internal Server Error, ${error}`);
 
         //Call next
         next();

@@ -1,0 +1,80 @@
+extends ../layouts/_layout_main_bootstrap
+
+block custom_stylesheets
+    link(type="text/css", rel="stylesheet", href="/stylesheets/admin-main.css")
+    link(type="text/css", rel="stylesheet", href="/liblaries/datatables.min.css")
+
+block content
+    //Start Navbar 
+    include _item_navbar
+    //End Navbar
+
+    //Content
+    #layoutSidenav
+        //Sidebar
+        include _item_sidebar
+        
+        //Start Content
+        #layoutSidenav_content
+            main
+                .container-fluid
+                    //Title
+                    h1.mt-4 Quản lý tài khoản
+
+                    //Start Breadcrumb
+                    include ../items/_item_breadscrumb
+                    //End readcrumb
+                    
+                    //Start Main Content
+                    .card
+                        .card-body
+                            button.btn.btn-outline-secondary.rounded-0 Thêm tài khoản
+
+                    // Bảng
+                    .card.my-4
+                        .card-header
+                            i.fas.fa-table.mr-1
+                            | Bảng quản lý tài khoản 
+                        .card-body
+                            #tableQuanLyTaiKhoanContainer.table-responsive
+                                table#tableQuanLyTaiKhoan.table.table-bordered.table-striped.table-hover(width='100%', cellspacing='0')
+                                    thead
+                                        tr
+                                            th ID
+                                            th Tên tài khoản 
+                                            th Mật khẩu 
+                                            th Loại 
+                                            th Thao tác 
+                                    tfoot
+                                        tr
+                                            th ID
+                                            th Tên tài khoản 
+                                            th Mật khẩu 
+                                            th Loại 
+                                            th Thao tác 
+                                    tbody
+                                        // Nội dung bảng
+                                        each taikhoan in taikhoans
+                                            tr
+                                                td #{taikhoan.idTaiKhoan}
+                                                td #{taikhoan.username}
+                                                td #{taikhoan.password}
+                                                td #{taikhoan.loai}
+                                                td 
+                                                    button.btn.btn-outline-info.rounded-0.m-1.opacity-50
+                                                        i.fa.fa-check-circle
+                                                    button.btn.btn-outline-secondary.rounded-0.m-1
+                                                        i.fa.fa-edit
+                                                    button.btn.btn-outline-dark.rounded-0.m-1
+                                                        i.fa.fa-trash
+                    //End Main Content
+            //Start Footer                
+            include ../items/_item_footer
+            //End Footer
+        //End Content
+
+block custom_javascripts
+    script(type="text/javascript", src="/javascripts/admin-main.js")
+    script(type="text/javascript", src="/liblaries/datatables.min.js")
+    script(type="text/javascript", src="/javascripts/custom-toggle-button.js")
+    script(type="text/javascript", src="/javascripts/quan-ly-tai-khoan.js")
