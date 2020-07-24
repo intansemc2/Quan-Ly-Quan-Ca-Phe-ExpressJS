@@ -5,7 +5,7 @@ const mysql = require('mysql');
 const baseDatabase = require('./base.database');
 const KhuyenMai = require('../models/khuyenmai');
 
-module.exports.createWHEREPart = function (input, isPrimarykeyOnly = false) {
+module.exports.createWHEREPart = function (input, isAllowGetAll = false, isPrimarykeyOnly = false) {
     let query = '';
     if (input) {
         //Input is the id
@@ -48,7 +48,7 @@ module.exports.createWHEREPart = function (input, isPrimarykeyOnly = false) {
         }
     }
 
-    if (query !== '') {
+    if (query !== '' || (isAllowGetAll && query === '')) {
         query = ` WHERE 1=1 ${query}`;
     } else {
         query = ' WHERE 1=0 ';
@@ -59,7 +59,7 @@ module.exports.createWHEREPart = function (input, isPrimarykeyOnly = false) {
 
 module.exports.createQueryGet = function (input) {
     let query = 'SELECT * FROM khuyen_mai';
-    query += module.exports.createWHEREPart(input);
+    query += module.exports.createWHEREPart(input, true);
     return query;
 };
 
@@ -112,7 +112,7 @@ module.exports.createQueryPatch = function (input) {
 
 module.exports.createQueryDelete = function (input) {
     let query = `DELETE FROM khuyen_mai`;
-    query += module.exports.createWHEREPart(input);
+    query += module.exports.createWHEREPart(input, true);
     return query;
 };
 
@@ -120,9 +120,9 @@ module.exports.createQueryExists = function (input, isPrimarykeyOnly) {
     let query = `SELECT COUNT(*) AS NUMBER_ROWS FROM khuyen_mai `;
 
     if (isPrimarykeyOnly) {
-        query += module.exports.createWHEREPart({ idKhuyenMai: input.idKhuyenMai }, true);
+        query += module.exports.createWHEREPart({ idKhuyenMai: input.idKhuyenMai }, false, true);
     } else {
-        query += module.exports.createWHEREPart(input, true);
+        query += module.exports.createWHEREPart(input, false, true);
     }
 
     return query;
