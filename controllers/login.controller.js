@@ -1,5 +1,3 @@
-module.exports = {
-    index: (request, response, next) => {
-        next();
-    }
+module.exports.index = function (request, response, next) {
+    next();
 };

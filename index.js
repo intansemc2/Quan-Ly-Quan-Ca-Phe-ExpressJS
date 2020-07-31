@@ -34,7 +34,7 @@ app.use(express.static("./publics"));
 
 //Inline routers
 app.get("/", (request, response, next) => {
-    response.render("./admins/tong-quat.pug", { title: "Page" });
+    response.redirect('/admin');
     next();
 });
 
