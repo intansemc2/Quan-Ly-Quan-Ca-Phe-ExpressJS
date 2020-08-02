@@ -6,7 +6,10 @@ const router = express.Router();
 const loginController = require('../controllers/login.controller');
 
 //Router for get
-router.get('/', loginController.index);
+router.get('/', loginController.login);
+router.get('/login', loginController.login);
+router.get('/forgot-password', loginController.forgotPassword);
+router.get('/logout', loginController.logout);
 
 //Module export
 module.exports = router;
