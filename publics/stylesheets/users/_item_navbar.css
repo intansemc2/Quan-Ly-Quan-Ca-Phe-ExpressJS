@@ -1,0 +1,22 @@
+#userNavbar {
+    background-color: rgba(255, 255, 255, 0.5);
+    color: rgba(0, 0, 0, 1);
+}
+
+#userNavbar .nav-item:hover {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+#userNavbar .nav-link {
+    color: rgba(0, 0, 0, 1);
+}
+
+#userNavbar .dropdown-menu.show {
+    border: 0 solid rgba(0, 0, 0, 1);
+    border-radius: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+#userNavbar .dropdown-item:hover {
+    background-color: rgba(0, 0, 0, 0.25);
+}

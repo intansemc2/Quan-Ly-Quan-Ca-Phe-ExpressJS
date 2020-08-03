@@ -1,0 +1,37 @@
+nav#userNavbar.navbar.fixed-top.navbar-expand-lg.navbar-light
+    a.navbar-brand(href='/user')
+        i.fa.fa-coffee
+
+    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNavDropdown', aria-controls='navbarNavDropdown', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+    #navbarNavDropdown.collapse.navbar-collapse
+        ul.navbar-nav
+            li.nav-item
+                a.nav-link(href='#') Thông tin 
+            li.nav-item
+                a.nav-link(href='#') Sản phẩm
+            li.nav-item
+                a.nav-link(href='#') Nhân viên
+            li.nav-item
+                a.nav-link(href='#') Đặt trước 
+            li.nav-item
+                a.nav-link(href='#') Bộ sưu tập 
+            li.nav-item
+                a.nav-link(href='#') Nhận xét chung 
+            li.nav-item
+                a.nav-link(href='#') Thông tin liên hệ 
+            li.nav-item.dropdown
+                a#navbarDropdownAccount.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                    | Tài khoản 
+                .dropdown-menu(aria-labelledby='navbarDropdownAccount')
+                    a.dropdown-item(href='#') Đăng nhập
+                    a.dropdown-item(href='#') Đăng ký 
+                    a.dropdown-item(href='#') Đăng xuất 
+                    a.dropdown-item(href='#') Sửa thông tin tài khoản 
+            li.nav-item.dropdown
+                a#navbarDropdownPages.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                    | Trang
+                .dropdown-menu(aria-labelledby='navbarDropdownPages')
+                    a.dropdown-item(href='#') Trang USER
+                    a.dropdown-item(href='#') Trang ADMIN
+                    a.dropdown-item(href='#') Trang STAFF

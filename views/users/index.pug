@@ -1,0 +1,37 @@
+extends ../layouts/_layout_main_bootstrap
+
+block custom_stylesheets
+    //Custom stylesheets
+    link(rel='stylesheet', href='stylesheets/users/_item_navbar.css')
+    link(rel='stylesheet', href='stylesheets/users/_item_top_show.css')
+
+block content
+    //Navbar
+    include _item_navbar
+
+    //Top show
+    include _item_top_show
+
+    //About
+    include _item_about
+
+    //Food Menu
+    include _item_food_menu
+
+    //Team Staff
+    include _item_team_staff
+
+    //Reservation
+    include _item_reservation
+
+    //Gallery
+    include _item_gallery
+
+    //Client 
+    include _item_client
+
+    //Contact
+    include _item_contact
+
+block custom_javascripts    
+    //Custom Javascript

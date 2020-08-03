@@ -1,0 +1,17 @@
+#userCarouselTopShow .img {    
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+#userCarouselTopShow .img#img1 {
+    background-image: url("https://picsum.photos/1920/1080?random=1");
+}
+
+#userCarouselTopShow .img#img2 {
+    background-image: url("https://picsum.photos/1920/1080?random=2");
+}
+
+#userCarouselTopShow .img#img3 {
+    background-image: url("https://picsum.photos/1920/1080?random=3");
+}
