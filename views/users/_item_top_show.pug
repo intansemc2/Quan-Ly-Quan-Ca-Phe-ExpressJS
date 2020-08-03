@@ -1,21 +1,38 @@
-#userCarouselTopShow.carousel.slide.carousel-fade.wh-100.vh-100(data-ride='carousel')
+#userCarouselTopShow.carousel.slide.carousel-fade.vh-100(data-ride='carousel')
+    ol.carousel-indicators
+        li.active(data-target='#userCarouselTopShow', data-slide-to='0')
+        li(data-target='#userCarouselTopShow', data-slide-to='1')
+        li(data-target='#userCarouselTopShow', data-slide-to='2')
     .carousel-inner
         .carousel-item.active
-            .img#img1.w-100.h-100
+            .img.img1.w-100.h-100
             .carousel-caption.d-none.d-md-block
-                h5 Cà phê là thức uống quen thuộc mỗi buổi sáng giúp tôi có thể cảm nhận được cả thế giới chuyển động trong cơ thể.
-                a.small(href="https://wikicachlam.com/stt-ca-phe-nhung-cau-noi-hay-ve-cafe-va-cuoc-song-tinh-yeu/") Nguồn bài viết
-
+                .w-100.h-100.d-flex.justify-content-start.align-items-center
+                    .content.text-left
+                        span Cà phê 
+                        span.strong NGON HƠN 
+                        br 
+                        span khi uống 
+                        span.strong CÙNG NHAU
         .carousel-item
-            .img#img2.w-100.h-100
+            .img.img2.w-100.h-100
             .carousel-caption.d-none.d-md-block
-                h5 Thêm chút đường cà phê có ngọt ?
-                a.small(href="https://wikicachlam.com/stt-ca-phe-nhung-cau-noi-hay-ve-cafe-va-cuoc-song-tinh-yeu/") Nguồn bài viết
+                .w-100.h-100.d-flex.justify-content-center.align-items-center
+                    .content.text-center
+                        span Được chế biến từ 
+                        br
+                        span cà phê 
+                        span.strong NGUYÊN CHẤT 
         .carousel-item
-            .img#img3.w-100.h-100
+            .img.img3.w-100.h-100
             .carousel-caption.d-none.d-md-block
-                h5 Trà cho thanh thản, rượu cho nỗi đau, cà phê cho nỗi buồn.
-                a.small(href="https://wikicachlam.com/stt-ca-phe-nhung-cau-noi-hay-ve-cafe-va-cuoc-song-tinh-yeu/") Nguồn bài viết
+                .w-100.h-100.d-flex.justify-content-end.align-items-center
+                    .content.text-right
+                        span Tìm thấy 
+                        span.strong ĐAM MÊ 
+                        br
+                        span trong 
+                        span.strong TÁCH CÀ PHÊ 
     a.carousel-control-prev(href='#userCarouselTopShow', role='button', data-slide='prev')
         span.carousel-control-prev-icon(aria-hidden='true')
         span.sr-only Trước

@@ -4,14 +4,43 @@
     background-size: cover;
 }
 
-#userCarouselTopShow .img#img1 {
-    background-image: url("https://picsum.photos/1920/1080?random=1");
+#userCarouselTopShow .img.img1 {
+    background-image: url("/images/coffees/63312.jpg");
 }
 
-#userCarouselTopShow .img#img2 {
-    background-image: url("https://picsum.photos/1920/1080?random=2");
+#userCarouselTopShow .img.img2 {
+    background-image: url("/images/coffees/377947.jpg");
 }
 
-#userCarouselTopShow .img#img3 {
-    background-image: url("https://picsum.photos/1920/1080?random=3");
+#userCarouselTopShow .img.img3 {
+    background-image: url("/images/coffees/421545.jpg");
+}
+
+#userCarouselTopShow .carousel-caption {
+    top: 20px;
+    bottom: 20px;
+}
+
+#userCarouselTopShow .carousel-indicators li {
+    width: 10px;
+    height: 10px;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+#userCarouselTopShow .carousel-indicators li.active {
+    background-color: rgba(0, 0, 0, 1);
+}
+
+#userCarouselTopShow .carousel-item .carousel-caption .content {
+    text-shadow: 2px 2px 18px rgba(21, 2, 2, 0.45);
+    letter-spacing: 3px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 70px;
+    font-weight: 600;
+}
+
+#userCarouselTopShow .carousel-item .carousel-caption .content .strong {
+    color: rgba(255, 255, 255, 1);
+    font-weight: bold;
 }
