@@ -1,38 +1,55 @@
 extends ../layouts/_layout_main_bootstrap
 
 block custom_stylesheets
-    //Custom stylesheets
-    link(rel='stylesheet', href='stylesheets/users/_item_navbar.css')
-    link(rel='stylesheet', href='stylesheets/users/_item_top_show.css')
-    link(rel='stylesheet', href='stylesheets/users/_item_about.css')
+    //Custom stylesheets    
+    //Css for item
+
+    //Css for page part
+    link(rel='stylesheet', href='/stylesheets/users/_page_part_navbar.css')
+    link(rel='stylesheet', href='/stylesheets/users/_page_part_top_show.css')
+    link(rel='stylesheet', href='/stylesheets/users/_page_part_about.css')
+    link(rel='stylesheet', href='/stylesheets/users/_page_part_food_menu.css')
 
 block content
     //Navbar
-    include _item_navbar
+    include _page_part_navbar
+    ///Navbar
 
     //Top show
-    include _item_top_show
+    include _page_part_top_show
+    ///Top show
 
     //About
-    include _item_about
+    include _page_part_about
+    ///About
 
     //Food Menu
-    include _item_food_menu
+    include _page_part_food_menu
+    ///Food Menu
 
     //Team Staff
-    include _item_team_staff
+    include _page_part_team_staff
+    ///Team Staff
 
     //Reservation
-    include _item_reservation
+    include _page_part_reservation
+    ///Reservation
 
     //Gallery
-    include _item_gallery
+    include _page_part_gallery
+    ///Gallery
 
     //Client 
-    include _item_client
+    include _page_part_client
+    ///Client
 
     //Contact
-    include _item_contact
+    include _page_part_contact
+    ///Contact
+
+    //Footer
+    include ../items/_item_footer
+    ///Footer
 
 block custom_javascripts    
     //Custom Javascript

@@ -16,6 +16,14 @@
     background-image: url("/images/coffees/421545.jpg");
 }
 
+#userCarouselTopShow .carousel-inner {
+    height: 100%;
+}
+
+#userCarouselTopShow .carousel-item {
+    height: 100%;
+}
+
 #userCarouselTopShow .carousel-caption {
     top: 20px;
     bottom: 20px;

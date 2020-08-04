@@ -1,8 +1,8 @@
-#userAbout .content {
-    width: 80%;
-    height: 80%;
-}
-
 #userAbout .img {
     background-image: url("/images/coffees/86787.jpg");
+}
+
+#userAbout .small-content {
+    max-width: 500px;
+    font-weight: 300;
 }
