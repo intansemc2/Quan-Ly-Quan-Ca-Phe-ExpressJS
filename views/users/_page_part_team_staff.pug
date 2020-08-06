@@ -1,0 +1,22 @@
+#userTeamStaff
+    .container.h-100.d-flex.flex-column
+        .text-center.mt-5.pt-5
+            .display-4 Nhóm pha chế 
+            .lead Những người pha chế đầy tiềm năng
+
+        .d-flex.flex-wrap.justify-content-center.align-items-center.flex-grow-1
+            .row
+                - for(let i=0; i<4; i+=1)
+                    .bartender.col-lg-3.col-md-6.col-12.p-3.card(style='width: 18rem;')
+                        .bartender-image(style='background-image: url("/images/coffees/212272.jpg"); background-size: cover;')
+                        .card-body
+                            .card-text.text-center Lorem, ipsum.
+                            .card-text.h-100.d-flex.justify-content-around.align-items-center
+                                a.bartender-link(href="https://google.com") 
+                                    i.fab.fa-twitter
+                                a.bartender-link(href="https://facebook.com") 
+                                    i.fab.fa-facebook-square
+                                a.bartender-link(href="https://youtube.com") 
+                                    i.fab.fa-youtube
+                                a.bartender-link(href="https://linkedin.com") 
+                                    i.fab.fa-linkedin-in

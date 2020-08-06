@@ -36,6 +36,18 @@ module.exports.createWHEREPart = function (input, isAllowGetAll = false, isPrima
             if (input.diemTichLuy) {
                 query += ` AND DIEM_TICH_LUY = ${mysql.escape(input.diemTichLuy)} `;
             }
+
+            if (input.email) {
+                query += ` AND EMAIL = ${mysql.escape(input.email)} `;
+            }
+
+            if (input.google) {
+                query += ` AND GOOGLE = ${mysql.escape(input.google)} `;
+            }
+
+            if (input.facebook) {
+                query += ` AND FACEBOOK = ${mysql.escape(input.facebook)} `;
+            }
         }
         //Input is Array
         else if (typeof input === 'array' && input.length > 0) {
@@ -88,7 +100,19 @@ module.exports.createQueryPost = function (input) {
         input.diemTichLuy = null;
     }
 
-    let query = `INSERT INTO khach_hang (ID_KHACH_HANG,TEN,SDT,ID_TAI_KHOAN,DIEM_TICH_LUY) VALUES ( ${mysql.escape(input.idKhachHang)},${mysql.escape(input.ten)},${mysql.escape(input.sdt)},${mysql.escape(input.idTaiKhoan)},${mysql.escape(input.diemTichLuy)} )`;
+    if (!input.email) {
+        input.email = null;
+    }
+
+    if (!input.google) {
+        input.google = null;
+    }
+
+    if (!input.facebook) {
+        input.facebook = null;
+    }
+
+    let query = `INSERT INTO khach_hang (ID_KHACH_HANG,TEN,SDT,ID_TAI_KHOAN,DIEM_TICH_LUY,EMAIL,GOOGLE,FACEBOOK) VALUES ( ${mysql.escape(input.idKhachHang)},${mysql.escape(input.ten)},${mysql.escape(input.sdt)},${mysql.escape(input.idTaiKhoan)},${mysql.escape(input.diemTichLuy)},${mysql.escape(input.email)},${mysql.escape(input.google)},${mysql.escape(input.facebook)} )`;
     return query;
 };
 
@@ -112,12 +136,24 @@ module.exports.createQueryPatch = function (input) {
         queryChanges.push(` DIEM_TICH_LUY = ${mysql.escape(input.diemTichLuy)} `);
     }
 
+    if (input.email) {
+        queryChanges.push(` EMAIL = ${mysql.escape(input.email)} `);
+    }
+
+    if (input.google) {
+        queryChanges.push(` GOOGLE = ${mysql.escape(input.google)} `);
+    }
+
+    if (input.facebook) {
+        queryChanges.push(` FACEBOOK = ${mysql.escape(input.facebook)} `);
+    }
+
     if (!input.oldIdKhachHang) {
         input.oldIdKhachHang = input.idKhachHang;
     }
 
     query += queryChanges.join(',');
-    query += module.exports.createWHEREPart({ idKhachHang: input.oldIdKhachHang, ten: input.oldTen, sdt: input.oldSdt, idTaiKhoan: input.oldIdTaiKhoan, diemTichLuy: input.oldDiemTichLuy });
+    query += module.exports.createWHEREPart({ idKhachHang: input.oldIdKhachHang, ten: input.oldTen, sdt: input.oldSdt, idTaiKhoan: input.oldIdTaiKhoan, diemTichLuy: input.oldDiemTichLuy, email: input.oldEmail, google: input.oldGoogle, facebook: input.oldFacebook });
 
     return query;
 };
@@ -152,6 +188,12 @@ module.exports.converResultGet = function (input) {
     output.idTaiKhoan = input.ID_TAI_KHOAN;
 
     output.diemTichLuy = input.DIEM_TICH_LUY;
+
+    output.email = input.EMAIL;
+
+    output.google = input.GOOGLE;
+
+    output.facebook = input.FACEBOOK;
 
     return output;
 };

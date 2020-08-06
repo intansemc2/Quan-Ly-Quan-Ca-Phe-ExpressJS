@@ -36,6 +36,18 @@ module.exports.createWHEREPart = function (input, isAllowGetAll = false, isPrima
             if (input.idTaiKhoan) {
                 query += ` AND ID_TAI_KHOAN = ${mysql.escape(input.idTaiKhoan)} `;
             }
+
+            if (input.ngaySinh) {
+                query += ` AND NGAY_SINH = ${mysql.escape(input.ngaySinh)} `;
+            }
+
+            if (input.linkAnh) {
+                query += ` AND LINK_ANH = ${mysql.escape(input.linkAnh)} `;
+            }
+
+            if (input.email) {
+                query += ` AND EMAIL = ${mysql.escape(input.email)} `;
+            }
         }
         //Input is Array
         else if (typeof input === 'array' && input.length > 0) {
@@ -88,7 +100,19 @@ module.exports.createQueryPost = function (input) {
         input.idTaiKhoan = null;
     }
 
-    let query = `INSERT INTO nhan_vien (ID_NHAN_VIEN,TEN,SDT,LOAI,ID_TAI_KHOAN) VALUES ( ${mysql.escape(input.idNhanVien)},${mysql.escape(input.ten)},${mysql.escape(input.sdt)},${mysql.escape(input.loai)},${mysql.escape(input.idTaiKhoan)} )`;
+    if (!input.ngaySinh) {
+        input.ngaySinh = null;
+    }
+
+    if (!input.linkAnh) {
+        input.linkAnh = null;
+    }
+
+    if (!input.email) {
+        input.email = null;
+    }
+
+    let query = `INSERT INTO nhan_vien (ID_NHAN_VIEN,TEN,SDT,LOAI,ID_TAI_KHOAN,NGAY_SINH,LINK_ANH,EMAIL) VALUES ( ${mysql.escape(input.idNhanVien)},${mysql.escape(input.ten)},${mysql.escape(input.sdt)},${mysql.escape(input.loai)},${mysql.escape(input.idTaiKhoan)},${mysql.escape(input.ngaySinh)},${mysql.escape(input.linkAnh)},${mysql.escape(input.email)} )`;
     return query;
 };
 
@@ -112,12 +136,24 @@ module.exports.createQueryPatch = function (input) {
         queryChanges.push(` ID_TAI_KHOAN = ${mysql.escape(input.idTaiKhoan)} `);
     }
 
+    if (input.ngaySinh) {
+        queryChanges.push(` NGAY_SINH = ${mysql.escape(input.ngaySinh)} `);
+    }
+
+    if (input.linkAnh) {
+        queryChanges.push(` LINK_ANH = ${mysql.escape(input.linkAnh)} `);
+    }
+
+    if (input.email) {
+        queryChanges.push(` EMAIL = ${mysql.escape(input.email)} `);
+    }
+
     if (!input.oldIdNhanVien) {
         input.oldIdNhanVien = input.idNhanVien;
     }
 
     query += queryChanges.join(',');
-    query += module.exports.createWHEREPart({ idNhanVien: input.oldIdNhanVien, ten: input.oldTen, sdt: input.oldSdt, loai: input.oldLoai, idTaiKhoan: input.oldIdTaiKhoan });
+    query += module.exports.createWHEREPart({ idNhanVien: input.oldIdNhanVien, ten: input.oldTen, sdt: input.oldSdt, loai: input.oldLoai, idTaiKhoan: input.oldIdTaiKhoan, ngaySinh: input.oldNgaySinh, linkAnh: input.oldLinkAnh, email: input.oldEmail });
 
     return query;
 };
@@ -152,6 +188,12 @@ module.exports.converResultGet = function (input) {
     output.loai = input.LOAI;
 
     output.idTaiKhoan = input.ID_TAI_KHOAN;
+
+    output.ngaySinh = input.NGAY_SINH;
+
+    output.linkAnh = input.LINK_ANH;
+
+    output.email = input.EMAIL;
 
     return output;
 };

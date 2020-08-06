@@ -1,5 +1,5 @@
-#userFoodMenu.vh-100.my-5.py-5
-    .container
+#userFoodMenu.my-5.py-5
+    .container.h-100
         .title.d-flex.flex-column
             span.display-4 Danh sách sản phẩm 
             span.lead Những hương vị ngọt ngào      
@@ -7,26 +7,30 @@
         br.my-3   
 
         ul.nav.nav-tabs
-            li.nav-item
-                a.nav-link.active(data-toggle='tab', href='#home') Home
-            li.nav-item
-                a.nav-link(data-toggle='tab', href='#menu1') Menu 1
-            li.nav-item
-                a.nav-link(data-toggle='tab', href='#menu2') Menu 2
-            li.nav-item
-                a.nav-link(data-toggle='tab', href='#menu3') Menu 3
+            - for(let i=0; i<5; i+=1)
+                li.nav-item
+                    a(class=(i===0)?'nav-link active':'nav-link', data-toggle='tab', href='#LoaiSanPham' + i) Loại #{i} 
 
         .tab-content
-            #home.tab-pane.fade-in.active
-                h3 HOME
-                p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            #menu1.tab-pane.fade
-                h3 Menu 1
-                p Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            #menu2.tab-pane.fade
-                h3 Menu 2
-                p Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
-            #menu3.tab-pane.fade
-                h3 Menu 3
-                p Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-
+            - for(let i=0; i<5; i+=1)
+                div(class=(i===0)?'tab-pane overflow-auto active':'tab-pane overflow-auto fade', id='LoaiSanPham' + i)
+                    .my-3.lead Các sản phẩm loại #{i}
+                    ul.my-3.mx-0.py-3.px-0.product-list.vh-100.overflow-auto
+                        - for(let j=0; j<20; j+=1)
+                            li.product-item.card.mr-2.mb-2
+                                .row.no-gutters.h-100
+                                    .col-md-4
+                                        .card-img.h-100(style='background-image: url("/images/coffees/212272.jpg"); background-size: cover')
+                                    .col-md-8.d-flex.flex-column.justify-content-between
+                                        .card-body
+                                            h5.card-title Product name #{j}
+                                            small.card-text Product description: Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                        .card-footer
+                                            p.card-text
+                                                small 
+                                                    i.fa.fa-credit-card.text-warning
+                                                    del.mx-1.text-danger 10000
+                                                    span 8000
+                                                    span.mx-3 &nbsp;
+                                                    i.fa.fa-key.text-info
+                                                    span 12
