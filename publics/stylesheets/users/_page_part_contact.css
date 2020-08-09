@@ -1,0 +1,15 @@
+#userContact {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#userContact .strong {
+    font-size: 1.75rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+#userContact .contact-content {
+    min-height: 700px;
+}
