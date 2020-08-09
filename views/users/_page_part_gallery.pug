@@ -1,0 +1,8 @@
+#userGallery
+    .mt-md-5.pt-md-5.text-center
+        .display-4 Bộ sưu tập ảnh 
+    .flex-grow-1.d-flex.justify-content-center.align-items-center.overflow-auto
+        .gallery-container.d-flex.justify-content-center.align-items-center.flex-wrap
+            - for(let i=0; i<=10; i+=1)
+                a(href='/images/coffees/212272.jpg')
+                    img.img-fluid.img-thumbnail.image-icon(src='/images/coffees/212272.jpg', alt='Coffee Image')
