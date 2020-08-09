@@ -12,8 +12,8 @@ module.exports.createWHEREPart = function (input, isAllowGetAll = false, isPrima
         if (typeof input === 'object') {
             //Input is Object
 
-            if (input.idTaiKhoan) {
-                query += ` AND ID_TAI_KHOAN = ${mysql.escape(input.idTaiKhoan)} `;
+            if (input.idKhachHang) {
+                query += ` AND ID_KHACH_HANG = ${mysql.escape(input.idKhachHang)} `;
             }
 
             if (input.idBan) {
@@ -24,7 +24,7 @@ module.exports.createWHEREPart = function (input, isAllowGetAll = false, isPrima
                 query += ` AND THOI_GIAN_LAP = ${mysql.escape(input.thoiGianLap)} `;
             }
 
-            if (input.idTaiKhoan || input.idBan || input.thoiGianLap) {
+            if (input.idKhachHang || input.idBan || input.thoiGianLap) {
                 if (isPrimarykeyOnly) {
                     return ` WHERE 1=1 ${query}`;
                 }
@@ -37,15 +37,11 @@ module.exports.createWHEREPart = function (input, isAllowGetAll = false, isPrima
             if (input.ghiChu) {
                 query += ` AND GHI_CHU = ${mysql.escape(input.ghiChu)} `;
             }
-
-            if (input.idHoaDon) {
-                query += ` AND ID_HOA_DON = ${mysql.escape(input.idHoaDon)} `;
-            }
         }
         //Input is Array of Object
         else if (typeof input === 'array' && input.length > 0) {
             query += ' AND (';
-            query += input.map((item) => ` ( ID_TAI_KHOAN = mysql.escape(item.idTaiKhoan)} AND ID_BAN = mysql.escape(item.idBan)} AND THOI_GIAN_LAP = mysql.escape(item.thoiGianLap)} ) `).join(' OR ');
+            query += input.map((item) => ` ( ID_KHACH_HANG = mysql.escape(item.idKhachHang)} AND ID_BAN = mysql.escape(item.idBan)} AND THOI_GIAN_LAP = mysql.escape(item.thoiGianLap)} ) `).join(' OR ');
             query += ')';
         }
     }
@@ -66,8 +62,8 @@ module.exports.createQueryGet = function (input) {
 };
 
 module.exports.createQueryPost = function (input) {
-    if (!input.idTaiKhoan) {
-        input.idTaiKhoan = null;
+    if (!input.idKhachHang) {
+        input.idKhachHang = null;
     }
 
     if (!input.idBan) {
@@ -86,11 +82,7 @@ module.exports.createQueryPost = function (input) {
         input.ghiChu = null;
     }
 
-    if (!input.idHoaDon) {
-        input.idHoaDon = null;
-    }
-
-    let query = `INSERT INTO dat_ban (ID_TAI_KHOAN,ID_BAN,THOI_GIAN_LAP,THOI_GIAN_NHAN,GHI_CHU,ID_HOA_DON) VALUES ( ${mysql.escape(input.idTaiKhoan)},${mysql.escape(input.idBan)},${mysql.escape(input.thoiGianLap)},${mysql.escape(input.thoiGianNhan)},${mysql.escape(input.ghiChu)},${mysql.escape(input.idHoaDon)} )`;
+    let query = `INSERT INTO dat_ban (ID_KHACH_HANG,ID_BAN,THOI_GIAN_LAP,THOI_GIAN_NHAN,GHI_CHU) VALUES ( ${mysql.escape(input.idKhachHang)},${mysql.escape(input.idBan)},${mysql.escape(input.thoiGianLap)},${mysql.escape(input.thoiGianNhan)},${mysql.escape(input.ghiChu)} )`;
     return query;
 };
 
@@ -98,8 +90,8 @@ module.exports.createQueryPatch = function (input) {
     let query = `UPDATE dat_ban SET `;
     let queryChanges = [];
 
-    if (input.idTaiKhoan) {
-        queryChanges.push(` AND ID_TAI_KHOAN = ${mysql.escape(input.idTaiKhoan)} `);
+    if (input.idKhachHang) {
+        queryChanges.push(` AND ID_KHACH_HANG = ${mysql.escape(input.idKhachHang)} `);
     }
 
     if (input.idBan) {
@@ -118,12 +110,8 @@ module.exports.createQueryPatch = function (input) {
         queryChanges.push(` AND GHI_CHU = ${mysql.escape(input.ghiChu)} `);
     }
 
-    if (input.idHoaDon) {
-        queryChanges.push(` AND ID_HOA_DON = ${mysql.escape(input.idHoaDon)} `);
-    }
-
-    if (!input.oldIdTaiKhoan) {
-        input.oldIdTaiKhoan = input.idTaiKhoan;
+    if (!input.oldIdKhachHang) {
+        input.oldIdKhachHang = input.idKhachHang;
     }
 
     if (!input.oldIdBan) {
@@ -135,7 +123,7 @@ module.exports.createQueryPatch = function (input) {
     }
 
     query += queryChanges.join(',');
-    query += module.exports.createWHEREPart({ idTaiKhoan: input.oldIdTaiKhoan, idBan: input.oldIdBan, thoiGianLap: input.oldThoiGianLap, thoiGianNhan: input.oldThoiGianNhan, ghiChu: input.oldGhiChu, idHoaDon: input.oldIdHoaDon });
+    query += module.exports.createWHEREPart({ idKhachHang: input.oldIdKhachHang, idBan: input.oldIdBan, thoiGianLap: input.oldThoiGianLap, thoiGianNhan: input.oldThoiGianNhan, ghiChu: input.oldGhiChu });
 
     return query;
 };
@@ -150,7 +138,7 @@ module.exports.createQueryExists = function (input, isPrimarykeyOnly) {
     let query = `SELECT COUNT(*) AS NUMBER_ROWS FROM dat_ban `;
 
     if (isPrimarykeyOnly) {
-        query += module.exports.createWHEREPart({ idTaiKhoan: input.idTaiKhoan, idBan: input.idBan, thoiGianLap: input.thoiGianLap }, false, true);
+        query += module.exports.createWHEREPart({ idKhachHang: input.idKhachHang, idBan: input.idBan, thoiGianLap: input.thoiGianLap }, false, true);
     } else {
         query += module.exports.createWHEREPart(input, false, true);
     }
@@ -161,7 +149,7 @@ module.exports.createQueryExists = function (input, isPrimarykeyOnly) {
 module.exports.converResultGet = function (input) {
     let output = new DatBan();
 
-    output.idTaiKhoan = input.ID_TAI_KHOAN;
+    output.idKhachHang = input.ID_KHACH_HANG;
 
     output.idBan = input.ID_BAN;
 
@@ -170,8 +158,6 @@ module.exports.converResultGet = function (input) {
     output.thoiGianNhan = input.THOI_GIAN_NHAN;
 
     output.ghiChu = input.GHI_CHU;
-
-    output.idHoaDon = input.ID_HOA_DON;
 
     return output;
 };
@@ -195,7 +181,7 @@ module.exports.patch = function (input) {
     if (!input) {
         throw new Error('Missing the input');
     }
-    if ((!input.idTaiKhoan && !input.oldIdTaiKhoan) || (!input.idBan && !input.oldIdBan) || (!input.thoiGianLap && !input.oldThoiGianLap)) {
+    if ((!input.idKhachHang && !input.oldIdKhachHang) || (!input.idBan && !input.oldIdBan) || (!input.thoiGianLap && !input.oldThoiGianLap)) {
         throw new Error('Missing the identity properties');
     }
     return baseDatabase.patch(input, module.exports.createQueryPatch);

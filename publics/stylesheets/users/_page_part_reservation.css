@@ -1,0 +1,45 @@
+#userReservation {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+}
+
+#userReservation .background-image {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-image: url('/images/coffees/212272.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: blur(2px);
+    opacity: 0.5;
+    z-index: -1000;
+}
+
+#userReservation .input-action {
+    border-radius: 0px;
+    border: 1px solid rgba(255, 255, 255, 1);
+    background-color: rgba(255, 255, 255, 0);
+    transition: all 0.75s;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    word-wrap: normal;
+}
+
+#userReservation .input-action:focus {
+    background-color: rgba(255, 255, 255, 0.5);
+    color: rgba(0, 0, 0, 1);
+}
+
+#userReservation .input-icon {
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(0, 0, 0, 1);
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
