@@ -1,0 +1,39 @@
+#userClientComment {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#userClientComment .swiper-container {
+    width: 100%;
+    height: 100%;
+}
+
+#userClientComment .swiper-slide {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#userClientComment .swiper-button-next, #userClientComment .swiper-button-prev {
+    width: 50px;
+    height: 50px;
+    border: 1px solid var(--secondary);
+    border-radius: 100px;
+    opacity: 0.125;
+    transition: all 0.75s;
+    color: var(--secondary);
+}
+
+#userClientComment .swiper-button-next:after, #userClientComment .swiper-button-prev:after {
+    content: "";
+    display: none;
+}
+
+#userClientComment .swiper-button-next:hover, #userClientComment .swiper-button-prev:hover {
+    opacity: 1;
+    border: 0px solid transparent;
+    background-color: var(--secondary);
+    color: var(--light);
+}
