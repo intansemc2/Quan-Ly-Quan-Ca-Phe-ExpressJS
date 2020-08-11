@@ -20,3 +20,30 @@
 #userNavbar .dropdown-item:hover {
     background-color: rgba(0, 0, 0, 0.25);
 }
+
+#userNavbar .save-dropdown {
+    min-width: 200px;
+}
+
+#userNavbar .save-dropdown-button {
+    border-radius: 0;
+    width: 50px;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#userNavbar .save-dropdown-container {
+    max-height: 200px;
+}
+
+@media (min-width:992px) {
+    #userNavbar .save-dropdown {
+        min-width: 500px;
+    }
+
+    #userNavbar .save-dropdown-container {
+        max-height: 500px;
+    }
+}

@@ -21,6 +21,39 @@ nav#userNavbar.navbar.fixed-top.navbar-expand-lg.navbar-light
             li.nav-item
                 a.nav-link(href='#userContact') Thông tin liên hệ 
             li.nav-item.dropdown
+                a#navbarDropdownSave.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                    | Lưu trữ 
+                .save-dropdown.dropdown-menu(aria-labelledby='navbarDropdownSave')
+                    .save-dropdown-container.d-flex.flex-column.overflow-auto
+                        - for(let i=0; i<5; i+=1)
+                            .d-flex.border.border-secondary
+                                .flex-grow-1
+                                    table.table.table-bordered.table-hover.m-0.p-0
+                                        thead
+                                            tr
+                                                th(colspan='2') Đặt bàn 
+                                        tbody
+                                            tr
+                                                td Số điện thoại
+                                                td 2345387658567
+                                            tr
+                                                td Email 
+                                                td sdfgdfg@dsfg.sdfg
+                                            tr
+                                                td Ngày nhận 
+                                                td 06/08/2020
+                                            tr
+                                                td Thời gian nhận 
+                                                td 23:20:00
+                                            tr
+                                                td Bàn số 
+                                                td 4
+                                .d-flex.flex-column
+                                    .save-dropdown-button.btn.btn-outline-dark
+                                        i.fa.fa-edit(aria-hidden='true')
+                                    .save-dropdown-button.btn.btn-outline-secondary
+                                        i.fa.fa-trash
+            li.nav-item.dropdown
                 a#navbarDropdownAccount.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
                     | Tài khoản 
                 .dropdown-menu(aria-labelledby='navbarDropdownAccount')
@@ -32,6 +65,6 @@ nav#userNavbar.navbar.fixed-top.navbar-expand-lg.navbar-light
                 a#navbarDropdownPages.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
                     | Trang
                 .dropdown-menu(aria-labelledby='navbarDropdownPages')
-                    a.dropdown-item(href='#') Trang USER
-                    a.dropdown-item(href='#') Trang ADMIN
-                    a.dropdown-item(href='#') Trang STAFF
+                    a.dropdown-item(href='/user') Trang USER
+                    a.dropdown-item(href='/admin') Trang ADMIN
+                    a.dropdown-item(href='/staff') Trang STAFF

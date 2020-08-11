@@ -112,6 +112,7 @@ router.put('/tai-khoan', apiTaikhoanController.put);
 router.patch('/tai-khoan', apiTaikhoanController.patch);  
 router.delete('/tai-khoan', apiTaikhoanController.delete);  
 router.use('/tai-khoan/exists', apiTaikhoanController.exists); 
+router.use('/tai-khoan/types', apiTaikhoanController.types); 
 
 //Module export
 module.exports = router;
