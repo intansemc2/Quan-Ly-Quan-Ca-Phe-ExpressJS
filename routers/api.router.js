@@ -15,6 +15,9 @@ const apiNhanvienController = require('../controllers/api.nhanvien.controller');
 const apiSanphamController = require('../controllers/api.sanpham.controller');
 const apiTaikhoanController = require('../controllers/api.taikhoan.controller');
 
+//Import Validator
+const apiTaikhoanValidator = require('../middlewares/api.taikhoan.validator');
+
 //Routers for Ban  
 router.get('/ban', apiBanController.get);  
 router.post('/ban', apiBanController.post);  
@@ -107,7 +110,7 @@ router.use('/san-pham/exists', apiSanphamController.exists);
 
 //Routers for Taikhoan  
 router.get('/tai-khoan', apiTaikhoanController.get);  
-router.post('/tai-khoan', apiTaikhoanController.post);  
+router.post('/tai-khoan', apiTaikhoanValidator.postValidator, apiTaikhoanController.post);  
 router.put('/tai-khoan', apiTaikhoanController.put);  
 router.patch('/tai-khoan', apiTaikhoanController.patch);  
 router.delete('/tai-khoan', apiTaikhoanController.delete);  

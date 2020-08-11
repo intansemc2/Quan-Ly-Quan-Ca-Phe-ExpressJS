@@ -36,61 +36,15 @@ block content
                         .card-body
                             button.btn.btn-outline-secondary.rounded-0(type='button', data-toggle='modal', data-target='#modelThemTaiKhoan') Thêm mới  
                             span.mx-1
-                            button.btn.btn-outline-dark.rounded-0 Xóa tất cả 
+                            button#deleteAll.btn.btn-outline-dark.rounded-0 Xóa tất cả 
+                            span.mx-1
+                            button#refreshAll.btn.btn-outline-dark.rounded-0 Làm mới 
 
                     // Model thêm tài khoản
-                    #modelThemTaiKhoan.modal.fade(tabindex='-1', role='dialog', aria-labelledby='Model aria-labelledby', aria-hidden='true')
-                        .modal-dialog.modal-dialog-centered(role='document')
-                            .modal-content
-                                .modal-header
-                                    h5.modal-title Thêm tài khoản 
-                                    button.close(type='button', data-dismiss='modal', aria-label='Close')
-                                        span(aria-hidden='true') &times;
-                                .modal-body
-                                    #themTaiKhoanAlerts
-                                        // Các alert của phần này
-                                    .form-group
-                                        label.small.mb-1(for='themTaiKhoanUsername') Tên đăng nhập 
-                                        input#themTaiKhoanUsername.form-control.py-4.username(type='text', placeholder='Nhập tên đăng nhập của bạn')
-                                    .form-group
-                                        label.small.mb-1(for='themTaiKhoanPassword') Mật khẩu 
-                                        input#themTaiKhoanPassword.form-control.py-4.password(type='password', placeholder='Nhập mật khẩu của bạn')
-                                    .form-group
-                                        label.small.mb-1(for='themTaiKhoanConfirmPassword') Nhập lại mật khẩu 
-                                        input#themTaiKhoanConfirmPassword.form-control.py-4.re_password(type='password', placeholder='Nhập lại mật khẩu của bạn')
-                                    .form-group
-                                        label.small.mb-1(for='themTaiKhoanLoaiTaiKhoan') Loại tài khản 
-                                        select#themTaiKhoanLoaiTaiKhoan.form-control.loai
-                                .modal-footer
-                                    input#themTaiKhoanConfirm.btn.btn-outline-secondary.rounded-0(type='button', value='Thêm Tài khoản')
-                                    input#themTaiKhoanReset.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')
+                    include ./quan-ly-tai-khoan-them-tai-khoan
 
                     // Model sửa tài khoản
-                    #modelSuaTaiKhoan.modal.fade(tabindex='-1', role='dialog', aria-labelledby='ModelSuaTaiKhoan aria-labelledby', aria-hidden='true')
-                        .modal-dialog.modal-dialog-centered(role='document')
-                            .modal-content
-                                .modal-header
-                                    h5.modal-title Sửa tài khoản 
-                                    button.close(type='button', data-dismiss='modal', aria-label='Close')
-                                        span(aria-hidden='true') &times;
-                                .modal-body
-                                    #suaTaiKhoanAlerts
-                                        // Các alert của phần này
-                                    .form-group
-                                        label.small.mb-1(for='suaTaiKhoanUsername') Tên đăng nhập  
-                                        input#suaTaiKhoanUsername.form-control.py-4.username(type='text', placeholder='Nhập tên đăng nhập của bạn')
-                                    .form-group
-                                        label.small.mb-1(for='suaTaiKhoanPassword') Mật khẩu 
-                                        input#suaTaiKhoanPassword.form-control.py-4.password(type='password', placeholder='Nhập mật khẩu của bạn')
-                                    .form-group
-                                        label.small.mb-1(for='suaTaiKhoanConfirmPassword') Nhập lại mật khẩu 
-                                        input#suaTaiKhoanConfirmPassword.form-control.py-4.re_password(type='password', placeholder='Nhập lại mật khẩu của bạn')
-                                    .form-group
-                                        label.small.mb-1(for='suaTaiKhoanLoaiTaiKhoan') Loại tài khoản 
-                                        select#suaTaiKhoanLoaiTaiKhoan.form-control.loai
-                                .modal-footer
-                                    input#suaTaiKhoanConfirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa Tài khoản')
-                                    input#suaTaiKhoanReset.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')
+                    include ./quan-ly-tai-khoan-sua-tai-khoan
 
                     //Start Table
                     .card.my-4
@@ -115,21 +69,7 @@ block content
                                             th Loại 
                                             th Thao tác 
                                     tbody
-                                        //Start Table Content
-                                        //- each taikhoan in taikhoans
-                                        //-     tr
-                                        //-         td #{taikhoan.idTaiKhoan}
-                                        //-         td #{taikhoan.username}
-                                        //-         td #{taikhoan.password}
-                                        //-         td #{taikhoan.loai}
-                                        //-         td 
-                                        //-             button.btn.btn-outline-info.rounded-0.m-1.opacity-50
-                                        //-                 i.fa.fa-check-circle
-                                        //-             button.btn.btn-outline-secondary.rounded-0.m-1
-                                        //-                 i.fa.fa-edit
-                                        //-             button.btn.btn-outline-dark.rounded-0.m-1
-                                        //-                 i.fa.fa-trash
-                                        ///End Table Content
+                                        //Table Content
                         ///End Table
                     ///End Main Content
                     
@@ -141,10 +81,18 @@ block content
 block custom_javascripts
     //Javascript library files
     script(type="text/javascript", src="/liblaries/datatable/datatables.min.js")
+    script(type="text/javascript", src="/liblaries/sweetalert/sweetalert.min.js")
 
     //Javascript items
+    script(type="text/javascript", src="/javascripts/custom-alert.js")
     script(type="text/javascript", src="/javascripts/custom-toggle-button.js")
 
     //Custom Javascript
-    script(type="text/javascript", src="/javascripts/admins/admin-main.js")        
-    script(type="text/javascript", src="/javascripts/admins/quan-ly-tai-khoan.js")
+    script(type="text/javascript", src="/javascripts/admins/admin-main.js")   
+
+    script(type="text/javascript", src="/javascripts/admins/quan-ly-tai-khoan/variables.js")
+    script(type="text/javascript", src="/javascripts/admins/quan-ly-tai-khoan/table-functions.js")
+    script(type="text/javascript", src="/javascripts/admins/quan-ly-tai-khoan/them-tai-khoan.js")
+    script(type="text/javascript", src="/javascripts/admins/quan-ly-tai-khoan/sua-tai-khoan.js")
+    script(type="text/javascript", src="/javascripts/admins/quan-ly-tai-khoan/xoa-tai-khoan.js")
+    script(type="text/javascript", src="/javascripts/admins/quan-ly-tai-khoan/main.js")
