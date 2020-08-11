@@ -66,7 +66,7 @@ let tableQuanLyTaiKhoan = {};
 //Get data of taikhoanTypes
 function getTaikhoanTypes() {
     return new Promise(function(resolve, reject){
-        $.post('/admin/getTaikhoanTypes', {}, function(data, status, xhr){
+        $.post('/api/tai-khoan/types', {}, function(data, status, xhr){
             resolve(data);
         });
     });
