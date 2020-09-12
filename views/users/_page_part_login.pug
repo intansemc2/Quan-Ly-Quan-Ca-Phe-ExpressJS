@@ -5,15 +5,21 @@
     .card-body
         form
             .form-group
+                span.small.text-danger (*) Phần bắt buộc phải nhập 
+            .form-group
                 label.small.mb-1 Tên đăng nhập 
-                input.form-control.py-4(name='username',type='text', placeholder='Nhập Tên đăng nhập ')
+                    span.text-danger (*)
+                input.form-control.py-4(name='username',type='text', placeholder='Nhập Tên đăng nhập ', required)
             .form-group
                 label.small.mb-1 Mật khẩu 
-                input.form-control.py-4(name='password', type='password', placeholder='Nhập Mật khẩu ')
+                    span.text-danger (*)
+                input.form-control.py-4(name='password', type='password', placeholder='Nhập Mật khẩu ', required)
             .form-group
                 .custom-control.custom-checkbox
                     input.custom-control-input(name='rememberPassword', type='checkbox')
                     label.custom-control-label Ghi nhớ mật khẩu 
             .form-group.d-flex.align-items-center.justify-content-between.mb-0
                 a.small(href='#') Quên mật khẩu 
-                input.btn.btn-outline-secondary.rounded-0(name='loginSubmit', type='submit', value='Đăng nhập')  
+                span
+                    input.btn.btn-outline-dark.rounded-0.mx-1(name='reset', type='reset', value='Cài lại')  
+                    input.btn.btn-outline-secondary.rounded-0(name='loginSubmit', type='submit', value='Đăng nhập')  
