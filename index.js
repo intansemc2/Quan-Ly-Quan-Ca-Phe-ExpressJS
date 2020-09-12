@@ -26,7 +26,7 @@ app.set('views', './views');
 //Uses
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
+app.use(cookieParser(undefined, {sameSite: true}));
 
 //Public folders
 app.use(express.static('./publics'));
