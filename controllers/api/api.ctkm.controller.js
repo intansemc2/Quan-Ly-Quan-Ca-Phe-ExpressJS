@@ -1,14 +1,14 @@
 //Import Controllers
-const errorController = require('./error.controller');
+const errorController = require('../error.controller');
 
 //Import Databases
-const datbanDatabase = require('../databases/datban.database');
+const ctkmDatabase = require('../../databases/ctkm.database');
 
 module.exports.get = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await datbanDatabase.get(input);
+        let output = await ctkmDatabase.get(input);
         response.json(output);
         next();
     } catch (error) {
@@ -20,7 +20,7 @@ module.exports.post = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await datbanDatabase.post(input);
+        let output = await ctkmDatabase.post(input);
         response.json(output);
         next();
     } catch (error) {
@@ -32,7 +32,7 @@ module.exports.put = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await datbanDatabase.put(input);
+        let output = await ctkmDatabase.put(input);
         response.json(output);
         next();
     } catch (error) {
@@ -44,7 +44,7 @@ module.exports.patch = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await datbanDatabase.patch(input);
+        let output = await ctkmDatabase.patch(input);
         response.json(output);
         next();
     } catch (error) {
@@ -56,7 +56,7 @@ module.exports.delete = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await datbanDatabase.delete(input);
+        let output = await ctkmDatabase.delete(input);
         response.json(output);
         next();
     } catch (error) {
@@ -68,7 +68,7 @@ module.exports.exists = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await datbanDatabase.exists(input);
+        let output = await ctkmDatabase.exists(input);
         response.json(output);
         next();
     } catch (error) {

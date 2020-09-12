@@ -3,17 +3,17 @@ const express = require('express');
 const router = express.Router();
 
 //Import controller
-const apiBanController = require('../controllers/api.ban.controller');
-const apiCthdController = require('../controllers/api.cthd.controller');
-const apiCtkmController = require('../controllers/api.ctkm.controller');
-const apiDatbanController = require('../controllers/api.datban.controller');
-const apiHoadonController = require('../controllers/api.hoadon.controller');
-const apiKhachhangController = require('../controllers/api.khachhang.controller');
-const apiKhuyenmaiController = require('../controllers/api.khuyenmai.controller');
-const apiLoaisanphamController = require('../controllers/api.loaisanpham.controller');
-const apiNhanvienController = require('../controllers/api.nhanvien.controller');
-const apiSanphamController = require('../controllers/api.sanpham.controller');
-const apiTaikhoanController = require('../controllers/api.taikhoan.controller');
+const apiBanController = require('../controllers/api/api.ban.controller');
+const apiCthdController = require('../controllers/api/api.cthd.controller');
+const apiCtkmController = require('../controllers/api/api.ctkm.controller');
+const apiDatbanController = require('../controllers/api/api.datban.controller');
+const apiHoadonController = require('../controllers/api/api.hoadon.controller');
+const apiKhachhangController = require('../controllers/api/api.khachhang.controller');
+const apiKhuyenmaiController = require('../controllers/api/api.khuyenmai.controller');
+const apiLoaisanphamController = require('../controllers/api/api.loaisanpham.controller');
+const apiNhanvienController = require('../controllers/api/api.nhanvien.controller');
+const apiSanphamController = require('../controllers/api/api.sanpham.controller');
+const apiTaikhoanController = require('../controllers/api/api.taikhoan.controller');
 
 //Import Validator
 const apiTaikhoanValidator = require('../middlewares/api.taikhoan.validator');

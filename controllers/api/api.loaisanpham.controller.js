@@ -1,14 +1,14 @@
 //Import Controllers
-const errorController = require('./error.controller');
+const errorController = require('../error.controller');
 
 //Import Databases
-const khachhangDatabase = require('../databases/khachhang.database');
+const loaisanphamDatabase = require('../../databases/loaisanpham.database');
 
 module.exports.get = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await khachhangDatabase.get(input);
+        let output = await loaisanphamDatabase.get(input);
         response.json(output);
         next();
     } catch (error) {
@@ -20,7 +20,7 @@ module.exports.post = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await khachhangDatabase.post(input);
+        let output = await loaisanphamDatabase.post(input);
         response.json(output);
         next();
     } catch (error) {
@@ -32,7 +32,7 @@ module.exports.put = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await khachhangDatabase.put(input);
+        let output = await loaisanphamDatabase.put(input);
         response.json(output);
         next();
     } catch (error) {
@@ -44,7 +44,7 @@ module.exports.patch = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await khachhangDatabase.patch(input);
+        let output = await loaisanphamDatabase.patch(input);
         response.json(output);
         next();
     } catch (error) {
@@ -56,7 +56,7 @@ module.exports.delete = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await khachhangDatabase.delete(input);
+        let output = await loaisanphamDatabase.delete(input);
         response.json(output);
         next();
     } catch (error) {
@@ -68,7 +68,7 @@ module.exports.exists = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await khachhangDatabase.exists(input);
+        let output = await loaisanphamDatabase.exists(input);
         response.json(output);
         next();
     } catch (error) {

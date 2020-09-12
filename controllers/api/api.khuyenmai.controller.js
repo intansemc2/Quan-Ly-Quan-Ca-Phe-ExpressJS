@@ -1,14 +1,14 @@
 //Import Controllers
-const errorController = require('./error.controller');
+const errorController = require('../error.controller');
 
 //Import Databases
-const sanphamDatabase = require('../databases/sanpham.database');
+const khuyenmaiDatabase = require('../../databases/khuyenmai.database');
 
 module.exports.get = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await sanphamDatabase.get(input);
+        let output = await khuyenmaiDatabase.get(input);
         response.json(output);
         next();
     } catch (error) {
@@ -20,7 +20,7 @@ module.exports.post = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await sanphamDatabase.post(input);
+        let output = await khuyenmaiDatabase.post(input);
         response.json(output);
         next();
     } catch (error) {
@@ -32,7 +32,7 @@ module.exports.put = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await sanphamDatabase.put(input);
+        let output = await khuyenmaiDatabase.put(input);
         response.json(output);
         next();
     } catch (error) {
@@ -44,7 +44,7 @@ module.exports.patch = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await sanphamDatabase.patch(input);
+        let output = await khuyenmaiDatabase.patch(input);
         response.json(output);
         next();
     } catch (error) {
@@ -56,7 +56,7 @@ module.exports.delete = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await sanphamDatabase.delete(input);
+        let output = await khuyenmaiDatabase.delete(input);
         response.json(output);
         next();
     } catch (error) {
@@ -68,7 +68,7 @@ module.exports.exists = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await sanphamDatabase.exists(input);
+        let output = await khuyenmaiDatabase.exists(input);
         response.json(output);
         next();
     } catch (error) {
