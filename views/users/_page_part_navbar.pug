@@ -1,5 +1,5 @@
-nav#userNavbar.navbar.fixed-top.navbar-expand-lg.navbar-light
-    a.navbar-brand(href='#userCarouselTopShow')
+nav#userNavbar.navbar.navbar-expand-lg.navbar-light.fixed-top
+    a.navbar-brand(href='/user#userCarouselTopShow')
         i.fa.fa-coffee
 
     button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNavDropdown', aria-controls='navbarNavDropdown', aria-expanded='false', aria-label='Toggle navigation')
@@ -7,64 +7,24 @@ nav#userNavbar.navbar.fixed-top.navbar-expand-lg.navbar-light
     #navbarNavDropdown.collapse.navbar-collapse
         ul.navbar-nav
             li.nav-item
-                a.nav-link(href='#userAbout') Thông tin 
+                a.nav-link(href='/user#userAbout') Giới thiệu 
             li.nav-item
-                a.nav-link(href='#userFoodMenu') Sản phẩm
+                a.nav-link(href='/user#userGallery') Bộ sưu tập ảnh 
             li.nav-item
-                a.nav-link(href='#userTeamStaff') Nhân viên
+                a.nav-link(href='/user#userClientComment') Ý kiến phản hồi 
             li.nav-item
-                a.nav-link(href='#userReservation') Đặt trước 
+                a.nav-link(href='/user#userContact') Thông tin liên hệ 
             li.nav-item
-                a.nav-link(href='#userGallery') Bộ sưu tập 
+                a.nav-link(href='/user/reservation-table') Đặt trước bàn 
+                    span.badge.badge-secondary 0
             li.nav-item
-                a.nav-link(href='#userClientComment') Nhận xét chung 
+                a.nav-link(href='/user/reservation-table') Đặt trước món ăn 
+                    span.badge.badge-secondary 0
             li.nav-item
-                a.nav-link(href='#userContact') Thông tin liên hệ 
-            li.nav-item.dropdown
-                a#navbarDropdownSave.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-                    | Lưu trữ 
-                .save-dropdown.dropdown-menu(aria-labelledby='navbarDropdownSave')
-                    .save-dropdown-container.d-flex.flex-column.overflow-auto
-                        - for(let i=0; i<5; i+=1)
-                            .d-flex.border.border-secondary
-                                .flex-grow-1
-                                    table.table.table-bordered.table-hover.m-0.p-0
-                                        thead
-                                            tr
-                                                th(colspan='2') Đặt bàn 
-                                        tbody
-                                            tr
-                                                td Số điện thoại
-                                                td 2345387658567
-                                            tr
-                                                td Email 
-                                                td sdfgdfg@dsfg.sdfg
-                                            tr
-                                                td Ngày nhận 
-                                                td 06/08/2020
-                                            tr
-                                                td Thời gian nhận 
-                                                td 23:20:00
-                                            tr
-                                                td Bàn số 
-                                                td 4
-                                .d-flex.flex-column
-                                    .save-dropdown-button.btn.btn-outline-dark
-                                        i.fa.fa-edit(aria-hidden='true')
-                                    .save-dropdown-button.btn.btn-outline-secondary
-                                        i.fa.fa-trash
-            li.nav-item.dropdown
-                a#navbarDropdownAccount.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-                    | Tài khoản 
-                .dropdown-menu(aria-labelledby='navbarDropdownAccount')
-                    a.dropdown-item(href='#') Đăng nhập
-                    a.dropdown-item(href='#') Đăng ký 
-                    a.dropdown-item(href='#') Đăng xuất 
-                    a.dropdown-item(href='#') Sửa thông tin tài khoản 
+                a.nav-link(href='/user/account-manager') Tài khoản 
             li.nav-item.dropdown
                 a#navbarDropdownPages.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
                     | Trang
                 .dropdown-menu(aria-labelledby='navbarDropdownPages')
-                    a.dropdown-item(href='/user') Trang USER
                     a.dropdown-item(href='/admin') Trang ADMIN
                     a.dropdown-item(href='/staff') Trang STAFF

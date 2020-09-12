@@ -8,15 +8,12 @@ block custom_stylesheets
     link(rel='stylesheet', href='/liblaries/swiper/swiper-bundle.min.css') 
 
     //Css for page part
-    link(rel='stylesheet', href='/stylesheets/users/_page_part_navbar.css')
-    link(rel='stylesheet', href='/stylesheets/users/_page_part_top_show.css')
-    link(rel='stylesheet', href='/stylesheets/users/_page_part_about.css')
-    link(rel='stylesheet', href='/stylesheets/users/_page_part_food_menu.css')
-    link(rel='stylesheet', href='/stylesheets/users/_page_part_team_staff.css')
-    link(rel='stylesheet', href='/stylesheets/users/_page_part_reservation.css')
-    link(rel='stylesheet', href='/stylesheets/users/_page_part_gallery.css')    
-    link(rel='stylesheet', href='/stylesheets/users/_page_part_client.css')  
-    link(rel='stylesheet', href='/stylesheets/users/_page_part_contact.css')   
+    link(rel='stylesheet', href='/stylesheets/users/_page_part_navbar.css') 
+    link(rel='stylesheet', href='/stylesheets/users/_page_part_top_show.css') 
+    link(rel='stylesheet', href='/stylesheets/users/_page_part_about.css') 
+    link(rel='stylesheet', href='/stylesheets/users/_page_part_gallery.css') 
+    link(rel='stylesheet', href='/stylesheets/users/_page_part_client.css') 
+    link(rel='stylesheet', href='/stylesheets/users/_page_part_contact.css') 
     
 
 block content
@@ -24,37 +21,13 @@ block content
     include _page_part_navbar
     ///Navbar
 
-    //Top show
+    //Content
     include _page_part_top_show
-    ///Top show
-
-    //About
     include _page_part_about
-    ///About
-
-    //Food Menu
-    include _page_part_food_menu
-    ///Food Menu
-
-    //Team Staff
-    include _page_part_team_staff
-    ///Team Staff
-
-    //Reservation
-    include _page_part_reservation
-    ///Reservation
-
-    //Gallery
     include _page_part_gallery
-    ///Gallery
-
-    //Client 
     include _page_part_client
-    ///Client
-
-    //Contact
     include _page_part_contact
-    ///Contact
+    ///Content
 
     //Footer
     include ../items/_item_footer
@@ -62,10 +35,9 @@ block content
 
 block custom_javascripts    
     //Custom Javascript libraries 
-    script(src='/liblaries/lightgallery/lightgallery.min.js')
-    script(src='/liblaries/swiper/swiper-bundle.min.js')
+    script(type="text/javascript", src="/liblaries/lightgallery/lightgallery.min.js")
+    script(type="text/javascript", src="/liblaries/swiper/swiper-bundle.min.js")
 
     //Custom javascript files
-    script(src='/javascripts/users/_page_part_navbar.js')    
-    script(src='/javascripts/users/_page_part_gallery.js')
-    script(src='/javascripts/users/_page_part_client.js')    
+    script(type="text/javascript", src="/javascripts/users/_page_part_gallery.js")
+    script(type="text/javascript", src="/javascripts/users/_page_part_client.js")

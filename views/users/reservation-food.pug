@@ -1,0 +1,31 @@
+extends ../layouts/_layout_main_bootstrap
+
+block custom_stylesheets
+    //Custom stylesheets   
+
+    //Css for item
+    link(rel='stylesheet', href='/liblaries/lightgallery/lightgallery.min.css') 
+    link(rel='stylesheet', href='/liblaries/swiper/swiper-bundle.min.css') 
+
+    //Css for page part
+    link(rel='stylesheet', href='/stylesheets/users/_page_part_navbar.css') 
+    
+
+block content
+    //Navbar
+    include _page_part_navbar
+    ///Navbar
+
+    //Content
+    .container
+        span This is the content Food
+    ///Content
+
+    //Footer
+    include ../items/_item_footer
+    ///Footer
+
+block custom_javascripts    
+    //Custom Javascript libraries 
+
+    //Custom javascript files
