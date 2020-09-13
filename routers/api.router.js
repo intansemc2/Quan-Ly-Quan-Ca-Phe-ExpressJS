@@ -15,6 +15,8 @@ const apiNhanvienController = require('../controllers/api/api.nhanvien.controlle
 const apiSanphamController = require('../controllers/api/api.sanpham.controller');
 const apiTaikhoanController = require('../controllers/api/api.taikhoan.controller');
 
+const apiLoginManagerController = require('../controllers/api/api.login.manager.controller');
+
 //Import Validator
 const apiTaikhoanValidator = require('../middlewares/api.taikhoan.validator');
 
@@ -116,6 +118,9 @@ router.patch('/tai-khoan', apiTaikhoanController.patch);
 router.delete('/tai-khoan', apiTaikhoanController.delete);  
 router.use('/tai-khoan/exists', apiTaikhoanController.exists); 
 router.use('/tai-khoan/types', apiTaikhoanController.types); 
+
+//Routers for LoginManager
+router.use('/login', apiLoginManagerController.login);  
 
 //Module export
 module.exports = router;
