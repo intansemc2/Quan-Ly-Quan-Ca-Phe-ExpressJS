@@ -1,198 +1,19 @@
 const fs = require('fs');
 const path = require('path');
 
-function capitalize(input) {
-    return input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
-}
-function capitalizeFirst(input) {
-    return input.charAt(0).toUpperCase() + input.slice(1);
-}
-function lowercaseFirst(input) {
-    return input.charAt(0).toLowerCase() + input.slice(1);
-}
-function convertTableNameToSqlProperty(name) {
-    return name.toLowerCase();
-}
-function convertNameToSqlProperty(name) {
-    return name.toUpperCase();
-}
-function convertNameToJSClass(name) {
-    return name
-        .toLowerCase()
-        .split('_')
-        .map((item) => capitalizeFirst(item))
-        .join('');
-}
-function convertNameToJSProperty(name) {
-    return lowercaseFirst(
-        name
-            .toLowerCase()
-            .split('_')
-            .map((item) => capitalizeFirst(item))
-            .join('')
-    );
-}
-function copyTextareaToClipboard(textareaID) {
-    let textArea = document.getElementById(textareaID);
-    textArea.focus();
-    textArea.select();
+const tableData = require('./tableData');
+const ccfs = require('./createCodeFunctions');
 
-    try {
-        let successful = document.execCommand('copy');
-        let msg = successful ? 'successful' : 'unsuccessful';
-        alert('Copying text command was ' + msg);
-    } catch (err) {
-        alert('Oops, unable to copy' + err);
-    }
-}
-
-let datas = [
-    {
-        classname: 'ban',
-        properties: [
-            { name: 'ID_BAN', type: 'int', speak: 'id bàn' },
-            { name: 'TEN', type: 'String', speak: 'tên bàn' },
-            { name: 'GHI_CHU', type: 'int', speak: 'loại bàn' },
-        ],
-        keys: ['ID_BAN'],
-    },
-    {
-        classname: 'cthd',
-        properties: [
-            { name: 'ID_HOA_DON', type: 'int', speak: 'id hóa đơn' },
-            { name: 'ID_SAN_PHAM', type: 'int', speak: 'id sản phẩm' },
-            { name: 'SO_LUONG', type: 'int', speak: 'số lượng' },
-            { name: 'DON_GIA', type: 'int', speak: 'đơn giá' },
-            { name: 'DIEM_TICH_LUY', type: 'int', speak: 'điểm tích lũy' },
-        ],
-        keys: ['ID_HOA_DON', 'ID_SAN_PHAM'],
-    },
-    {
-        classname: 'ctkm',
-        properties: [
-            { name: 'ID_KHUYEN_MAI', type: 'int', speak: 'id khuyến mãi' },
-            { name: 'ID_SAN_PHAM', type: 'int', speak: 'id sản phẩm' },
-            { name: 'SO_LUONG', type: 'int', speak: 'số lượng' },
-            { name: 'DON_GIA', type: 'int', speak: 'đơn giá' },
-            { name: 'DIEM_TICH_LUY', type: 'int', speak: 'điểm tích lũy' },
-        ],
-        keys: ['ID_KHUYEN_MAI', 'ID_SAN_PHAM'],
-    },
-    {
-        classname: 'dat_ban',
-        properties: [
-            { name: 'ID_KHACH_HANG', type: 'int', speak: 'id khách hàng ' },
-            { name: 'ID_BAN', type: 'int', speak: 'id bàn' },
-            { name: 'THOI_GIAN_LAP', type: 'datetime', speak: 'thời gian lập' },
-            { name: 'THOI_GIAN_NHAN', type: 'datetime', speak: 'thời gian nhận' },
-            { name: 'GHI_CHU', type: 'String', speak: 'ghi chú' },
-        ],
-        keys: ['username', 'ID_BAN', 'ID_KHACH_HANG', 'THOI_GIAN_LAP'],
-    },
-    {
-        classname: 'hoa_don',
-        properties: [
-            { name: 'ID_HOA_DON', type: 'int', speak: 'id hóa đơn' },
-            { name: 'ID_KHACH_HANG', type: 'int', speak: 'id khách hàng' },
-            { name: 'ID_BAN', type: 'int', speak: 'id bàn' },
-            { name: 'ID_NHAN_VIEN', type: 'int', speak: 'id nhân viên' },
-            { name: 'THOI_GIAN_LAP', type: 'datetime', speak: 'thời gian' },
-        ],
-        keys: ['ID_HOA_DON'],
-    },
-    {
-        classname: 'thanh_toan_hoa_don',
-        properties: [
-            { name: 'ID_HOA_DON', type: 'int', speak: 'id hóa đơn' },
-            { name: 'ID_TAI_KHOAN_THANH_TOAN', type: 'int', speak: 'id tài khoản thanh toán' },
-            { name: 'THOI_GIAN_THANH_TOAN', type: 'datetime', speak: 'thời gian thanh toán' },
-            { name: 'PHAN_TRAM_TICH_LUY', type: 'float', speak: 'phần trăm tích lũy' },
-            { name: 'SO_LUONG_DIEM_DOI', type: 'int', speak: 'số lượng điểm đổi' },
-            { name: 'TY_GIA_DIEM_DOI', type: 'float', speak: 'tỷ giá quy đổi' },
-        ],
-        keys: ['ID_HOA_DON', 'ID_TAI_KHOAN_THANH_TOAN', 'THOI_GIAN_THANH_TOAN'],
-    },
-    {
-        classname: 'khach_hang',
-        properties: [
-            { name: 'ID_KHACH_HANG', type: 'int', speak: 'id khách hàng' },
-            { name: 'TEN', type: 'String', speak: 'tên' },
-            { name: 'SDT', type: 'String', speak: 'số điện thoại' },
-            { name: 'ID_TAI_KHOAN', type: 'int', speak: 'id tài khoản' },
-            { name: 'DIEM_TICH_LUY', type: 'int', speak: 'điểm tích lũy' },
-            { name: 'EMAIL', TYPE: 'text', speak: 'email' },
-            { name: 'GOOGLE', TYPE: 'text', speak: 'google' },
-            { name: 'FACEBOOK', TYPE: 'text', speak: 'facebook' },
-        ],
-        keys: ['ID_KHACH_HANG'],
-    },
-    {
-        classname: 'khuyen_mai',
-        properties: [
-            { name: 'ID_KHUYEN_MAI', type: 'int', speak: 'id khuyến mãi' },
-            { name: 'TEN', type: 'String', speak: 'tên' },
-            { name: 'THOI_GIAN_DIEN_RA', type: 'datetime', speak: 'thời gian diễn ra' },
-            { name: 'THOI_GIAN_KET_THUC', type: 'datetime', speak: 'thời gian kết thúc' },
-        ],
-        keys: ['ID_KHUYEN_MAI'],
-    },
-    {
-        classname: 'loai_san_pham',
-        properties: [
-            { name: 'ID_LOAI_SAN_PHAM', type: 'int', speak: 'id loại sản phẩm' },
-            { name: 'TEN', type: 'String', speak: 'tên' },
-            { name: 'LINK_ANH', type: 'String', speak: 'link ảnh' },
-            { name: 'GHI_CHU', type: 'String', speak: 'ghi chú' },
-        ],
-        keys: ['ID_LOAI_SAN_PHAM'],
-    },
-    {
-        classname: 'nhan_vien',
-        properties: [
-            { name: 'ID_NHAN_VIEN', type: 'int', speak: 'id nhân viên' },
-            { name: 'TEN', type: 'String', speak: 'tên' },
-            { name: 'SDT', type: 'String', speak: 'số điện thoại' },
-            { name: 'LOAI', type: 'int', speak: 'loại' },
-            { name: 'ID_TAI_KHOAN', type: 'int', speak: 'id tài khoản' },
-            { name: 'NGAY_SINH', type: 'date', speak: 'ngày sinh' },
-            { name: 'LINK_ANH', type: 'text', speak: 'link ảnh' },
-            { name: 'EMAIL', TYPE: 'text', speak: 'email' },
-        ],
-        keys: ['ID_NHAN_VIEN'],
-    },
-    {
-        classname: 'san_pham',
-        properties: [
-            { name: 'ID_SAN_PHAM', type: 'int', speak: 'id sản phẩm' },
-            { name: 'ID_LOAI_SAN_PHAM', type: 'int', speak: 'id loại sản phẩm' },
-            { name: 'TEN', type: 'String', speak: 'tên' },
-            { name: 'GIA', type: 'int', speak: 'giá' },
-            { name: 'DIEM_TICH_LUY', type: 'int', speak: 'điểm tích lũy' },
-            { name: 'GHI_CHU', type: 'String', speak: 'ghi chú' },
-            { name: 'LINK_ANH', type: 'String', speak: 'link ảnh' },
-        ],
-        keys: ['ID_SAN_PHAM'],
-    },
-    {
-        classname: 'tai_khoan',
-        properties: [
-            { name: 'ID_TAI_KHOAN', type: 'int', speak: 'id tài khoản' },
-            { name: 'USERNAME', type: 'String', speak: 'tên đăng nhập' },
-            { name: 'PASSWORD', type: 'String', speak: 'mật khẩu' },
-            { name: 'LOAI', type: 'int', speak: 'loại' },
-        ],
-        keys: ['ID_TAI_KHOAN'],
-    },
-];
+let datas = tableData.tableData;
 
 for (let i = 0; i < datas.length; i += 1) {
     let contents = '';
     let data = datas[i];
 
     //Pre-process
-    let tablenameFile = convertNameToJSClass(data.classname).toLowerCase();
-    let tablenameClass = convertNameToJSClass(data.classname);
-    let tablenameObject = convertNameToSqlProperty(data.classname);
+    let tablenameFile = ccfs.convertNameToJSClass(data.classname).toLowerCase();
+    let tablenameClass = ccfs.convertNameToJSClass(data.classname);
+    let tablenameObject = ccfs.convertNameToSqlProperty(data.classname);
 
     let tableNotKeysProperties = data.properties.filter((item) => !data.keys.find((key) => key === item.name));
     let tableKeysProperties = data.properties.filter((item) => data.keys.find((key) => key === item.name));
@@ -224,8 +45,8 @@ if (typeof input === 'number' || typeof input === 'string') {
 }
 //Input is object
 else if (typeof input === 'object') {
-    if (input.${convertNameToJSProperty(data.keys[0])}) {
-        query += \` AND ${data.keys[0]} = \${mysql.escape(input.${convertNameToJSProperty(data.keys[0])})} \`;
+    if (input.${ccfs.convertNameToJSProperty(data.keys[0])}) {
+        query += \` AND ${data.keys[0]} = \${mysql.escape(input.${ccfs.convertNameToJSProperty(data.keys[0])})} \`;
         if (isPrimarykeyOnly) {
             return \` WHERE 1=1 \${query}\`;
         }
@@ -233,8 +54,8 @@ else if (typeof input === 'object') {
     ${tableNotKeysProperties
         .map(
             (item) => `
-    if (input.${convertNameToJSProperty(item.name)}) {
-        query += \` AND ${item.name} = \${mysql.escape(input.${convertNameToJSProperty(item.name)})} \`;
+    if (input.${ccfs.convertNameToJSProperty(item.name)}) {
+        query += \` AND ${item.name} = \${mysql.escape(input.${ccfs.convertNameToJSProperty(item.name)})} \`;
     }
             `
         )
@@ -248,7 +69,7 @@ else if (typeof input === 'array' && input.length > 0) {
             if (typeof item === 'number' || typeof item === 'string') {
                 return \` ${data.keys[0]} = \${mysql.escape(item)} \`;
             }
-            return \` ${data.keys[0]} = \${mysql.escape(item.${convertNameToJSProperty(data.keys[0])})} \`;
+            return \` ${data.keys[0]} = \${mysql.escape(item.${ccfs.convertNameToJSProperty(data.keys[0])})} \`;
         })
         .join(' OR ');
     query += ')';
@@ -261,14 +82,14 @@ if (typeof input === 'object') {
     ${tableKeysProperties
         .map(
             (item) => `
-    if (input.${convertNameToJSProperty(item.name)}) {
-        query += \` AND ${item.name} = \${mysql.escape(input.${convertNameToJSProperty(item.name)})} \`;
+    if (input.${ccfs.convertNameToJSProperty(item.name)}) {
+        query += \` AND ${item.name} = \${mysql.escape(input.${ccfs.convertNameToJSProperty(item.name)})} \`;
     }
             `
         )
         .join('\n')}
     ${`
-    if (${tableKeysProperties.map((item) => `input.${convertNameToJSProperty(item.name)}`).join(' || ')}) {
+    if (${tableKeysProperties.map((item) => `input.${ccfs.convertNameToJSProperty(item.name)}`).join(' || ')}) {
         if (isPrimarykeyOnly) {
             return \` WHERE 1=1 \${query}\`;
         }
@@ -278,8 +99,8 @@ if (typeof input === 'object') {
     ${tableNotKeysProperties
         .map(
             (item) => `
-    if (input.${convertNameToJSProperty(item.name)}) {
-        query += \` AND ${item.name} = \${mysql.escape(input.${convertNameToJSProperty(item.name)})} \`;
+    if (input.${ccfs.convertNameToJSProperty(item.name)}) {
+        query += \` AND ${item.name} = \${mysql.escape(input.${ccfs.convertNameToJSProperty(item.name)})} \`;
     }
             `
         )
@@ -289,7 +110,7 @@ if (typeof input === 'object') {
 else if (typeof input === 'array' && input.length > 0) {
     query += ' AND (';
     query += input
-        .map((item) =>  \` ( ${tableKeysProperties.map((item) => `${item.name} = mysql.escape(item.${convertNameToJSProperty(item.name)})}`).join(' AND ')} ) \`)
+        .map((item) =>  \` ( ${tableKeysProperties.map((item) => `${item.name} = mysql.escape(item.${ccfs.convertNameToJSProperty(item.name)})}`).join(' AND ')} ) \`)
         .join(' OR ');
     query += ')';
 }
@@ -317,13 +138,13 @@ module.exports.createQueryPost = function (input) {
 ${data.properties
     .map(
         (item) => `
-if (!input.${convertNameToJSProperty(item.name)}) {
-input.${convertNameToJSProperty(item.name)} = null;
+if (!input.${ccfs.convertNameToJSProperty(item.name)}) {
+input.${ccfs.convertNameToJSProperty(item.name)} = null;
 }
     `
     )
     .join('\n')}
-let query = \`INSERT INTO ${data.classname.toLowerCase()} (${data.properties.map((item) => item.name).join(',')}) VALUES ( ${data.properties.map((item) => `\${mysql.escape(input.${convertNameToJSProperty(item.name)})}`).join(',')} )\`;
+let query = \`INSERT INTO ${data.classname.toLowerCase()} (${data.properties.map((item) => item.name).join(',')}) VALUES ( ${data.properties.map((item) => `\${mysql.escape(input.${ccfs.convertNameToJSProperty(item.name)})}`).join(',')} )\`;
 return query;
 };
 
@@ -336,8 +157,8 @@ ${
 ${tableNotKeysProperties
     .map(
         (item) => `
-if (input.${convertNameToJSProperty(item.name)}) {
-queryChanges.push(\` ${item.name} = \${mysql.escape(input.${convertNameToJSProperty(item.name)})} \`);
+if (input.${ccfs.convertNameToJSProperty(item.name)}) {
+queryChanges.push(\` ${item.name} = \${mysql.escape(input.${ccfs.convertNameToJSProperty(item.name)})} \`);
 }
         `
     )
@@ -346,22 +167,22 @@ queryChanges.push(\` ${item.name} = \${mysql.escape(input.${convertNameToJSPrope
 ${tableKeysProperties
     .map(
         (item) => `
-if (!input.old${convertNameToJSClass(item.name)}) {
-input.old${convertNameToJSClass(item.name)} = input.${convertNameToJSProperty(item.name)};
+if (!input.old${ccfs.convertNameToJSClass(item.name)}) {
+input.old${ccfs.convertNameToJSClass(item.name)} = input.${ccfs.convertNameToJSProperty(item.name)};
 }
         `
     )
     .join('\n')}
 
 query += queryChanges.join(',');
-query += module.exports.createWHEREPart({${data.properties.map((item) => `${convertNameToJSProperty(item.name)}: input.old${convertNameToJSClass(item.name)}`).join(',')}});
+query += module.exports.createWHEREPart({${data.properties.map((item) => `${ccfs.convertNameToJSProperty(item.name)}: input.old${ccfs.convertNameToJSClass(item.name)}`).join(',')}});
 `
         : `
 ${data.properties
     .map(
         (item) => `
-if (input.${convertNameToJSProperty(item.name)}) {
-queryChanges.push(\` AND ${item.name} = \${mysql.escape(input.${convertNameToJSProperty(item.name)})} \`);
+if (input.${ccfs.convertNameToJSProperty(item.name)}) {
+queryChanges.push(\` AND ${item.name} = \${mysql.escape(input.${ccfs.convertNameToJSProperty(item.name)})} \`);
 }
         `
     )
@@ -370,15 +191,15 @@ queryChanges.push(\` AND ${item.name} = \${mysql.escape(input.${convertNameToJSP
 ${tableKeysProperties
     .map(
         (item) => `
-if (!input.old${convertNameToJSClass(item.name)}) {
-input.old${convertNameToJSClass(item.name)} = input.${convertNameToJSProperty(item.name)};
+if (!input.old${ccfs.convertNameToJSClass(item.name)}) {
+input.old${ccfs.convertNameToJSClass(item.name)} = input.${ccfs.convertNameToJSProperty(item.name)};
 }
         `
     )
     .join('\n')}
 
 query += queryChanges.join(',');
-query += module.exports.createWHEREPart({${data.properties.map((item) => `${convertNameToJSProperty(item.name)}: input.old${convertNameToJSClass(item.name)}`).join(',')}});
+query += module.exports.createWHEREPart({${data.properties.map((item) => `${ccfs.convertNameToJSProperty(item.name)}: input.old${ccfs.convertNameToJSClass(item.name)}`).join(',')}});
 `
 }
 
@@ -395,7 +216,7 @@ module.exports.createQueryExists = function (input, isPrimarykeyOnly) {
 let query = \`SELECT COUNT(*) AS NUMBER_ROWS FROM ${data.classname.toLowerCase()} \`;
 
 if (isPrimarykeyOnly) {
-query += module.exports.createWHEREPart({ ${tableKeysProperties.map((item) => `${convertNameToJSProperty(item.name)}: input.${convertNameToJSProperty(item.name)}`).join(',')} }, false, true);
+query += module.exports.createWHEREPart({ ${tableKeysProperties.map((item) => `${ccfs.convertNameToJSProperty(item.name)}: input.${ccfs.convertNameToJSProperty(item.name)}`).join(',')} }, false, true);
 } else {
 query += module.exports.createWHEREPart(input, false, true);
 }
@@ -408,7 +229,7 @@ let output = new ${tablenameClass}();
 ${data.properties
     .map(
         (item) => `
-output.${convertNameToJSProperty(item.name)} = input.${item.name};
+output.${ccfs.convertNameToJSProperty(item.name)} = input.${item.name};
     `
     )
     .join('\n')}
@@ -434,7 +255,7 @@ module.exports.patch = function (input) {
 if (!input) {
 throw new Error("Missing the input");
 }
-if (${tableKeysProperties.map((item) => `!input.${convertNameToJSProperty(item.name)} && !input.old${convertNameToJSClass(item.name)}`).join(' || ')}) {
+if (${tableKeysProperties.map((item) => `!input.${ccfs.convertNameToJSProperty(item.name)} && !input.old${ccfs.convertNameToJSClass(item.name)}`).join(' || ')}) {
 throw new Error("Missing the identity properties");
 }
 return baseDatabase.patch(input, module.exports.createQueryPatch);
@@ -450,13 +271,6 @@ return baseDatabase.exists(input, module.exports.createQueryExists);
 
 `;
 
-    //Create dir
-    let dir = `${__dirname}/results`;
-    //Check dir exists
-    if (!fs.existsSync(dir)){
-        fs.mkdirSync(dir);
-    }
     //Write code to file
-    fs.writeFileSync(`${dir}/${tablenameFile}.database.js`, contents, {encoding: 'utf8'});
+    ccfs.writeStringSync(`${__dirname}/results`, `${tablenameFile}.database.js`, contents);
 }
-

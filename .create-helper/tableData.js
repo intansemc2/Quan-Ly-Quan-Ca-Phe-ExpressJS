@@ -1,0 +1,138 @@
+module.exports.tableData = [
+    {
+        classname: 'ban',
+        properties: [
+            { name: 'ID_BAN', type: 'int', speak: 'id bàn' },
+            { name: 'TEN', type: 'String', speak: 'tên bàn' },
+            { name: 'GHI_CHU', type: 'int', speak: 'loại bàn' },
+        ],
+        keys: ['ID_BAN'],
+    },
+    {
+        classname: 'cthd',
+        properties: [
+            { name: 'ID_HOA_DON', type: 'int', speak: 'id hóa đơn' },
+            { name: 'ID_SAN_PHAM', type: 'int', speak: 'id sản phẩm' },
+            { name: 'SO_LUONG', type: 'int', speak: 'số lượng' },
+            { name: 'DON_GIA', type: 'int', speak: 'đơn giá' },
+            { name: 'DIEM_TICH_LUY', type: 'int', speak: 'điểm tích lũy' },
+        ],
+        keys: ['ID_HOA_DON', 'ID_SAN_PHAM'],
+    },
+    {
+        classname: 'ctkm',
+        properties: [
+            { name: 'ID_KHUYEN_MAI', type: 'int', speak: 'id khuyến mãi' },
+            { name: 'ID_SAN_PHAM', type: 'int', speak: 'id sản phẩm' },
+            { name: 'SO_LUONG', type: 'int', speak: 'số lượng' },
+            { name: 'DON_GIA', type: 'int', speak: 'đơn giá' },
+            { name: 'DIEM_TICH_LUY', type: 'int', speak: 'điểm tích lũy' },
+        ],
+        keys: ['ID_KHUYEN_MAI', 'ID_SAN_PHAM'],
+    },
+    {
+        classname: 'dat_ban',
+        properties: [
+            { name: 'ID_KHACH_HANG', type: 'int', speak: 'id khách hàng ' },
+            { name: 'ID_BAN', type: 'int', speak: 'id bàn' },
+            { name: 'THOI_GIAN_LAP', type: 'datetime', speak: 'thời gian lập' },
+            { name: 'THOI_GIAN_NHAN', type: 'datetime', speak: 'thời gian nhận' },
+            { name: 'GHI_CHU', type: 'String', speak: 'ghi chú' },
+        ],
+        keys: ['username', 'ID_BAN', 'ID_KHACH_HANG', 'THOI_GIAN_LAP'],
+    },
+    {
+        classname: 'hoa_don',
+        properties: [
+            { name: 'ID_HOA_DON', type: 'int', speak: 'id hóa đơn' },
+            { name: 'ID_KHACH_HANG', type: 'int', speak: 'id khách hàng' },
+            { name: 'ID_BAN', type: 'int', speak: 'id bàn' },
+            { name: 'ID_NHAN_VIEN', type: 'int', speak: 'id nhân viên' },
+            { name: 'THOI_GIAN_LAP', type: 'datetime', speak: 'thời gian' },
+        ],
+        keys: ['ID_HOA_DON'],
+    },
+    {
+        classname: 'thanh_toan_hoa_don',
+        properties: [
+            { name: 'ID_HOA_DON', type: 'int', speak: 'id hóa đơn' },
+            { name: 'ID_TAI_KHOAN_THANH_TOAN', type: 'int', speak: 'id tài khoản thanh toán' },
+            { name: 'THOI_GIAN_THANH_TOAN', type: 'datetime', speak: 'thời gian thanh toán' },
+            { name: 'PHAN_TRAM_TICH_LUY', type: 'float', speak: 'phần trăm tích lũy' },
+            { name: 'SO_LUONG_DIEM_DOI', type: 'int', speak: 'số lượng điểm đổi' },
+            { name: 'TY_GIA_DIEM_DOI', type: 'float', speak: 'tỷ giá quy đổi' },
+        ],
+        keys: ['ID_HOA_DON', 'ID_TAI_KHOAN_THANH_TOAN', 'THOI_GIAN_THANH_TOAN'],
+    },
+    {
+        classname: 'khach_hang',
+        properties: [
+            { name: 'ID_KHACH_HANG', type: 'int', speak: 'id khách hàng' },
+            { name: 'TEN', type: 'String', speak: 'tên' },
+            { name: 'SDT', type: 'String', speak: 'số điện thoại' },
+            { name: 'ID_TAI_KHOAN', type: 'int', speak: 'id tài khoản' },
+            { name: 'DIEM_TICH_LUY', type: 'int', speak: 'điểm tích lũy' },
+            { name: 'EMAIL', TYPE: 'text', speak: 'email' },
+            { name: 'GOOGLE', TYPE: 'text', speak: 'google' },
+            { name: 'FACEBOOK', TYPE: 'text', speak: 'facebook' },
+        ],
+        keys: ['ID_KHACH_HANG'],
+    },
+    {
+        classname: 'khuyen_mai',
+        properties: [
+            { name: 'ID_KHUYEN_MAI', type: 'int', speak: 'id khuyến mãi' },
+            { name: 'TEN', type: 'String', speak: 'tên' },
+            { name: 'THOI_GIAN_DIEN_RA', type: 'datetime', speak: 'thời gian diễn ra' },
+            { name: 'THOI_GIAN_KET_THUC', type: 'datetime', speak: 'thời gian kết thúc' },
+        ],
+        keys: ['ID_KHUYEN_MAI'],
+    },
+    {
+        classname: 'loai_san_pham',
+        properties: [
+            { name: 'ID_LOAI_SAN_PHAM', type: 'int', speak: 'id loại sản phẩm' },
+            { name: 'TEN', type: 'String', speak: 'tên' },
+            { name: 'LINK_ANH', type: 'String', speak: 'link ảnh' },
+            { name: 'GHI_CHU', type: 'String', speak: 'ghi chú' },
+        ],
+        keys: ['ID_LOAI_SAN_PHAM'],
+    },
+    {
+        classname: 'nhan_vien',
+        properties: [
+            { name: 'ID_NHAN_VIEN', type: 'int', speak: 'id nhân viên' },
+            { name: 'TEN', type: 'String', speak: 'tên' },
+            { name: 'SDT', type: 'String', speak: 'số điện thoại' },
+            { name: 'LOAI', type: 'int', speak: 'loại' },
+            { name: 'ID_TAI_KHOAN', type: 'int', speak: 'id tài khoản' },
+            { name: 'NGAY_SINH', type: 'date', speak: 'ngày sinh' },
+            { name: 'LINK_ANH', type: 'text', speak: 'link ảnh' },
+            { name: 'EMAIL', TYPE: 'text', speak: 'email' },
+        ],
+        keys: ['ID_NHAN_VIEN'],
+    },
+    {
+        classname: 'san_pham',
+        properties: [
+            { name: 'ID_SAN_PHAM', type: 'int', speak: 'id sản phẩm' },
+            { name: 'ID_LOAI_SAN_PHAM', type: 'int', speak: 'id loại sản phẩm' },
+            { name: 'TEN', type: 'String', speak: 'tên' },
+            { name: 'GIA', type: 'int', speak: 'giá' },
+            { name: 'DIEM_TICH_LUY', type: 'int', speak: 'điểm tích lũy' },
+            { name: 'GHI_CHU', type: 'String', speak: 'ghi chú' },
+            { name: 'LINK_ANH', type: 'String', speak: 'link ảnh' },
+        ],
+        keys: ['ID_SAN_PHAM'],
+    },
+    {
+        classname: 'tai_khoan',
+        properties: [
+            { name: 'ID_TAI_KHOAN', type: 'int', speak: 'id tài khoản' },
+            { name: 'USERNAME', type: 'String', speak: 'tên đăng nhập' },
+            { name: 'PASSWORD', type: 'String', speak: 'mật khẩu' },
+            { name: 'LOAI', type: 'int', speak: 'loại' },
+        ],
+        keys: ['ID_TAI_KHOAN'],
+    },
+];
