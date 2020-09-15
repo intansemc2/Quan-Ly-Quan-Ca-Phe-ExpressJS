@@ -10,26 +10,24 @@ module.exports.login = async function (request, response, next) {
         request.headers.accept = 'application/json';
         let input = request.body;
 
-        if (input) {
+        if (input && input.username && input.password) {
             let username = input.username;
             let password = input.password;
+            let rememberLogin = input.rememberLogin;
 
-            if (username && password) {
-                let taikhoans = await taikhoanDatabase.get(input);
+            let taikhoans = await taikhoanDatabase.get({username: username, password: password});
 
-                if (taikhoans && taikhoans[0]) {
-                    response.send({result: 'success', taikhoan: taikhoans[0]});
+            if (taikhoans && taikhoans[0]) {              
+                if (rememberLogin) {
+                    response.cookie("loginInfo", JSON.stringify(taikhoans[0]), {signed: true});
                 }
-                else {
-                    response.send({result: 'fail', message: 'Tên đăng nhập hoặc mật khẩu không hợp lệ '});
-                }
+
+                response.send({ result: 'success', taikhoan: taikhoans[0] });
+            } else {
+                response.send({ result: 'fail', message: 'Tên đăng nhập hoặc mật khẩu không hợp lệ ' });
             }
-            else {
-                response.send({result: 'fail', message: 'Thiếu Tên đăng nhập hoặc mật khẩu '});
-            }
-        }
-        else {
-            response.send({result: 'fail', message: 'Thiếu Input '});
+        } else {
+            response.send({ result: 'fail', message: 'Thiếu Tên đăng nhập hoặc mật khẩu ' });
         }
 
         next();
@@ -38,3 +36,10 @@ module.exports.login = async function (request, response, next) {
     }
 };
 
+module.exports.logout = async function (request, response, next) {
+    try {
+        next();
+    } catch (error) {
+        errorController.handle500(error, request, response, next);
+    }
+};
