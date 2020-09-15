@@ -38,7 +38,7 @@ module.exports.convertTableNameToFolderName = (tableName) => {
 module.exports.writeStringSync = (path, filename, content) => {
     //Check dir exists
     if (!fs.existsSync(path)) {
-        fs.mkdirSync(path);
+        fs.mkdirSync(path, {recursive: true});
     }
     //Write code to file
     fs.writeFileSync(`${path}/${filename}`, content, { encoding: 'utf8' });

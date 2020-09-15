@@ -1,6 +1,7 @@
 module.exports.tableData = [
     {
         classname: 'ban',
+        speak: 'bàn',
         properties: [
             { name: 'ID_BAN', type: 'int', speak: 'id bàn' },
             { name: 'TEN', type: 'String', speak: 'tên bàn' },
@@ -10,6 +11,7 @@ module.exports.tableData = [
     },
     {
         classname: 'cthd',
+        speak: 'chi tiết hóa đơn',
         properties: [
             { name: 'ID_HOA_DON', type: 'int', speak: 'id hóa đơn' },
             { name: 'ID_SAN_PHAM', type: 'int', speak: 'id sản phẩm' },
@@ -21,6 +23,7 @@ module.exports.tableData = [
     },
     {
         classname: 'ctkm',
+        speak: 'chi tiết khuyến mãi',
         properties: [
             { name: 'ID_KHUYEN_MAI', type: 'int', speak: 'id khuyến mãi' },
             { name: 'ID_SAN_PHAM', type: 'int', speak: 'id sản phẩm' },
@@ -32,6 +35,7 @@ module.exports.tableData = [
     },
     {
         classname: 'dat_ban',
+        speak: 'đặt bàn',
         properties: [
             { name: 'ID_KHACH_HANG', type: 'int', speak: 'id khách hàng ' },
             { name: 'ID_BAN', type: 'int', speak: 'id bàn' },
@@ -43,6 +47,7 @@ module.exports.tableData = [
     },
     {
         classname: 'hoa_don',
+        speak: 'hóa đơn',
         properties: [
             { name: 'ID_HOA_DON', type: 'int', speak: 'id hóa đơn' },
             { name: 'ID_KHACH_HANG', type: 'int', speak: 'id khách hàng' },
@@ -54,6 +59,7 @@ module.exports.tableData = [
     },
     {
         classname: 'thanh_toan_hoa_don',
+        speak: 'thanh toán hóa đơn',
         properties: [
             { name: 'ID_HOA_DON', type: 'int', speak: 'id hóa đơn' },
             { name: 'ID_TAI_KHOAN_THANH_TOAN', type: 'int', speak: 'id tài khoản thanh toán' },
@@ -66,6 +72,7 @@ module.exports.tableData = [
     },
     {
         classname: 'khach_hang',
+        speak: 'khách hàng',
         properties: [
             { name: 'ID_KHACH_HANG', type: 'int', speak: 'id khách hàng' },
             { name: 'TEN', type: 'String', speak: 'tên' },
@@ -80,6 +87,7 @@ module.exports.tableData = [
     },
     {
         classname: 'khuyen_mai',
+        speak: 'khuyến mãi',
         properties: [
             { name: 'ID_KHUYEN_MAI', type: 'int', speak: 'id khuyến mãi' },
             { name: 'TEN', type: 'String', speak: 'tên' },
@@ -90,6 +98,7 @@ module.exports.tableData = [
     },
     {
         classname: 'loai_san_pham',
+        speak: 'loại sản phẩm',
         properties: [
             { name: 'ID_LOAI_SAN_PHAM', type: 'int', speak: 'id loại sản phẩm' },
             { name: 'TEN', type: 'String', speak: 'tên' },
@@ -100,6 +109,7 @@ module.exports.tableData = [
     },
     {
         classname: 'nhan_vien',
+        speak: 'nhân viên',
         properties: [
             { name: 'ID_NHAN_VIEN', type: 'int', speak: 'id nhân viên' },
             { name: 'TEN', type: 'String', speak: 'tên' },
@@ -114,6 +124,7 @@ module.exports.tableData = [
     },
     {
         classname: 'san_pham',
+        speak: 'sản phẩm',
         properties: [
             { name: 'ID_SAN_PHAM', type: 'int', speak: 'id sản phẩm' },
             { name: 'ID_LOAI_SAN_PHAM', type: 'int', speak: 'id loại sản phẩm' },
@@ -127,6 +138,7 @@ module.exports.tableData = [
     },
     {
         classname: 'tai_khoan',
+        speak: 'tài khoản',
         properties: [
             { name: 'ID_TAI_KHOAN', type: 'int', speak: 'id tài khoản' },
             { name: 'USERNAME', type: 'String', speak: 'tên đăng nhập' },
