@@ -22,6 +22,7 @@ for (let i = 0; i < datas.length; i += 1) {
 
     //Views
     //Create content
+    contents = '';
     contents += `
     extends ../layouts/_layout_main_bootstrap
 
@@ -116,6 +117,48 @@ ${data.properties.map((item) => `                                               
     
 `;
 
-    //Write code to file
     ccfs.writeStringSync(`${__dirname}/results/views/admins`, `${forderName}.js`, contents);
+
+    //Create edit
+    contents = '';
+    contents += `
+// Model sửa ${data.speak}
+#modelSuaTaiKhoan.modal.fade(tabindex='-1', role='dialog', aria-labelledby='ModelSuaTaiKhoan aria-labelledby', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+        form.modal-content
+            .modal-header
+                h5.modal-title Sửa ${data.speak} 
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+            .modal-body                
+                .alerts
+                    // Các alert của phần này
+                input.idTaiKhoan(type='hidden')
+                .form-group
+                    label.small.mb-1(for='suaTaiKhoanUsername') Tên đăng nhập  
+                    input#suaTaiKhoanUsername.form-control.py-4.username(type='text', placeholder='Nhập tên đăng nhập của bạn')
+                .form-group
+                    label.small.mb-1(for='suaTaiKhoanPassword') Mật khẩu 
+                    input#suaTaiKhoanPassword.form-control.py-4.password(type='password', placeholder='Nhập mật khẩu của bạn')
+                .form-group
+                    label.small.mb-1(for='suaTaiKhoanConfirmPassword') Nhập lại mật khẩu 
+                    input#suaTaiKhoanConfirmPassword.form-control.py-4.re_password(type='password', placeholder='Nhập lại mật khẩu của bạn')
+                .form-group
+                    label.small.mb-1(for='suaTaiKhoanLoaiTaiKhoan') Loại ${data.speak} 
+                    select#suaTaiKhoanLoaiTaiKhoan.form-control.loai
+            .modal-footer
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa Tài khoản')
+                input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')
+`;
+
+    ccfs.writeStringSync(`${__dirname}/results/views/admins`, `${forderName}.js`, contents);
+
+    //Create Add
+    contents = '';
+    contents += `
+
+    `;
+
+    ccfs.writeStringSync(`${__dirname}/results/views/admins`, `${forderName}.js`, contents);
+
 }
