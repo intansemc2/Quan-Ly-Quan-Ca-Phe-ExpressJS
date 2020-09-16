@@ -1,5 +1,6 @@
 const fs = require('fs');
 
+//Convert string
 module.exports.capitalize = (input) => {
     return input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
 };
@@ -35,6 +36,19 @@ module.exports.convertTableNameToFolderName = (tableName) => {
     return tableName.replace(/_/g, '-').toLowerCase();
 };
 
+//Create form
+module.exports.createFormInputElement = (id, label, type, classId, otherClasses, otherAttributes, firstEachLine) => {
+    let extraClass = otherClasses ? `${otherClasses.join(' ')}` : '';
+    let extraAttribute = otherAttributes ? `, ${otherAttributes.join(', ')}` : '';
+    let extraSpaces = Array(firstEachLine).fill(' ').join('');
+    return `
+${extraSpaces}.form-group
+${extraSpaces}    label.small.mb-1(for='${id}') ${label}  
+${extraSpaces}    input#${id}.${classId}(type='${type}', class='form-control py-4 ${extraClass}' ${extraAttribute})
+`;
+}
+
+//Write to file
 module.exports.writeStringSync = (path, filename, content) => {
     //Check dir exists
     if (!fs.existsSync(path)) {

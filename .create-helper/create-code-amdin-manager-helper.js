@@ -123,7 +123,7 @@ ${data.properties.map((item) => `                                               
     contents = '';
     contents += `
 // Model sửa ${data.speak}
-#modelSuaTaiKhoan.modal.fade(tabindex='-1', role='dialog', aria-labelledby='ModelSuaTaiKhoan aria-labelledby', aria-hidden='true')
+#modelSua${tablenameClass}.modal.fade(tabindex='-1', role='dialog', aria-labelledby='ModelSua${tablenameClass} aria-labelledby', aria-hidden='true')
     .modal-dialog.modal-dialog-centered(role='document')
         form.modal-content
             .modal-header
@@ -133,32 +133,57 @@ ${data.properties.map((item) => `                                               
             .modal-body                
                 .alerts
                     // Các alert của phần này
-                input.idTaiKhoan(type='hidden')
+                input.id${tablenameClass}(type='hidden')
                 .form-group
-                    label.small.mb-1(for='suaTaiKhoanUsername') Tên đăng nhập  
-                    input#suaTaiKhoanUsername.form-control.py-4.username(type='text', placeholder='Nhập tên đăng nhập của bạn')
+                    label.small.mb-1(for='sua${tablenameClass}Username') Tên đăng nhập  
+                    input#sua${tablenameClass}Username.form-control.py-4.username(type='text', placeholder='Nhập tên đăng nhập của bạn')
                 .form-group
-                    label.small.mb-1(for='suaTaiKhoanPassword') Mật khẩu 
-                    input#suaTaiKhoanPassword.form-control.py-4.password(type='password', placeholder='Nhập mật khẩu của bạn')
+                    label.small.mb-1(for='sua${tablenameClass}Password') Mật khẩu 
+                    input#sua${tablenameClass}Password.form-control.py-4.password(type='password', placeholder='Nhập mật khẩu của bạn')
                 .form-group
-                    label.small.mb-1(for='suaTaiKhoanConfirmPassword') Nhập lại mật khẩu 
-                    input#suaTaiKhoanConfirmPassword.form-control.py-4.re_password(type='password', placeholder='Nhập lại mật khẩu của bạn')
+                    label.small.mb-1(for='sua${tablenameClass}ConfirmPassword') Nhập lại mật khẩu 
+                    input#sua${tablenameClass}ConfirmPassword.form-control.py-4.re_password(type='password', placeholder='Nhập lại mật khẩu của bạn')
                 .form-group
-                    label.small.mb-1(for='suaTaiKhoanLoaiTaiKhoan') Loại ${data.speak} 
-                    select#suaTaiKhoanLoaiTaiKhoan.form-control.loai
+                    label.small.mb-1(for='sua${tablenameClass}Loai${tablenameClass}') Loại ${data.speak} 
+                    select#sua${tablenameClass}Loai${tablenameClass}.form-control.loai
             .modal-footer
                 input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa Tài khoản')
                 input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')
 `;
 
-    ccfs.writeStringSync(`${__dirname}/results/views/admins`, `${forderName}.js`, contents);
+    ccfs.writeStringSync(`${__dirname}/results/views/admins/${forderName}`, `quan-li-sua.js`, contents);
 
     //Create Add
     contents = '';
     contents += `
-
+    // Model thêm ${data.speak}
+    #modelThem${tablenameClass}.modal.fade(tabindex='-1', role='dialog', aria-labelledby='Model aria-labelledby', aria-hidden='true')
+        .modal-dialog.modal-dialog-centered(role='document')
+            form.modal-content
+                .modal-header
+                    h5.modal-title Thêm ${data.speak} 
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') &times;
+                .modal-body
+                    .alerts
+                        // Các alert của phần này
+                    .form-group
+                        label.small.mb-1(for='them${tablenameClass}Username') Tên đăng nhập 
+                        input#them${tablenameClass}Username.form-control.py-4.username(type='text', placeholder='Nhập tên đăng nhập của bạn')
+                    .form-group
+                        label.small.mb-1(for='them${tablenameClass}Password') Mật khẩu 
+                        input#them${tablenameClass}Password.form-control.py-4.password(type='password', placeholder='Nhập mật khẩu của bạn')
+                    .form-group
+                        label.small.mb-1(for='them${tablenameClass}ConfirmPassword') Nhập lại mật khẩu 
+                        input#them${tablenameClass}ConfirmPassword.form-control.py-4.re_password(type='password', placeholder='Nhập lại mật khẩu của bạn')
+                    .form-group
+                        label.small.mb-1(for='them${tablenameClass}Loai${tablenameClass}') Loại tài khản 
+                        select#them${tablenameClass}Loai${tablenameClass}.form-control.loai
+                .modal-footer
+                    input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Thêm Tài khoản')
+                    input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')
     `;
 
-    ccfs.writeStringSync(`${__dirname}/results/views/admins`, `${forderName}.js`, contents);
+    ccfs.writeStringSync(`${__dirname}/results/views/admins/${forderName}`, `quan-ly-them.js`, contents);
 
 }
