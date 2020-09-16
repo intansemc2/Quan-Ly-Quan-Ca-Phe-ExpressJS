@@ -1,21 +1,33 @@
 const fs = require('fs');
 
 //Convert string
+
+//Return: abcdef -> Abcdef
 module.exports.capitalize = (input) => {
     return input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
 };
+
+//Return: abcdEf -> AbcdEf
 module.exports.capitalizeFirst = (input) => {
     return input.charAt(0).toUpperCase() + input.slice(1);
 };
+
+//Return: ABCDEF -> aBCDEF
 module.exports.lowercaseFirst = (input) => {
     return input.charAt(0).toLowerCase() + input.slice(1);
 };
+
+//Return: ABCdef -> abcdef
 module.exports.convertTableNameToSqlProperty = (name) => {
     return name.toLowerCase();
 };
+
+//Return: ABCdef -> ABCDEF
 module.exports.convertNameToSqlProperty = (name) => {
     return name.toUpperCase();
 };
+
+//Return: ABC_DEF -> AbcDef
 module.exports.convertNameToJSClass = (name) => {
     return name
         .toLowerCase()
@@ -23,6 +35,8 @@ module.exports.convertNameToJSClass = (name) => {
         .map((item) => (module.exports.capitalizeFirst(item)))
         .join('');
 };
+
+//Return: ABC_DEF -> abcDef
 module.exports.convertNameToJSProperty = (name) => {
     return module.exports.lowercaseFirst(
         name
@@ -32,12 +46,16 @@ module.exports.convertNameToJSProperty = (name) => {
             .join('')
     );
 };
+
+//Return: ABC_DEF -> abcdef
 module.exports.convertNameToJSId = (name) => {
     return name        
         .split('_')
         .join('')
         .toLowerCase();
 };
+
+//Return: ABC_DEF -> abc-def
 module.exports.convertTableNameToFolderName = (tableName) => {
     return tableName.replace(/_/g, '-').toLowerCase();
 };

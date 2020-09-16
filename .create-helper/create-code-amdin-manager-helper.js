@@ -157,7 +157,7 @@ ${tableNotKeysProperties.map(item => ccfs.createFormInputElement(
 
     ccfs.writeStringSync(`${__dirname}/results/views/admins/${forderName}`, `quan-li-sua.js`, contents);
 
-    //Create Add
+    //Create add
     contents = '';
     contents += `
     // Model thêm ${data.speak}
@@ -194,5 +194,152 @@ ${tableNotKeysProperties.map(item => ccfs.createFormInputElement(
 
     ccfs.writeStringSync(`${__dirname}/results/views/admins/${forderName}`, `quan-ly-them.js`, contents);
 
-    //
+    //Javascript
+    //Create main.js
+    contents = '';
+    contents += `
+\$(document).ready(function () {
+    //Initialize Table
+    tableQuanLy${tablenameClass} = \$('#tableQuanLy${tablenameClass}').DataTable({
+        columnDefs: [
+            {
+                targets: 0,
+                render: function (data, type, row, meta) {
+                    let renderData = data;
+                    return \`<span class="id${tablenameClass}" data="\${data}">\${renderData}</span>\`;
+                },
+            },
+            {
+                targets: 1,
+                render: function (data, type, row, meta) {
+                    let renderData = data;
+                    return \`<span class="username" data="\${data}">\${renderData}</span>\`;
+                },
+            },
+            {
+                targets: 2,
+                render: function (data, type, row, meta) {
+                    let renderData = data;
+                    return \`<span class="password" data="\${data}">\${renderData}</span>\`;
+                },
+            },
+            {
+                targets: 3,
+                render: function (data, type, row, meta) {
+                    let typeIndex = data;
+                    let renderData = ${ccfs.convertNameToJSId(data.classname)}sTypes[typeIndex] ? ${ccfs.convertNameToJSId(data.classname)}sTypes[typeIndex] : data;
+                    return \`<span class="loai" data="\${data}">\${renderData}</span>\`;
+                },
+            },
+            {
+                targets: 4,
+                render: function (data, type, row, meta) {
+                    let ${ccfs.convertNameToJSId(data.classname)} = data;
+                    let renderData = \`
+<button type="button" class="btn btn-outline-secondary rounded-0 m-1" data-toggle="modal" data-target='#modelSua${tablenameClass}' id${tablenameClass}="\${${ccfs.convertNameToJSId(data.classname)}.id${tablenameClass}}">
+    <i class="fas fa-edit"></i>
+</button>
+
+<button type="button" class="btn btn-outline-dark rounded-0 m-1" onclick="delete${tablenameClass}RowInTable(\$(this));">
+    <i class="fas fa-trash"></i>
+</button>
+\`;
+                    return \`\${renderData}\`;
+                },
+            },
+        ],
+    });
+
+    //Initialize Button Events
+    \$('#refreshAll').click(function () {
+        refreshPageData();
+        swal({ text: 'Làm mới thành công ', icon: 'success'});
+    });
+
+    //Events
+
+    //Initialize final
+    refreshPageData();
+});
+
+//Functions
+//Get data of ${ccfs.convertNameToJSId(data.classname)}Types
+function get${tablenameClass}Types() {
+    return new Promise(function (resolve, reject) {
+        \$.post('/api/tai-khoan/types', {}, function (data, status, xhr) {
+            resolve(data);
+        });
+    });
+}
+
+//Get ${ccfs.convertNameToJSId(data.classname)}s
+function get${tablenameClass}s() {
+    return new Promise(function (resolve, reject) {
+        \$.get('/api/tai-khoan', {}, function (data, status, xhr) {
+            resolve(data);
+        });
+    });
+}
+
+//Refresh data in table with data in ${ccfs.convertNameToJSId(data.classname)}s
+function refreshTableData() {
+    tableQuanLy${tablenameClass}.clear();
+    for (let ${ccfs.convertNameToJSId(data.classname)} of ${ccfs.convertNameToJSId(data.classname)}s) {
+        tableQuanLy${tablenameClass}.row.add([${ccfs.convertNameToJSId(data.classname)}.id${tablenameClass}, ${ccfs.convertNameToJSId(data.classname)}.username, ${ccfs.convertNameToJSId(data.classname)}.password, ${ccfs.convertNameToJSId(data.classname)}.loai, ${ccfs.convertNameToJSId(data.classname)}]);
+    }
+    tableQuanLy${tablenameClass}.draw();
+}
+
+//Refresh all data in page
+async function refreshPageData() {
+    ${ccfs.convertNameToJSId(data.classname)}sTypes = await get${tablenameClass}Types();
+    refreshDataInModelThem${tablenameClass}();
+    refreshDataInModelSua${tablenameClass}();
+
+    ${ccfs.convertNameToJSId(data.classname)}s = await get${tablenameClass}s();
+    refreshTableData();
+}    
+`;
+
+    ccfs.writeStringSync(`${__dirname}/results/publics/javascripts/admins/${forderName}`, `main.js`, contents);
+
+    //Create sua.js
+    contents = '';
+    contents += `
+
+`;
+
+    ccfs.writeStringSync(`${__dirname}/results/publics/javascripts/admins/${forderName}`, `sua.js`, contents);
+
+    //Create table-functions.js
+    contents = '';
+    contents += `
+
+`;
+
+    ccfs.writeStringSync(`${__dirname}/results/publics/javascripts/admins/${forderName}`, `table-functions.js`, contents);
+
+    //Create them.js
+    contents = '';
+    contents += `
+
+`;
+
+    ccfs.writeStringSync(`${__dirname}/results/publics/javascripts/admins/${forderName}`, `them.js`, contents);
+
+    //Create variables.js
+    contents = '';
+    contents += `
+
+`;
+
+    ccfs.writeStringSync(`${__dirname}/results/publics/javascripts/admins/${forderName}`, `variables.js`, contents);
+
+    //Create xoa.js
+    contents = '';
+    contents += `
+
+`;
+
+    ccfs.writeStringSync(`${__dirname}/results/publics/javascripts/admins/${forderName}`, `xoa.js`, contents);
 }
