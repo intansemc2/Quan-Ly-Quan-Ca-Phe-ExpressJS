@@ -134,20 +134,24 @@ ${data.properties.map((item) => `                                               
                 .alerts
                     // Các alert của phần này
                 input.id${tablenameClass}(type='hidden')
-                .form-group
-                    label.small.mb-1(for='sua${tablenameClass}Username') Tên đăng nhập  
-                    input#sua${tablenameClass}Username.form-control.py-4.username(type='text', placeholder='Nhập tên đăng nhập của bạn')
-                .form-group
-                    label.small.mb-1(for='sua${tablenameClass}Password') Mật khẩu 
-                    input#sua${tablenameClass}Password.form-control.py-4.password(type='password', placeholder='Nhập mật khẩu của bạn')
-                .form-group
-                    label.small.mb-1(for='sua${tablenameClass}ConfirmPassword') Nhập lại mật khẩu 
-                    input#sua${tablenameClass}ConfirmPassword.form-control.py-4.re_password(type='password', placeholder='Nhập lại mật khẩu của bạn')
-                .form-group
-                    label.small.mb-1(for='sua${tablenameClass}Loai${tablenameClass}') Loại ${data.speak} 
-                    select#sua${tablenameClass}Loai${tablenameClass}.form-control.loai
+${tableKeysProperties.map(item => ccfs.createFormInputElement(
+    ccfs.convertNameToJSId(item.name),
+    ccfs.capitalizeFirst(item.speak),
+    item.type.toLowerCase(),
+    [ccfs.convertNameToJSId(item.name).toLowerCase()],
+    [`required='true'`, `placeholder='Nhập ${ccfs.capitalizeFirst(item.speak)}'`],
+    4*4
+)).join('')}
+${tableNotKeysProperties.map(item => ccfs.createFormInputElement(
+    ccfs.convertNameToJSId(item.name),
+    ccfs.capitalizeFirst(item.speak),
+    item.type.toLowerCase(),
+    [ccfs.convertNameToJSId(item.name).toLowerCase()],
+    [`placeholder='Nhập ${ccfs.capitalizeFirst(item.speak)}'`],
+    4*4
+)).join('')}
             .modal-footer
-                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa Tài khoản')
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa ${ccfs.capitalizeFirst(data.speak)}')
                 input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')
 `;
 
@@ -167,23 +171,28 @@ ${data.properties.map((item) => `                                               
                 .modal-body
                     .alerts
                         // Các alert của phần này
-                    .form-group
-                        label.small.mb-1(for='them${tablenameClass}Username') Tên đăng nhập 
-                        input#them${tablenameClass}Username.form-control.py-4.username(type='text', placeholder='Nhập tên đăng nhập của bạn')
-                    .form-group
-                        label.small.mb-1(for='them${tablenameClass}Password') Mật khẩu 
-                        input#them${tablenameClass}Password.form-control.py-4.password(type='password', placeholder='Nhập mật khẩu của bạn')
-                    .form-group
-                        label.small.mb-1(for='them${tablenameClass}ConfirmPassword') Nhập lại mật khẩu 
-                        input#them${tablenameClass}ConfirmPassword.form-control.py-4.re_password(type='password', placeholder='Nhập lại mật khẩu của bạn')
-                    .form-group
-                        label.small.mb-1(for='them${tablenameClass}Loai${tablenameClass}') Loại tài khản 
-                        select#them${tablenameClass}Loai${tablenameClass}.form-control.loai
+${tableKeysProperties.map(item => ccfs.createFormInputElement(
+    ccfs.convertNameToJSId(item.name),
+    ccfs.capitalizeFirst(item.speak),
+    item.type.toLowerCase(),
+    [ccfs.convertNameToJSId(item.name).toLowerCase()],
+    [`required='true'`, `placeholder='Nhập ${ccfs.capitalizeFirst(item.speak)}'`],
+    4*4
+)).join('')}
+${tableNotKeysProperties.map(item => ccfs.createFormInputElement(
+    ccfs.convertNameToJSId(item.name),
+    ccfs.capitalizeFirst(item.speak),
+    item.type.toLowerCase(),
+    [ccfs.convertNameToJSId(item.name).toLowerCase()],
+    [`placeholder='Nhập ${ccfs.capitalizeFirst(item.speak)}'`],
+    4*4
+)).join('')}
                 .modal-footer
-                    input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Thêm Tài khoản')
+                    input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Thêm ${ccfs.capitalizeFirst(data.speak)}')
                     input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')
-    `;
+`;
 
     ccfs.writeStringSync(`${__dirname}/results/views/admins/${forderName}`, `quan-ly-them.js`, contents);
 
+    //
 }
