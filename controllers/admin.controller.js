@@ -39,7 +39,7 @@ module.exports.quanlyban = async function (request, response, next) {
 module.exports.quanlycthd = async function (request, response, next) {
     try {
         response.render('admins/quan-ly-cthd', {
-            sidebarActiveQuanlytaikhoan: 'active',
+            sidebarActiveQuanlycthd: 'active',
             breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý chi tiết hóa đơn', link: '/admin/quan-ly-cthd', isActive: 'active' }],
             taikhoan: new TaiKhoan(1, 'admin')
         });
@@ -52,7 +52,7 @@ module.exports.quanlycthd = async function (request, response, next) {
 module.exports.quanlyctkm = async function (request, response, next) {
     try {
         response.render('admins/quan-ly-ctkm', {
-            sidebarActiveQuanlytaikhoan: 'active',
+            sidebarActiveQuanlyctkm: 'active',
             breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý chi tiết khuyến mãi', link: '/admin/quan-ly-ctkm', isActive: 'active' }],
             taikhoan: new TaiKhoan(1, 'admin')
         });
@@ -65,7 +65,7 @@ module.exports.quanlyctkm = async function (request, response, next) {
 module.exports.quanlydatban = async function (request, response, next) {
     try {
         response.render('admins/quan-ly-dat-ban', {
-            sidebarActiveQuanlytaikhoan: 'active',
+            sidebarActiveQuanlydatban: 'active',
             breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý đặt bàn', link: '/admin/quan-ly-dat-ban', isActive: 'active' }],
             taikhoan: new TaiKhoan(1, 'admin')
         });
@@ -78,7 +78,7 @@ module.exports.quanlydatban = async function (request, response, next) {
 module.exports.quanlyhoadon = async function (request, response, next) {
     try {
         response.render('admins/quan-ly-hoa-don', {
-            sidebarActiveQuanlytaikhoan: 'active',
+            sidebarActiveQuanlyhoadon: 'active',
             breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý hóa đơn', link: '/admin/quan-ly-hoa-don', isActive: 'active' }],
             taikhoan: new TaiKhoan(1, 'admin')
         });
@@ -91,7 +91,7 @@ module.exports.quanlyhoadon = async function (request, response, next) {
 module.exports.quanlykhachhang = async function (request, response, next) {
     try {
         response.render('admins/quan-ly-khach-hang', {
-            sidebarActiveQuanlytaikhoan: 'active',
+            sidebarActiveQuanlykhachhang: 'active',
             breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý khách hàng', link: '/admin/quan-ly-khach-hang', isActive: 'active' }],
             taikhoan: new TaiKhoan(1, 'admin')
         });
@@ -104,7 +104,7 @@ module.exports.quanlykhachhang = async function (request, response, next) {
 module.exports.quanlykhuyenmai = async function (request, response, next) {
     try {
         response.render('admins/quan-ly-khuyen-mai', {
-            sidebarActiveQuanlytaikhoan: 'active',
+            sidebarActiveQuanlykhuyenmai: 'active',
             breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý khuyến mãi', link: '/admin/quan-ly-khuyen-mai', isActive: 'active' }],
             taikhoan: new TaiKhoan(1, 'admin')
         });
@@ -117,7 +117,7 @@ module.exports.quanlykhuyenmai = async function (request, response, next) {
 module.exports.quanlyloaisanpham = async function (request, response, next) {
     try {
         response.render('admins/quan-ly-loai-san-pham', {
-            sidebarActiveQuanlytaikhoan: 'active',
+            sidebarActiveQuanlyloaisanpham: 'active',
             breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý loại sản phẩm', link: '/admin/quan-ly-loai-san-pham', isActive: 'active' }],
             taikhoan: new TaiKhoan(1, 'admin')
         });
@@ -130,7 +130,7 @@ module.exports.quanlyloaisanpham = async function (request, response, next) {
 module.exports.quanlynhanvien = async function (request, response, next) {
     try {
         response.render('admins/quan-ly-nhan-vien', {
-            sidebarActiveQuanlytaikhoan: 'active',
+            sidebarActiveQuanlynhanvien: 'active',
             breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý nhân viên', link: '/admin/quan-ly-nhan-vien', isActive: 'active' }],
             taikhoan: new TaiKhoan(1, 'admin')
         });
@@ -143,7 +143,7 @@ module.exports.quanlynhanvien = async function (request, response, next) {
 module.exports.quanlysanpham = async function (request, response, next) {
     try {
         response.render('admins/quan-ly-san-pham', {
-            sidebarActiveQuanlytaikhoan: 'active',
+            sidebarActiveQuanlysanpham: 'active',
             breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý sản phẩm', link: '/admin/quan-ly-san-pham', isActive: 'active' }],
             taikhoan: new TaiKhoan(1, 'admin')
         });
@@ -169,7 +169,7 @@ module.exports.quanlytaikhoan = async function (request, response, next) {
 module.exports.quanlythanhtoanhoadon = async function (request, response, next) {
     try {
         response.render('admins/quan-ly-thanh-toan-hoa-don', {
-            sidebarActiveQuanlytaikhoan: 'active',
+            sidebarActiveQuanlythanhtoanhoadon: 'active',
             breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý thanh toán hóa đơn', link: '/admin/quan-ly-thanh-toan-hoa-don', isActive: 'active' }],
             taikhoan: new TaiKhoan(1, 'admin')
         });
