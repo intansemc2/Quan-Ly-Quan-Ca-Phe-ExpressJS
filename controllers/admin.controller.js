@@ -26,7 +26,7 @@ module.exports.tongquat = async function (request, response, next) {
 module.exports.quanlyban = async function (request, response, next) {
     try {
         response.render('admins/quan-ly-ban', {
-            sidebarActiveQuanlytaikhoan: 'active',
+            sidebarActiveQuanlyban: 'active',
             breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý bàn', link: '/admin/quan-ly-ban', isActive: 'active' }],
             taikhoan: new TaiKhoan(1, 'admin')
         });

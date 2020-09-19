@@ -5,7 +5,7 @@ module.exports.tableData = [
         properties: [
             { name: 'ID_BAN', type: 'int', speak: 'id bàn' },
             { name: 'TEN', type: 'string', speak: 'tên bàn' },
-            { name: 'GHI_CHU', type: 'int', speak: 'loại bàn' },
+            { name: 'GHI_CHU', type: 'int', speak: 'ghi chú' },
         ],
         keys: ['ID_BAN'],
     },

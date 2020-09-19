@@ -82,10 +82,12 @@ block content
                                 table#tableQuanLy${tablenameClass}.table.table-bordered.table-striped.table-hover(width='100%', cellspacing='0')
                                     thead
                                         tr
-${data.properties.map((item) => `                                                th ${ccfs.capitalizeFirst(item.speak)}`).join('\n')}
+${data.properties.map((item) => `                                            th ${ccfs.capitalizeFirst(item.speak)}`).join('\n')}
+                                            th Thao tác 
                                     tfoot
                                         tr
-${data.properties.map((item) => `                                                th ${ccfs.capitalizeFirst(item.speak)}`).join('\n')} 
+${data.properties.map((item) => `                                            th ${ccfs.capitalizeFirst(item.speak)}`).join('\n')} 
+                                            th Thao tác 
                                     tbody
                                         //Table Content
                         ///End Table
@@ -202,37 +204,19 @@ item.type.toLowerCase(),
     //Initialize Table
     tableQuanLy${tablenameClass} = \$('#tableQuanLy${tablenameClass}').DataTable({
         columnDefs: [
+${
+    data.properties.map((item, index) => `
             {
-                targets: 0,
+                targets: ${index},
                 render: function (data, type, row, meta) {
                     let renderData = data;
-                    return \`<span class="id${tablenameClass}" data="\${data}">\${renderData}</span>\`;
-                },
+                    return \`<span class="${ccfs.convertNameToJSId(item.name)}" data="\${data}">\${renderData}</span>\`;
+                }
             },
+    `).join('')
+}
             {
-                targets: 1,
-                render: function (data, type, row, meta) {
-                    let renderData = data;
-                    return \`<span class="username" data="\${data}">\${renderData}</span>\`;
-                },
-            },
-            {
-                targets: 2,
-                render: function (data, type, row, meta) {
-                    let renderData = data;
-                    return \`<span class="password" data="\${data}">\${renderData}</span>\`;
-                },
-            },
-            {
-                targets: 3,
-                render: function (data, type, row, meta) {
-                    let typeIndex = data;
-                    let renderData = ${ccfs.convertNameToJSId(data.classname)}sTypes[typeIndex] ? ${ccfs.convertNameToJSId(data.classname)}sTypes[typeIndex] : data;
-                    return \`<span class="loai" data="\${data}">\${renderData}</span>\`;
-                },
-            },
-            {
-                targets: 4,
+                targets: ${data.properties.length},
                 render: function (data, type, row, meta) {
                     let ${ccfs.convertNameToJSId(data.classname)} = data;
                     let renderData = \`
@@ -263,15 +247,6 @@ item.type.toLowerCase(),
 });
 
 //Functions
-//Get data of ${ccfs.convertNameToJSId(data.classname)}Types
-function get${tablenameClass}Types() {
-    return new Promise(function (resolve, reject) {
-        \$.post('/api/tai-khoan/types', {}, function (data, status, xhr) {
-            resolve(data);
-        });
-    });
-}
-
 //Get ${ccfs.convertNameToJSId(data.classname)}s
 function get${tablenameClass}s() {
     return new Promise(function (resolve, reject) {
@@ -292,7 +267,6 @@ function refreshTableData() {
 
 //Refresh all data in page
 async function refreshPageData() {
-    ${ccfs.convertNameToJSId(data.classname)}sTypes = await get${tablenameClass}Types();
     refreshDataInModelThem${tablenameClass}();
     refreshDataInModelSua${tablenameClass}();
 
@@ -310,12 +284,12 @@ async function refreshPageData() {
     //Initialize Button Events
     //Sua${tablenameClass} Confirm
     \$('#modelSua${tablenameClass} .confirm').click(async function () {
-        let id${tablenameClass} = \$(this).parents('form').find('.id${tablenameClass}').val();
-        let username = \$(this).parents('form').find('.username').val();
-        let password = \$(this).parents('form').find('.password').val();
-        let re_password = \$(this).parents('form').find('.re_password').val();
-        let loai = \$(this).parents('form').find('.loai').val();
-        let ${ccfs.convertNameToJSId(data.classname)} = { id${tablenameClass}: id${tablenameClass}, username: username, password: password, re_password: re_password, loai: loai };
+${
+    data.properties.map(item => `
+        let ${ccfs.convertNameToJSId(item.name)} = \$(this).parents('form').find('.${ccfs.convertNameToJSId(item.name)}').val();
+    `).join('')
+}
+        let ${ccfs.convertNameToJSId(data.classname)} = { ${data.properties.map(item => `${ccfs.convertNameToJSId(item.name)} = ${ccfs.convertNameToJSId(item.name)}`).join(', ')} };
 
         let errors = sua${tablenameClass}Validator(${ccfs.convertNameToJSId(data.classname)});
 
@@ -331,33 +305,25 @@ async function refreshPageData() {
     //Set ${ccfs.convertNameToJSId(data.classname)} current value When model showup
     \$('#modelSua${tablenameClass}').on('show.bs.modal', function (event) {
         let sua${tablenameClass}Triggered = \$(event.relatedTarget);
+${
+    tableKeysProperties.map(item => `
+        let ${ccfs.convertNameToJSId(item.name)} = sua${tablenameClass}Triggered.attr('${ccfs.convertNameToJSId(item.name)}');
+    `).join('')
+}
 
-        let id${tablenameClass} = sua${tablenameClass}Triggered.attr('id${tablenameClass}');
-        let ${ccfs.convertNameToJSId(data.classname)} = ${ccfs.convertNameToJSId(data.classname)}s.find((item) => item.id${tablenameClass} == id${tablenameClass});
-
-        \$('#modelSua${tablenameClass}').find('.id${tablenameClass}').val(${ccfs.convertNameToJSId(data.classname)}.id${tablenameClass});
-        \$('#modelSua${tablenameClass}').find('.username').val(${ccfs.convertNameToJSId(data.classname)}.username);
-        \$('#modelSua${tablenameClass}').find('.password').val(${ccfs.convertNameToJSId(data.classname)}.password);
-        \$('#modelSua${tablenameClass}').find('.re_password').val(${ccfs.convertNameToJSId(data.classname)}.password);
-        \$('#modelSua${tablenameClass}').find('.loai').val(${ccfs.convertNameToJSId(data.classname)}.loai);
+${
+    data.properties.map(item => `
+        \$('#modelSua${tablenameClass}').find('${ccfs.convertNameToJSId(item.name)}').val(${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)});
+    `).join('')
+}
 
         refreshSua${tablenameClass}Alert([], "");
     });
-
-    //Initialize final
 });
-
-//Variables
 
 //Functions
 //Refresh data in model Sua${tablenameClass} with data in ${ccfs.convertNameToJSId(data.classname)}sTypes
 function refreshDataInModelSua${tablenameClass}() {
-    let loai = \$('#modelSua${tablenameClass} .loai');
-    let loaiHtml = '';
-
-    ${ccfs.convertNameToJSId(data.classname)}sTypes.forEach((element, index) => (loaiHtml += \`<option value="\${index}">\${element}</option>\`));
-
-    loai.html(loaiHtml);
 }
 
 //Refresh sua ${ccfs.convertNameToJSId(data.classname)} Alert
