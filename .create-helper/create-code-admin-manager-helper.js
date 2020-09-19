@@ -140,7 +140,7 @@ ${tableKeysProperties.map(item => ccfs.createFormInputElement(
     ccfs.convertNameToJSId(item.name),
     ccfs.capitalizeFirst(item.speak),
     item.type.toLowerCase(),
-    [ccfs.convertNameToJSId(item.name).toLowerCase()],
+    [ccfs.convertNameToJSId(item.name)],
     [`required='true'`, `placeholder='Nhập ${ccfs.capitalizeFirst(item.speak)}'`],
     4*4
 )).join('')}
@@ -148,7 +148,7 @@ ${tableNotKeysProperties.map(item => ccfs.createFormInputElement(
     ccfs.convertNameToJSId(item.name),
     ccfs.capitalizeFirst(item.speak),
     item.type.toLowerCase(),
-    [ccfs.convertNameToJSId(item.name).toLowerCase()],
+    [ccfs.convertNameToJSId(item.name)],
     [`placeholder='Nhập ${ccfs.capitalizeFirst(item.speak)}'`],
     4*4
 )).join('')}
@@ -177,7 +177,7 @@ ${tableKeysProperties.map(item => ccfs.createFormInputElement(
 ccfs.convertNameToJSId(item.name),
 ccfs.capitalizeFirst(item.speak),
 item.type.toLowerCase(),
-[ccfs.convertNameToJSId(item.name).toLowerCase()],
+[ccfs.convertNameToJSId(item.name)],
 [`required='true'`, `placeholder='Nhập ${ccfs.capitalizeFirst(item.speak)}'`],
 4*4
 )).join('')}
@@ -185,7 +185,7 @@ ${tableNotKeysProperties.map(item => ccfs.createFormInputElement(
 ccfs.convertNameToJSId(item.name),
 ccfs.capitalizeFirst(item.speak),
 item.type.toLowerCase(),
-[ccfs.convertNameToJSId(item.name).toLowerCase()],
+[ccfs.convertNameToJSId(item.name)],
 [`placeholder='Nhập ${ccfs.capitalizeFirst(item.speak)}'`],
 4*4
 )).join('')}
@@ -220,7 +220,11 @@ ${
                 render: function (data, type, row, meta) {
                     let ${ccfs.convertNameToJSId(data.classname)} = data;
                     let renderData = \`
-<button type="button" class="btn btn-outline-secondary rounded-0 m-1" data-toggle="modal" data-target='#modelSua${tablenameClass}' id${tablenameClass}="\${${ccfs.convertNameToJSId(data.classname)}.id${tablenameClass}}">
+<button type="button" class="btn btn-outline-secondary rounded-0 m-1" data-toggle="modal" data-target='#modelSua${tablenameClass}' 
+${
+    tableKeysProperties.map(item => `${ccfs.convertNameToJSId(item.name)}="\${${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}}"`).join(' ')
+}
+>
     <i class="fas fa-edit"></i>
 </button>
 
@@ -250,7 +254,7 @@ ${
 //Get ${ccfs.convertNameToJSId(data.classname)}s
 function get${tablenameClass}s() {
     return new Promise(function (resolve, reject) {
-        \$.get('/api/tai-khoan', {}, function (data, status, xhr) {
+        \$.get('/api/${ccfs.convertNameToJSApiId(data.classname)}', {}, function (data, status, xhr) {
             resolve(data);
         });
     });
@@ -260,7 +264,9 @@ function get${tablenameClass}s() {
 function refreshTableData() {
     tableQuanLy${tablenameClass}.clear();
     for (let ${ccfs.convertNameToJSId(data.classname)} of ${ccfs.convertNameToJSId(data.classname)}s) {
-        tableQuanLy${tablenameClass}.row.add([${ccfs.convertNameToJSId(data.classname)}.id${tablenameClass}, ${ccfs.convertNameToJSId(data.classname)}.username, ${ccfs.convertNameToJSId(data.classname)}.password, ${ccfs.convertNameToJSId(data.classname)}.loai, ${ccfs.convertNameToJSId(data.classname)}]);
+        tableQuanLy${tablenameClass}.row.add([
+            ${data.properties.map(item => `${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}`).join(', ')}, ${ccfs.convertNameToJSId(data.classname)}
+        ]);
     }
     tableQuanLy${tablenameClass}.draw();
 }
@@ -289,7 +295,7 @@ ${
         let ${ccfs.convertNameToJSId(item.name)} = \$(this).parents('form').find('.${ccfs.convertNameToJSId(item.name)}').val();
     `).join('')
 }
-        let ${ccfs.convertNameToJSId(data.classname)} = { ${data.properties.map(item => `${ccfs.convertNameToJSId(item.name)} = ${ccfs.convertNameToJSId(item.name)}`).join(', ')} };
+        let ${ccfs.convertNameToJSId(data.classname)} = { ${data.properties.map(item => `${ccfs.convertNameToJSId(item.name)} : ${ccfs.convertNameToJSId(item.name)}`).join(', ')} };
 
         let errors = sua${tablenameClass}Validator(${ccfs.convertNameToJSId(data.classname)});
 
@@ -311,9 +317,19 @@ ${
     `).join('')
 }
 
+        let ${ccfs.convertNameToJSId(data.classname)} = ${ccfs.convertNameToJSId(data.classname)}s.find(
+            (item) => ${tableKeysProperties.map(item => `item.${ccfs.convertNameToJSId(item.name)} == ${ccfs.convertNameToJSId(item.name)}`).join(' && ')}
+        );
+
 ${
-    data.properties.map(item => `
-        \$('#modelSua${tablenameClass}').find('${ccfs.convertNameToJSId(item.name)}').val(${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)});
+    tableKeysProperties.map(item => `
+        \$('#modelSua${tablenameClass}').find('.${ccfs.convertNameToJSId(item.name)}').val(${ccfs.convertNameToJSId(item.name)});
+    `).join('')
+}
+
+${
+    tableNotKeysProperties.map(item => `
+        \$('#modelSua${tablenameClass}').find('.${ccfs.convertNameToJSId(item.name)}').val(${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)});
     `).join('')
 }
 
@@ -339,7 +355,7 @@ function refreshSua${tablenameClass}Alert(alerts, type = 'danger') {
 //Add new ${ccfs.convertNameToJSId(data.classname)}
 function sua${tablenameClass}AJAX(${ccfs.convertNameToJSId(data.classname)}) {
     return new Promise(function (resolve, reject) {
-        \$.ajax({ method: 'PATCH', url: '/api/tai-khoan', data: ${ccfs.convertNameToJSId(data.classname)} })
+        \$.ajax({ method: 'PATCH', url: '/api/${ccfs.convertNameToJSApiId(data.classname)}', data: ${ccfs.convertNameToJSId(data.classname)} })
             .done(function (data, status, xhr) {
                 let errors = data.errors;
                 let result = data;
@@ -377,32 +393,16 @@ function sua${tablenameClass}Validator(${ccfs.convertNameToJSId(data.classname)}
     let errors = [];
 
     if (!${ccfs.convertNameToJSId(data.classname)}) {
-        errors.push('Tài khoản không tồn tại ');
+        errors.push('${ccfs.capitalizeFirst(data.speak)} không tồn tại ');
     }
 
-    if (!${ccfs.convertNameToJSId(data.classname)}.id${tablenameClass}) {
-        errors.push('Không thể xác định Id tài khoản ');
+${
+    data.properties.map(item => `
+    if (!${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}) {
+        errors.push('Không thể xác định ${item.speak.toLowerCase()} ');
     }
-
-    if (!${ccfs.convertNameToJSId(data.classname)}.username) {
-        errors.push('Tên đăng nhập không được để trống ');
-    }
-
-    if (!${ccfs.convertNameToJSId(data.classname)}.password) {
-        errors.push('Mật khẩu không được để trống ');
-    }
-
-    if (!${ccfs.convertNameToJSId(data.classname)}.re_password) {
-        errors.push('Nhập lại Mật khẩu không được để trống ');
-    }
-
-    if (${ccfs.convertNameToJSId(data.classname)}.password != ${ccfs.convertNameToJSId(data.classname)}.re_password) {
-        errors.push('Mật khẩu khác Nhập lại Mật khẩu');
-    }
-
-    if (!${ccfs.convertNameToJSId(data.classname)}.loai) {
-        errors.push('Loại tài khoản không được để trống ');
-    }
+    `).join('')
+}
 
     return errors;
 }    
@@ -415,27 +415,35 @@ function sua${tablenameClass}Validator(${ccfs.convertNameToJSId(data.classname)}
     contents += `
 //Get a row in table
 function getRowInTable(${ccfs.convertNameToJSId(data.classname)}) {
-    return \$('#tableQuanLy${tablenameClass}').find(\`.id${tablenameClass}[data="\${${ccfs.convertNameToJSId(data.classname)}.id${tablenameClass}}"]\`).parents('tr');
+    return \$('#tableQuanLy${tablenameClass}')${tableKeysProperties.map(item => `.find(\`.${ccfs.convertNameToJSId(item.name)}[data="\${${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}}"]\`).parents('tr')`).join('')};
 }
 
 //Add new row to table
 function addNewRowToTable(${ccfs.convertNameToJSId(data.classname)}) {
-    tableQuanLy${tablenameClass}.row.add([${ccfs.convertNameToJSId(data.classname)}.id${tablenameClass}, ${ccfs.convertNameToJSId(data.classname)}.username, ${ccfs.convertNameToJSId(data.classname)}.password, ${ccfs.convertNameToJSId(data.classname)}.loai, ${ccfs.convertNameToJSId(data.classname)}]).draw();
+    tableQuanLy${tablenameClass}.row.add([
+        ${data.properties.map(item => `${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}`).join(', ')}
+    ]).draw();
 
     //Change in ${ccfs.convertNameToJSId(data.classname)}s
-    ${ccfs.convertNameToJSId(data.classname)}s.push({ id${tablenameClass}: ${ccfs.convertNameToJSId(data.classname)}.id${tablenameClass}, username: ${ccfs.convertNameToJSId(data.classname)}.username, password: ${ccfs.convertNameToJSId(data.classname)}.password, loai: ${ccfs.convertNameToJSId(data.classname)}.loai });
+    ${ccfs.convertNameToJSId(data.classname)}s.push({ 
+        ${data.properties.map(item => `${ccfs.convertNameToJSId(item.name)}: ${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}`).join(', ')}
+    });
 }
 
 //Edit row in table
 function editRowInTable(${ccfs.convertNameToJSId(data.classname)}) {
     let old${tablenameClass}Row = getRowInTable(${ccfs.convertNameToJSId(data.classname)});
-    tableQuanLy${tablenameClass}.row(old${tablenameClass}Row).data([${ccfs.convertNameToJSId(data.classname)}.id${tablenameClass}, ${ccfs.convertNameToJSId(data.classname)}.username, ${ccfs.convertNameToJSId(data.classname)}.password, ${ccfs.convertNameToJSId(data.classname)}.loai, ${ccfs.convertNameToJSId(data.classname)}]).draw();
+    tableQuanLy${tablenameClass}.row(old${tablenameClass}Row).data([
+        ${data.properties.map(item => `${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}`).join(', ')}
+    ]).draw();
 
     //Change in ${ccfs.convertNameToJSId(data.classname)}s
-    let ${ccfs.convertNameToJSId(data.classname)}Reference = ${ccfs.convertNameToJSId(data.classname)}s.find((item) => item.id${tablenameClass} == ${ccfs.convertNameToJSId(data.classname)}.id${tablenameClass});
-    ${ccfs.convertNameToJSId(data.classname)}Reference.username = ${ccfs.convertNameToJSId(data.classname)}.username;
-    ${ccfs.convertNameToJSId(data.classname)}Reference.password = ${ccfs.convertNameToJSId(data.classname)}.password;
-    ${ccfs.convertNameToJSId(data.classname)}Reference.loai = ${ccfs.convertNameToJSId(data.classname)}.loai;
+    let ${ccfs.convertNameToJSId(data.classname)}Reference = ${ccfs.convertNameToJSId(data.classname)}s.find(
+        (item) => ${tableKeysProperties.map(item => `item.${ccfs.convertNameToJSId(item.name)} == ${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}`).join(' && ')}
+    );
+    
+    ${data.properties.map(item => `${ccfs.convertNameToJSId(data.classname)}Reference.${ccfs.convertNameToJSId(item.name)} = ${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)};
+    `).join('')}
 }
 
 //Delete row in table
@@ -444,7 +452,9 @@ function deleteRowInTable(${ccfs.convertNameToJSId(data.classname)}) {
     tableQuanLy${tablenameClass}.row(old${tablenameClass}Row).remove().draw();
 
     //Change in ${ccfs.convertNameToJSId(data.classname)}s
-    ${ccfs.convertNameToJSId(data.classname)}s = ${ccfs.convertNameToJSId(data.classname)}s.filter((item) => item.id${tablenameClass} != ${ccfs.convertNameToJSId(data.classname)}.id${tablenameClass});
+    ${ccfs.convertNameToJSId(data.classname)}s = ${ccfs.convertNameToJSId(data.classname)}s.filter(
+        (item) => ${tableKeysProperties.map(item => `item.${ccfs.convertNameToJSId(item.name)} != ${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}`).join(' && ')}
+    );
 }
     
 `;
@@ -458,11 +468,12 @@ function deleteRowInTable(${ccfs.convertNameToJSId(data.classname)}) {
     //Initialize Button Events
     //Them${tablenameClass} Confirm
     \$('#modelThem${tablenameClass} .confirm').click(async function () {
-        let username = \$(this).parents('form').find('.username').val();
-        let password = \$(this).parents('form').find('.password').val();
-        let re_password = \$(this).parents('form').find('.re_password').val();
-        let loai = \$(this).parents('form').find('.loai').val();
-        let ${ccfs.convertNameToJSId(data.classname)} = { username: username, password: password, re_password: re_password, loai: loai };
+${
+    data.properties.map(item => `
+        let ${ccfs.convertNameToJSId(item.name)} = \$(this).parents('form').find('.${ccfs.convertNameToJSId(item.name)}').val();
+    `).join('')
+}
+        let ${ccfs.convertNameToJSId(data.classname)} = { ${data.properties.map(item => `${ccfs.convertNameToJSId(item.name)} : ${ccfs.convertNameToJSId(item.name)}`).join(', ')} };
 
         let errors = them${tablenameClass}Validator(${ccfs.convertNameToJSId(data.classname)});
 
@@ -488,12 +499,6 @@ function deleteRowInTable(${ccfs.convertNameToJSId(data.classname)}) {
 //Functions
 //Refresh data in model Them${tablenameClass} with data in ${ccfs.convertNameToJSId(data.classname)}sTypes
 function refreshDataInModelThem${tablenameClass}() {
-    let loai = \$('#modelThem${tablenameClass} .loai');
-    let loaiHtml = '';
-
-    ${ccfs.convertNameToJSId(data.classname)}sTypes.forEach((element, index) => (loaiHtml += \`<option value="\${index}">\${element}</option>\`));
-
-    loai.html(loaiHtml);
 }
 
 //Refresh them ${ccfs.convertNameToJSId(data.classname)} Alert
@@ -509,7 +514,7 @@ function refreshThem${tablenameClass}Alert(alerts, type = 'danger') {
 //Add new ${ccfs.convertNameToJSId(data.classname)}
 function them${tablenameClass}AJAX(${ccfs.convertNameToJSId(data.classname)}) {
     return new Promise(function (resolve, reject) {
-        \$.ajax({ method: 'POST', url: '/api/tai-khoan', data: ${ccfs.convertNameToJSId(data.classname)} })
+        \$.ajax({ method: 'POST', url: '/api/${ccfs.convertNameToJSApiId(data.classname)}', data: ${ccfs.convertNameToJSId(data.classname)} })
             .done(function (data, status, xhr) {
                 let errors = data.errors;
                 let result = data;
@@ -548,28 +553,16 @@ function them${tablenameClass}Validator(${ccfs.convertNameToJSId(data.classname)
     let errors = [];
 
     if (!${ccfs.convertNameToJSId(data.classname)}) {
-        errors.push('Tài khoản không tồn tại ');
+        errors.push('${ccfs.capitalizeFirst(data.speak)} không tồn tại ');
     }
 
-    if (!${ccfs.convertNameToJSId(data.classname)}.username) {
-        errors.push('Tên đăng nhập không được để trống ');
+${
+    data.properties.map(item => `
+    if (!${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}) {
+        errors.push('Không thể xác định ${item.speak.toLowerCase()} ');
     }
-
-    if (!${ccfs.convertNameToJSId(data.classname)}.password) {
-        errors.push('Mật khẩu không được để trống ');
-    }
-
-    if (!${ccfs.convertNameToJSId(data.classname)}.re_password) {
-        errors.push('Nhập lại Mật khẩu không được để trống ');
-    }
-
-    if (${ccfs.convertNameToJSId(data.classname)}.password != ${ccfs.convertNameToJSId(data.classname)}.re_password) {
-        errors.push('Mật khẩu khác Nhập lại Mật khẩu');
-    }
-
-    if (!${ccfs.convertNameToJSId(data.classname)}.loai) {
-        errors.push('Loại tài khoản không được để trống ');
-    }
+    `).join('')
+}
 
     return errors;
 }
@@ -582,7 +575,6 @@ function them${tablenameClass}Validator(${ccfs.convertNameToJSId(data.classname)
     contents = '';
     contents += `
 //Variables
-let ${ccfs.convertNameToJSId(data.classname)}sTypes = [];
 let ${ccfs.convertNameToJSId(data.classname)}s = [];
 let tableQuanLy${tablenameClass} = {};
     
@@ -617,8 +609,14 @@ let tableQuanLy${tablenameClass} = {};
 //Functions
 function delete${tablenameClass}RowInTable(buttonDelete) {
     let tableRow = \$(buttonDelete).parents('tr');
-    let id${tablenameClass} = \$(tableRow).find('.id${tablenameClass}').attr('data');
-    let ${ccfs.convertNameToJSId(data.classname)} = ${ccfs.convertNameToJSId(data.classname)}s.find((item) => item.id${tablenameClass} == id${tablenameClass});
+${
+    tableKeysProperties.map(item => `
+    let ${ccfs.convertNameToJSId(item.name)} = \$(tableRow).find('.${ccfs.convertNameToJSId(item.name)}').attr('data');`).join('')
+}
+
+    let ${ccfs.convertNameToJSId(data.classname)} = ${ccfs.convertNameToJSId(data.classname)}s.find(
+        (item) => ${tableKeysProperties.map(item => `item.${ccfs.convertNameToJSId(item.name)} == ${ccfs.convertNameToJSId(item.name)}`).join(' && ')}
+    );
 
     swal({
         title: \`Bạn có chắc chắn muón xóa tài khoản có tên đăng nhập là "\${${ccfs.convertNameToJSId(data.classname)}.username}" không?\`,
@@ -639,12 +637,12 @@ function delete${tablenameClass}RowInTable(buttonDelete) {
 
 //Delete ${ccfs.convertNameToJSId(data.classname)}
 function delete${tablenameClass}AJAX(${ccfs.convertNameToJSId(data.classname)}) {
-    \$.ajax({ method: 'DELETE', url: '/api/tai-khoan', data: { id${tablenameClass}: ${ccfs.convertNameToJSId(data.classname)}.id${tablenameClass} } })
+    \$.ajax({ method: 'DELETE', url: '/api/${ccfs.convertNameToJSApiId(data.classname)}', data: { id${tablenameClass}: ${ccfs.convertNameToJSId(data.classname)}.id${tablenameClass} } })
         .done(function (data, status, xhr) {
             if (data && data > 0) {
                 swal('Đã xóa thành công !', { icon: 'success' });
 
-                let tableRow = \$('#tableQuanLy${tablenameClass}').find(\`.id${tablenameClass}[data="\${${ccfs.convertNameToJSId(data.classname)}.id${tablenameClass}}"]\`).parents('tr');
+                let tableRow = getRowInTable(${ccfs.convertNameToJSId(data.classname)});
                 tableQuanLy${tablenameClass}.row(tableRow).remove().draw();
             } else {
                 swal('Đã xóa không thành công !', { icon: 'error' });
@@ -664,7 +662,7 @@ function delete${tablenameClass}AJAX(${ccfs.convertNameToJSId(data.classname)}) 
 
 //Delete ${ccfs.convertNameToJSId(data.classname)}
 function deleteAllAJAX() {
-    \$.ajax({ method: 'DELETE', url: '/api/tai-khoan', data: {} })
+    \$.ajax({ method: 'DELETE', url: '/api/${ccfs.convertNameToJSApiId(data.classname)}', data: {} })
         .done(function (data, status, xhr) {
             if (data && data > 0) {
                 swal(\`Đã xóa thành công \${data} tài khoản !\`, { icon: 'success' });

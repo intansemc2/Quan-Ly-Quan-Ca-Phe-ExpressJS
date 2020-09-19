@@ -31,7 +31,7 @@ module.exports.convertNameToSqlProperty = (name) => {
 module.exports.convertNameToJSClass = (name) => {
     return name
         .toLowerCase()
-        .split('_')
+        .split(/[^a-zA-Z0-9]/)
         .map((item) => (module.exports.capitalizeFirst(item)))
         .join('');
 };
@@ -41,7 +41,7 @@ module.exports.convertNameToJSProperty = (name) => {
     return module.exports.lowercaseFirst(
         name
             .toLowerCase()
-            .split('_')
+            .split(/[^a-zA-Z0-9]/)
             .map((item) => module.exports.capitalizeFirst(item))
             .join('')
     );
@@ -49,15 +49,33 @@ module.exports.convertNameToJSProperty = (name) => {
 
 //Return: ABC_DEF -> abcdef
 module.exports.convertNameToJSId = (name) => {
+    // return name        
+    //     .split(/[^a-zA-Z0-9]/)
+    //     .join('')
+    //     .toLowerCase();
+    return module.exports.camelCase(name);
+};
+
+//Return: ABC_DEF -> abc-def
+module.exports.convertNameToJSApiId = (name) => {
     return name        
-        .split('_')
-        .join('')
+        .split(/[^a-zA-Z0-9]/)
+        .join('-')
         .toLowerCase();
 };
 
 //Return: ABC_DEF -> abc-def
 module.exports.convertTableNameToFolderName = (tableName) => {
     return tableName.replace(/_/g, '-').toLowerCase();
+};
+
+//Return: ABC_DEF -> abcDef
+module.exports.camelCase = (name) => {
+    return module.exports.lowercaseFirst(name       
+        .split(/[^a-zA-Z0-9]/)
+        .map(item => module.exports.capitalize(item))
+        .join('')
+    );
 };
 
 //Create form
