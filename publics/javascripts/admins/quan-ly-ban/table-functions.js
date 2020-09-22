@@ -7,7 +7,7 @@ function getRowInTable(ban) {
 //Add new row to table
 function addNewRowToTable(ban) {
     tableQuanLyBan.row.add([
-        ban.idBan, ban.ten, ban.ghiChu
+        ban.idBan, ban.ten, ban.ghiChu, ban
     ]).draw();
 
     //Change in bans
@@ -20,7 +20,7 @@ function addNewRowToTable(ban) {
 function editRowInTable(ban) {
     let oldBanRow = getRowInTable(ban);
     tableQuanLyBan.row(oldBanRow).data([
-        ban.idBan, ban.ten, ban.ghiChu
+        ban.idBan, ban.ten, ban.ghiChu, ban
     ]).draw();
 
     //Change in bans

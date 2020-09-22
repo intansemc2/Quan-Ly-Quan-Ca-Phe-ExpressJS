@@ -82,7 +82,7 @@ function suaBanAJAX(ban) {
                     editRowInTable(ban);
 
                     $("#modelSuaBan").modal('hide');
-                    swal({ text: 'Sửa thành công ', icon: 'success'});
+                    swal({ text: 'Sửa thành công ', icon: 'success', timer: 1000});
                 } else {
                     refreshSuaBanAlert(['Sửa thất bại ' + result], 'danger');
                 }
@@ -110,14 +110,6 @@ function suaBanValidator(ban) {
 
     if (!ban.idBan) {
         errors.push('Không thể xác định id bàn ');
-    }
-    
-    if (!ban.ten) {
-        errors.push('Không thể xác định tên bàn ');
-    }
-    
-    if (!ban.ghiChu) {
-        errors.push('Không thể xác định ghi chú ');
     }
     
 

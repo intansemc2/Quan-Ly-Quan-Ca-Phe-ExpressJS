@@ -52,7 +52,7 @@ idBan="${ban.idBan}"
     //Initialize Button Events
     $('#refreshAll').click(function () {
         refreshPageData();
-        swal({ text: 'Làm mới thành công ', icon: 'success'});
+        swal({ text: 'Làm mới thành công ', icon: 'success', timer: 1000});
     });
 
     //Events

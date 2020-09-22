@@ -68,7 +68,7 @@ function themBanAJAX(ban) {
                     addNewRowToTable(ban);
 
                     $('#modelThemBan').modal('hide');
-                    swal({ text: 'Thêm thành công ', icon: 'success' });
+                    swal({ text: 'Thêm thành công ', icon: 'success' , timer: 1000});
                 } else {
                     refreshThemBanAlert(['Thêm thất bại ' + result], 'danger');
                 }
@@ -94,18 +94,8 @@ function themBanValidator(ban) {
     }
 
 
-    if (!ban.idBan) {
-        errors.push('Không thể xác định id bàn ');
-    }
-    
-    if (!ban.ten) {
-        errors.push('Không thể xác định tên bàn ');
-    }
-    
-    if (!ban.ghiChu) {
-        errors.push('Không thể xác định ghi chú ');
-    }
-    
+
+
 
     return errors;
 }

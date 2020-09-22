@@ -149,7 +149,7 @@ ${tableNotKeysProperties.map(item => ccfs.createFormInputElement(
     ccfs.capitalizeFirst(item.speak),
     item.type.toLowerCase(),
     [ccfs.convertNameToJSId(item.name)],
-    [`placeholder='Nhập ${ccfs.capitalizeFirst(item.speak)}'`],
+    [`placeholder='Nhập ${ccfs.capitalizeFirst(item.speak)}'`, item.isNull ? `` : `required`],
     4*4
 )).join('')}
             .modal-footer
@@ -173,20 +173,26 @@ ${tableNotKeysProperties.map(item => ccfs.createFormInputElement(
             .modal-body
                 .alerts
                     // Các alert của phần này
-${tableKeysProperties.map(item => ccfs.createFormInputElement(
+${
+    tableKeysProperties.length > 1 ? 
+    tableKeysProperties.map(item => ccfs.createFormInputElement(
 ccfs.convertNameToJSId(item.name),
 ccfs.capitalizeFirst(item.speak),
 item.type.toLowerCase(),
 [ccfs.convertNameToJSId(item.name)],
 [`required='true'`, `placeholder='Nhập ${ccfs.capitalizeFirst(item.speak)}'`],
 4*4
-)).join('')}
+)).join('')
+    :
+    ``
+}
+
 ${tableNotKeysProperties.map(item => ccfs.createFormInputElement(
 ccfs.convertNameToJSId(item.name),
 ccfs.capitalizeFirst(item.speak),
 item.type.toLowerCase(),
 [ccfs.convertNameToJSId(item.name)],
-[`placeholder='Nhập ${ccfs.capitalizeFirst(item.speak)}'`],
+[`placeholder='Nhập ${ccfs.capitalizeFirst(item.speak)}'`, item.isNull ? `` : `required`],
 4*4
 )).join('')}
             .modal-footer
@@ -241,7 +247,7 @@ ${
     //Initialize Button Events
     \$('#refreshAll').click(function () {
         refreshPageData();
-        swal({ text: 'Làm mới thành công ', icon: 'success'});
+        swal({ text: 'Làm mới thành công ', icon: 'success', timer: 1000});
     });
 
     //Events
@@ -371,7 +377,7 @@ function sua${tablenameClass}AJAX(${ccfs.convertNameToJSId(data.classname)}) {
                     editRowInTable(${ccfs.convertNameToJSId(data.classname)});
 
                     \$("#modelSua${tablenameClass}").modal('hide');
-                    swal({ text: 'Sửa thành công ', icon: 'success'});
+                    swal({ text: 'Sửa thành công ', icon: 'success', timer: 1000});
                 } else {
                     refreshSua${tablenameClass}Alert(['Sửa thất bại ' + result], 'danger');
                 }
@@ -397,7 +403,10 @@ function sua${tablenameClass}Validator(${ccfs.convertNameToJSId(data.classname)}
     }
 
 ${
-    data.properties.map(item => `
+    data.properties.map(item => 
+        item.isNull ? ``
+        :
+        `
     if (!${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}) {
         errors.push('Không thể xác định ${item.speak.toLowerCase()} ');
     }
@@ -421,7 +430,7 @@ function getRowInTable(${ccfs.convertNameToJSId(data.classname)}) {
 //Add new row to table
 function addNewRowToTable(${ccfs.convertNameToJSId(data.classname)}) {
     tableQuanLy${tablenameClass}.row.add([
-        ${data.properties.map(item => `${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}`).join(', ')}
+        ${data.properties.map(item => `${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}`).join(', ')}, ${ccfs.convertNameToJSId(data.classname)}
     ]).draw();
 
     //Change in ${ccfs.convertNameToJSId(data.classname)}s
@@ -434,7 +443,7 @@ function addNewRowToTable(${ccfs.convertNameToJSId(data.classname)}) {
 function editRowInTable(${ccfs.convertNameToJSId(data.classname)}) {
     let old${tablenameClass}Row = getRowInTable(${ccfs.convertNameToJSId(data.classname)});
     tableQuanLy${tablenameClass}.row(old${tablenameClass}Row).data([
-        ${data.properties.map(item => `${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}`).join(', ')}
+        ${data.properties.map(item => `${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}`).join(', ')}, ${ccfs.convertNameToJSId(data.classname)}
     ]).draw();
 
     //Change in ${ccfs.convertNameToJSId(data.classname)}s
@@ -531,7 +540,7 @@ function them${tablenameClass}AJAX(${ccfs.convertNameToJSId(data.classname)}) {
                     addNewRowToTable(${ccfs.convertNameToJSId(data.classname)});
 
                     \$('#modelThem${tablenameClass}').modal('hide');
-                    swal({ text: 'Thêm thành công ', icon: 'success' });
+                    swal({ text: 'Thêm thành công ', icon: 'success' , timer: 1000});
                 } else {
                     refreshThem${tablenameClass}Alert(['Thêm thất bại ' + result], 'danger');
                 }
@@ -557,11 +566,25 @@ function them${tablenameClass}Validator(${ccfs.convertNameToJSId(data.classname)
     }
 
 ${
-    data.properties.map(item => `
-    if (!${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}) {
-        errors.push('Không thể xác định ${item.speak.toLowerCase()} ');
-    }
-    `).join('')
+    tableKeysProperties.length > 1 ? 
+    tableKeysProperties.map(item => `
+        if (!${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}) {
+            errors.push('Không thể xác định ${item.speak.toLowerCase()} ');
+        }
+        `).join('')
+    :
+    ``
+}
+
+${
+    tableNotKeysProperties.map(item => 
+        item.isNull ? `` 
+        :
+        `
+        if (!${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}) {
+            errors.push('Không thể xác định ${item.speak.toLowerCase()} ');
+        }
+        `).join('')
 }
 
     return errors;
@@ -589,18 +612,18 @@ let tableQuanLy${tablenameClass} = {};
     //Initialize Event click
     \$("#deleteAll").click(function(){
         swal({
-            title: \`Bạn có chắc chắn muón xóa tài khoản tất cả không?\`,
+            title: \`Bạn có chắc chắn muón muốn xóa tất cả ${data.speak} không?\`,
             text: \`Không thể khôi phục dữ liệu sau khi xóa. Qúa trình sẽ xóa luôn các thông tin liên quan trong Cơ sở dữ liệu.\`,
             icon: 'warning',
             buttons: {
                 confirm: { text: 'Đồng ý', value: true, visible: true, closeModal: true },
                 cancel: { text: 'Không', value: false, visible: true, closeModal: true },
-            },
+            }
         }).then(function (theChoosenOne) {
             if (theChoosenOne) {
                 deleteAllAJAX(theChoosenOne);
             } else {
-                swal('Đã hủy thao tác! Dữ liệu vẫn an toàn!');
+                swal('Đã hủy thao tác! Dữ liệu vẫn an toàn!', {timer: 1000});
             }
         });
     });
@@ -619,18 +642,20 @@ ${
     );
 
     swal({
-        title: \`Bạn có chắc chắn muón xóa tài khoản có tên đăng nhập là "\${${ccfs.convertNameToJSId(data.classname)}.username}" không?\`,
+        title: \`Bạn có chắc chắn muón xóa ${data.speak} có ${ 
+            tableKeysProperties.map(item => `${item.speak} là "\${${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}}"`).join(', ')
+        } không?\`,
         text: \`Không thể khôi phục dữ liệu sau khi xóa. Qúa trình sẽ xóa luôn các thông tin liên quan trong Cơ sở dữ liệu.\`,
         icon: 'warning',
         buttons: {
             confirm: { text: 'Đồng ý', value: ${ccfs.convertNameToJSId(data.classname)}, visible: true, closeModal: true },
             cancel: { text: 'Không', value: false, visible: true, closeModal: true },
-        },
+        }
     }).then(function (theChoosenOne) {
         if (theChoosenOne) {
             delete${tablenameClass}AJAX(theChoosenOne);
         } else {
-            swal('Đã hủy thao tác! Dữ liệu vẫn an toàn!');
+            swal('Đã hủy thao tác! Dữ liệu vẫn an toàn!', {timer: 1000});
         }
     });
 }
@@ -640,12 +665,12 @@ function delete${tablenameClass}AJAX(${ccfs.convertNameToJSId(data.classname)}) 
     \$.ajax({ method: 'DELETE', url: '/api/${ccfs.convertNameToJSApiId(data.classname)}', data: { id${tablenameClass}: ${ccfs.convertNameToJSId(data.classname)}.id${tablenameClass} } })
         .done(function (data, status, xhr) {
             if (data && data > 0) {
-                swal('Đã xóa thành công !', { icon: 'success' });
+                swal('Đã xóa thành công !', { icon: 'success' , timer: 1000});
 
                 let tableRow = getRowInTable(${ccfs.convertNameToJSId(data.classname)});
                 tableQuanLy${tablenameClass}.row(tableRow).remove().draw();
             } else {
-                swal('Đã xóa không thành công !', { icon: 'error' });
+                swal('Đã xóa không thành công !', { icon: 'error' , timer: 1000});
             }
         })
         .fail(function (data, status, xhr) {
@@ -656,7 +681,7 @@ function delete${tablenameClass}AJAX(${ccfs.convertNameToJSId(data.classname)}) 
                 errorString += \`\${data}\`;
             }
 
-            swal(errorString, { icon: 'error' });
+            swal(errorString, { icon: 'error' , timer: 1000});
         });
 }
 
@@ -665,11 +690,11 @@ function deleteAllAJAX() {
     \$.ajax({ method: 'DELETE', url: '/api/${ccfs.convertNameToJSApiId(data.classname)}', data: {} })
         .done(function (data, status, xhr) {
             if (data && data > 0) {
-                swal(\`Đã xóa thành công \${data} tài khoản !\`, { icon: 'success' });
+                swal(\`Đã xóa thành công \${data} tài khoản !\`, { icon: 'success' , timer: 1000});
 
                 tableQuanLy${tablenameClass}.clear().draw();
             } else {
-                swal('Đã xóa không thành công !', { icon: 'error' });
+                swal('Đã xóa không thành công !', { icon: 'error' , timer: 1000});
             }
         })
         .fail(function (data, status, xhr) {
@@ -680,7 +705,7 @@ function deleteAllAJAX() {
                 errorString += \`\${data}\`;
             }
 
-            swal(errorString, { icon: 'error' });
+            swal(errorString, { icon: 'error' , timer: 1000});
         });
 }
 `;
