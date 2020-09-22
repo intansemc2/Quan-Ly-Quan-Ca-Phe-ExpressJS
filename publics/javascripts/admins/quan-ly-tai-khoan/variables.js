@@ -1,4 +1,5 @@
+
 //Variables
-let taikhoansTypes = [];
-let taikhoans = [];
+let taiKhoans = [];
 let tableQuanLyTaiKhoan = {};
+    

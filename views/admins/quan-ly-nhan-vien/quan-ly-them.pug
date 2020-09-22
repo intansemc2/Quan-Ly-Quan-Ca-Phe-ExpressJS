@@ -1,0 +1,39 @@
+
+// Model thêm nhân viên
+#modelThemNhanVien.modal.fade(tabindex='-1', role='dialog', aria-labelledby='Model aria-labelledby', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+        form.modal-content
+            .modal-header
+                h5.modal-title Thêm nhân viên 
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+            .modal-body
+                .alerts
+                    // Các alert của phần này
+
+
+
+                .form-group
+                    label.small.mb-1(for='ten') Tên  
+                    input#ten(type='string', class='form-control py-4 ten' , placeholder='Nhập Tên', required)
+                .form-group
+                    label.small.mb-1(for='sdt') Số điện thoại  
+                    input#sdt(type='string', class='form-control py-4 sdt' , placeholder='Nhập Số điện thoại', required)
+                .form-group
+                    label.small.mb-1(for='loai') Loại  
+                    input#loai(type='int', class='form-control py-4 loai' , placeholder='Nhập Loại', required)
+                .form-group
+                    label.small.mb-1(for='idTaiKhoan') Id tài khoản  
+                    input#idTaiKhoan(type='int', class='form-control py-4 idTaiKhoan' , placeholder='Nhập Id tài khoản', required)
+                .form-group
+                    label.small.mb-1(for='ngaySinh') Ngày sinh  
+                    input#ngaySinh(type='date', class='form-control py-4 ngaySinh' , placeholder='Nhập Ngày sinh', required)
+                .form-group
+                    label.small.mb-1(for='linkAnh') Link ảnh  
+                    input#linkAnh(type='text', class='form-control py-4 linkAnh' , placeholder='Nhập Link ảnh', )
+                .form-group
+                    label.small.mb-1(for='email') Email  
+                    input#email(type='text', class='form-control py-4 email' , placeholder='Nhập Email', )
+            .modal-footer
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Thêm Nhân viên')
+                input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')

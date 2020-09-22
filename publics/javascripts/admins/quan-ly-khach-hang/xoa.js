@@ -3,7 +3,7 @@ $(document).ready(function () {
     //Initialize Event click
     $("#deleteAll").click(function(){
         swal({
-            title: `Bạn có chắc chắn muón muốn xóa tất cả tài khoản không?`,
+            title: `Bạn có chắc chắn muón muốn xóa tất cả khách hàng không?`,
             text: `Không thể khôi phục dữ liệu sau khi xóa. Qúa trình sẽ xóa luôn các thông tin liên quan trong Cơ sở dữ liệu.`,
             icon: 'warning',
             buttons: {
@@ -21,41 +21,41 @@ $(document).ready(function () {
 });
 
 //Functions
-function deleteTaiKhoanRowInTable(buttonDelete) {
+function deleteKhachHangRowInTable(buttonDelete) {
     let tableRow = $(buttonDelete).parents('tr');
 
-    let idTaiKhoan = $(tableRow).find('.idTaiKhoan').attr('data');
+    let idKhachHang = $(tableRow).find('.idKhachHang').attr('data');
 
-    let taiKhoan = taiKhoans.find(
-        (item) => item.idTaiKhoan == idTaiKhoan
+    let khachHang = khachHangs.find(
+        (item) => item.idKhachHang == idKhachHang
     );
 
     swal({
-        title: `Bạn có chắc chắn muón xóa tài khoản có id tài khoản là "${taiKhoan.idTaiKhoan}" không?`,
+        title: `Bạn có chắc chắn muón xóa khách hàng có id khách hàng là "${khachHang.idKhachHang}" không?`,
         text: `Không thể khôi phục dữ liệu sau khi xóa. Qúa trình sẽ xóa luôn các thông tin liên quan trong Cơ sở dữ liệu.`,
         icon: 'warning',
         buttons: {
-            confirm: { text: 'Đồng ý', value: taiKhoan, visible: true, closeModal: true },
+            confirm: { text: 'Đồng ý', value: khachHang, visible: true, closeModal: true },
             cancel: { text: 'Không', value: false, visible: true, closeModal: true },
         }
     }).then(function (theChoosenOne) {
         if (theChoosenOne) {
-            deleteTaiKhoanAJAX(theChoosenOne);
+            deleteKhachHangAJAX(theChoosenOne);
         } else {
             swal('Đã hủy thao tác! Dữ liệu vẫn an toàn!', {timer: 1000});
         }
     });
 }
 
-//Delete taiKhoan
-function deleteTaiKhoanAJAX(taiKhoan) {
-    $.ajax({ method: 'DELETE', url: '/api/tai-khoan', data: { idTaiKhoan: taiKhoan.idTaiKhoan } })
+//Delete khachHang
+function deleteKhachHangAJAX(khachHang) {
+    $.ajax({ method: 'DELETE', url: '/api/khach-hang', data: { idKhachHang: khachHang.idKhachHang } })
         .done(function (data, status, xhr) {
             if (data && data > 0) {
                 swal('Đã xóa thành công !', { icon: 'success' , timer: 1000});
 
-                let tableRow = getRowInTable(taiKhoan);
-                tableQuanLyTaiKhoan.row(tableRow).remove().draw();
+                let tableRow = getRowInTable(khachHang);
+                tableQuanLyKhachHang.row(tableRow).remove().draw();
             } else {
                 swal('Đã xóa không thành công !', { icon: 'error' , timer: 1000});
             }
@@ -72,14 +72,14 @@ function deleteTaiKhoanAJAX(taiKhoan) {
         });
 }
 
-//Delete taiKhoan
+//Delete khachHang
 function deleteAllAJAX() {
-    $.ajax({ method: 'DELETE', url: '/api/tai-khoan', data: {} })
+    $.ajax({ method: 'DELETE', url: '/api/khach-hang', data: {} })
         .done(function (data, status, xhr) {
             if (data && data > 0) {
                 swal(`Đã xóa thành công ${data} tài khoản !`, { icon: 'success' , timer: 1000});
 
-                tableQuanLyTaiKhoan.clear().draw();
+                tableQuanLyKhachHang.clear().draw();
             } else {
                 swal('Đã xóa không thành công !', { icon: 'error' , timer: 1000});
             }

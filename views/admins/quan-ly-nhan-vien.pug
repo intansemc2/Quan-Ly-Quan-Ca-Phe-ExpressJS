@@ -23,7 +23,7 @@ block content
             main
                 .container-fluid
                     //Title
-                    h1.mt-4 Quản lý tài khoản
+                    h1.mt-4 Quản lý nhân viên
 
                     //Start Breadcrumb
                     include ../items/_item_breadscrumb
@@ -35,39 +35,47 @@ block content
                             i.fas.fa-toolbox.mr-1
                             | Các thao tác chung
                         .card-body
-                            button.btn.btn-outline-secondary.rounded-0(type='button', data-toggle='modal', data-target='#modelThemTaiKhoan') Thêm mới  
+                            button.btn.btn-outline-secondary.rounded-0(type='button', data-toggle='modal', data-target='#modelThemNhanVien') Thêm mới  
                             span.mx-1
                             button#deleteAll.btn.btn-outline-dark.rounded-0 Xóa tất cả 
                             span.mx-1
                             button#refreshAll.btn.btn-outline-dark.rounded-0 Làm mới 
 
-                    // Model thêm tài khoản
-                    include quan-ly-tai-khoan/quan-ly-them
+                    // Model thêm nhân viên
+                    include quan-ly-nhan-vien/quan-ly-them
 
-                    // Model sửa tài khoản
-                    include quan-ly-tai-khoan/quan-ly-sua
+                    // Model sửa nhân viên
+                    include quan-ly-nhan-vien/quan-ly-sua
 
                     //Start Table
                     .card.my-4
                         .card-header
                             i.fas.fa-table.mr-1
-                            | Bảng quản lý tài khoản 
+                            | Bảng quản lý nhân viên 
                         .card-body
-                            #tableQuanLyTaiKhoanContainer.table-responsive
-                                table#tableQuanLyTaiKhoan.table.table-bordered.table-striped.table-hover(width='100%', cellspacing='0')
+                            #tableQuanLyNhanVienContainer.table-responsive
+                                table#tableQuanLyNhanVien.table.table-bordered.table-striped.table-hover(width='100%', cellspacing='0')
                                     thead
                                         tr
-                                            th Id tài khoản
-                                            th Tên đăng nhập
-                                            th Mật khẩu
+                                            th Id nhân viên
+                                            th Tên
+                                            th Số điện thoại
                                             th Loại
+                                            th Id tài khoản
+                                            th Ngày sinh
+                                            th Link ảnh
+                                            th Email
                                             th Thao tác 
                                     tfoot
                                         tr
+                                            th Id nhân viên
+                                            th Tên
+                                            th Số điện thoại
+                                            th Loại
                                             th Id tài khoản
-                                            th Tên đăng nhập
-                                            th Mật khẩu
-                                            th Loại 
+                                            th Ngày sinh
+                                            th Link ảnh
+                                            th Email 
                                             th Thao tác 
                                     tbody
                                         //Table Content
@@ -91,10 +99,10 @@ block custom_javascripts
     //Custom Javascript
     script(type="text/javascript", src="/javascripts/admins/admin-main.js")   
 
-    script(type="text/javascript", src="/javascripts/admins/quan-ly-tai-khoan/variables.js")
-    script(type="text/javascript", src="/javascripts/admins/quan-ly-tai-khoan/table-functions.js")
-    script(type="text/javascript", src="/javascripts/admins/quan-ly-tai-khoan/them.js")
-    script(type="text/javascript", src="/javascripts/admins/quan-ly-tai-khoan/sua.js")
-    script(type="text/javascript", src="/javascripts/admins/quan-ly-tai-khoan/xoa.js")
-    script(type="text/javascript", src="/javascripts/admins/quan-ly-tai-khoan/main.js")
+    script(type="text/javascript", src="/javascripts/admins/quan-ly-nhan-vien/variables.js")
+    script(type="text/javascript", src="/javascripts/admins/quan-ly-nhan-vien/table-functions.js")
+    script(type="text/javascript", src="/javascripts/admins/quan-ly-nhan-vien/them.js")
+    script(type="text/javascript", src="/javascripts/admins/quan-ly-nhan-vien/sua.js")
+    script(type="text/javascript", src="/javascripts/admins/quan-ly-nhan-vien/xoa.js")
+    script(type="text/javascript", src="/javascripts/admins/quan-ly-nhan-vien/main.js")
 

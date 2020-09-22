@@ -1,14 +1,14 @@
 
 $(document).ready(function () {
     //Initialize Table
-    tableQuanLyTaiKhoan = $('#tableQuanLyTaiKhoan').DataTable({
+    tableQuanLyCtkm = $('#tableQuanLyCtkm').DataTable({
         columnDefs: [
 
             {
                 targets: 0,
                 render: function (data, type, row, meta) {
                     let renderData = data;
-                    return `<span class="idTaiKhoan" data="${data}">${renderData}</span>`;
+                    return `<span class="idKhuyenMai" data="${data}">${renderData}</span>`;
                 }
             },
     
@@ -16,7 +16,7 @@ $(document).ready(function () {
                 targets: 1,
                 render: function (data, type, row, meta) {
                     let renderData = data;
-                    return `<span class="username" data="${data}">${renderData}</span>`;
+                    return `<span class="idSanPham" data="${data}">${renderData}</span>`;
                 }
             },
     
@@ -24,7 +24,7 @@ $(document).ready(function () {
                 targets: 2,
                 render: function (data, type, row, meta) {
                     let renderData = data;
-                    return `<span class="password" data="${data}">${renderData}</span>`;
+                    return `<span class="soLuong" data="${data}">${renderData}</span>`;
                 }
             },
     
@@ -32,22 +32,30 @@ $(document).ready(function () {
                 targets: 3,
                 render: function (data, type, row, meta) {
                     let renderData = data;
-                    return `<span class="loai" data="${data}">${renderData}</span>`;
+                    return `<span class="donGia" data="${data}">${renderData}</span>`;
                 }
             },
     
             {
                 targets: 4,
                 render: function (data, type, row, meta) {
-                    let taiKhoan = data;
+                    let renderData = data;
+                    return `<span class="diemTichLuy" data="${data}">${renderData}</span>`;
+                }
+            },
+    
+            {
+                targets: 5,
+                render: function (data, type, row, meta) {
+                    let ctkm = data;
                     let renderData = `
-<button type="button" class="btn btn-outline-secondary rounded-0 m-1" data-toggle="modal" data-target='#modelSuaTaiKhoan' 
-idTaiKhoan="${taiKhoan.idTaiKhoan}"
+<button type="button" class="btn btn-outline-secondary rounded-0 m-1" data-toggle="modal" data-target='#modelSuaCtkm' 
+idKhuyenMai="${ctkm.idKhuyenMai}" idSanPham="${ctkm.idSanPham}"
 >
     <i class="fas fa-edit"></i>
 </button>
 
-<button type="button" class="btn btn-outline-dark rounded-0 m-1" onclick="deleteTaiKhoanRowInTable($(this));">
+<button type="button" class="btn btn-outline-dark rounded-0 m-1" onclick="deleteCtkmRowInTable($(this));">
     <i class="fas fa-trash"></i>
 </button>
 `;
@@ -70,31 +78,31 @@ idTaiKhoan="${taiKhoan.idTaiKhoan}"
 });
 
 //Functions
-//Get taiKhoans
-function getTaiKhoans() {
+//Get ctkms
+function getCtkms() {
     return new Promise(function (resolve, reject) {
-        $.get('/api/tai-khoan', {}, function (data, status, xhr) {
+        $.get('/api/ctkm', {}, function (data, status, xhr) {
             resolve(data);
         });
     });
 }
 
-//Refresh data in table with data in taiKhoans
+//Refresh data in table with data in ctkms
 function refreshTableData() {
-    tableQuanLyTaiKhoan.clear();
-    for (let taiKhoan of taiKhoans) {
-        tableQuanLyTaiKhoan.row.add([
-            taiKhoan.idTaiKhoan, taiKhoan.username, taiKhoan.password, taiKhoan.loai, taiKhoan
+    tableQuanLyCtkm.clear();
+    for (let ctkm of ctkms) {
+        tableQuanLyCtkm.row.add([
+            ctkm.idKhuyenMai, ctkm.idSanPham, ctkm.soLuong, ctkm.donGia, ctkm.diemTichLuy, ctkm
         ]);
     }
-    tableQuanLyTaiKhoan.draw();
+    tableQuanLyCtkm.draw();
 }
 
 //Refresh all data in page
 async function refreshPageData() {
-    refreshDataInModelThemTaiKhoan();
-    refreshDataInModelSuaTaiKhoan();
+    refreshDataInModelThemCtkm();
+    refreshDataInModelSuaCtkm();
 
-    taiKhoans = await getTaiKhoans();
+    ctkms = await getCtkms();
     refreshTableData();
 }    

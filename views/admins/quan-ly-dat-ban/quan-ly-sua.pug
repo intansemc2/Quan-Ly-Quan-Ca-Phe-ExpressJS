@@ -1,0 +1,33 @@
+
+// Model sửa đặt bàn
+#modelSuaDatBan.modal.fade(tabindex='-1', role='dialog', aria-labelledby='ModelSuaDatBan aria-labelledby', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+        form.modal-content
+            .modal-header
+                h5.modal-title Sửa đặt bàn 
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+            .modal-body                
+                .alerts
+                    // Các alert của phần này
+                input.idDatBan(type='hidden')
+
+                .form-group
+                    label.small.mb-1(for='idKhachHang') Id khách hàng   
+                    input#idKhachHang(type='int', class='form-control py-4 idKhachHang' , required='true', placeholder='Nhập Id khách hàng ')
+                .form-group
+                    label.small.mb-1(for='idBan') Id bàn  
+                    input#idBan(type='int', class='form-control py-4 idBan' , required='true', placeholder='Nhập Id bàn')
+                .form-group
+                    label.small.mb-1(for='thoiGianLap') Thời gian lập  
+                    input#thoiGianLap(type='datetime', class='form-control py-4 thoiGianLap' , required='true', placeholder='Nhập Thời gian lập')
+
+                .form-group
+                    label.small.mb-1(for='thoiGianNhan') Thời gian nhận  
+                    input#thoiGianNhan(type='datetime', class='form-control py-4 thoiGianNhan' , placeholder='Nhập Thời gian nhận', )
+                .form-group
+                    label.small.mb-1(for='ghiChu') Ghi chú  
+                    input#ghiChu(type='string', class='form-control py-4 ghiChu' , placeholder='Nhập Ghi chú', )
+            .modal-footer
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa Đặt bàn')
+                input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')

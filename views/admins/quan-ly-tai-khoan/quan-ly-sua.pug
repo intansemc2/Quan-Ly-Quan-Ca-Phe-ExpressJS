@@ -1,3 +1,4 @@
+
 // Model sửa tài khoản
 #modelSuaTaiKhoan.modal.fade(tabindex='-1', role='dialog', aria-labelledby='ModelSuaTaiKhoan aria-labelledby', aria-hidden='true')
     .modal-dialog.modal-dialog-centered(role='document')
@@ -10,18 +11,20 @@
                 .alerts
                     // Các alert của phần này
                 input.idTaiKhoan(type='hidden')
+
                 .form-group
-                    label.small.mb-1(for='suaTaiKhoanUsername') Tên đăng nhập  
-                    input#suaTaiKhoanUsername.form-control.py-4.username(type='text', placeholder='Nhập tên đăng nhập của bạn')
+                    label.small.mb-1(for='idTaiKhoan') Id tài khoản  
+                    input#idTaiKhoan(type='int', class='form-control py-4 idTaiKhoan' , required='true', placeholder='Nhập Id tài khoản')
+
                 .form-group
-                    label.small.mb-1(for='suaTaiKhoanPassword') Mật khẩu 
-                    input#suaTaiKhoanPassword.form-control.py-4.password(type='password', placeholder='Nhập mật khẩu của bạn')
+                    label.small.mb-1(for='username') Tên đăng nhập  
+                    input#username(type='string', class='form-control py-4 username' , placeholder='Nhập Tên đăng nhập', required)
                 .form-group
-                    label.small.mb-1(for='suaTaiKhoanConfirmPassword') Nhập lại mật khẩu 
-                    input#suaTaiKhoanConfirmPassword.form-control.py-4.re_password(type='password', placeholder='Nhập lại mật khẩu của bạn')
+                    label.small.mb-1(for='password') Mật khẩu  
+                    input#password(type='string', class='form-control py-4 password' , placeholder='Nhập Mật khẩu', required)
                 .form-group
-                    label.small.mb-1(for='suaTaiKhoanLoaiTaiKhoan') Loại tài khoản 
-                    select#suaTaiKhoanLoaiTaiKhoan.form-control.loai
+                    label.small.mb-1(for='loai') Loại  
+                    input#loai(type='int', class='form-control py-4 loai' , placeholder='Nhập Loại', required)
             .modal-footer
                 input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa Tài khoản')
                 input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')

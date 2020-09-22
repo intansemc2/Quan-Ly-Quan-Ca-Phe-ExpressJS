@@ -1,3 +1,4 @@
+
 // Model thêm tài khoản
 #modelThemTaiKhoan.modal.fade(tabindex='-1', role='dialog', aria-labelledby='Model aria-labelledby', aria-hidden='true')
     .modal-dialog.modal-dialog-centered(role='document')
@@ -9,18 +10,18 @@
             .modal-body
                 .alerts
                     // Các alert của phần này
+
+
+
                 .form-group
-                    label.small.mb-1(for='themTaiKhoanUsername') Tên đăng nhập 
-                    input#themTaiKhoanUsername.form-control.py-4.username(type='text', placeholder='Nhập tên đăng nhập của bạn')
+                    label.small.mb-1(for='username') Tên đăng nhập  
+                    input#username(type='string', class='form-control py-4 username' , placeholder='Nhập Tên đăng nhập', required)
                 .form-group
-                    label.small.mb-1(for='themTaiKhoanPassword') Mật khẩu 
-                    input#themTaiKhoanPassword.form-control.py-4.password(type='password', placeholder='Nhập mật khẩu của bạn')
+                    label.small.mb-1(for='password') Mật khẩu  
+                    input#password(type='string', class='form-control py-4 password' , placeholder='Nhập Mật khẩu', required)
                 .form-group
-                    label.small.mb-1(for='themTaiKhoanConfirmPassword') Nhập lại mật khẩu 
-                    input#themTaiKhoanConfirmPassword.form-control.py-4.re_password(type='password', placeholder='Nhập lại mật khẩu của bạn')
-                .form-group
-                    label.small.mb-1(for='themTaiKhoanLoaiTaiKhoan') Loại tài khản 
-                    select#themTaiKhoanLoaiTaiKhoan.form-control.loai
+                    label.small.mb-1(for='loai') Loại  
+                    input#loai(type='int', class='form-control py-4 loai' , placeholder='Nhập Loại', required)
             .modal-footer
                 input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Thêm Tài khoản')
                 input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')

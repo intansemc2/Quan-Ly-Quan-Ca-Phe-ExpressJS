@@ -1,59 +1,64 @@
+
 $(document).ready(function () {
     //Initialize Button Events
-    //SuaTaikhoan Confirm
+    //SuaTaiKhoan Confirm
     $('#modelSuaTaiKhoan .confirm').click(async function () {
-        let idTaiKhoan = $(this).parents('form').find('.idTaiKhoan').val();
-        let username = $(this).parents('form').find('.username').val();
-        let password = $(this).parents('form').find('.password').val();
-        let re_password = $(this).parents('form').find('.re_password').val();
-        let loai = $(this).parents('form').find('.loai').val();
-        let taikhoan = { idTaiKhoan: idTaiKhoan, username: username, password: password, re_password: re_password, loai: loai };
 
-        let errors = suaTaikhoanValidator(taikhoan);
+        let idTaiKhoan = $(this).parents('form').find('.idTaiKhoan').val();
+    
+        let username = $(this).parents('form').find('.username').val();
+    
+        let password = $(this).parents('form').find('.password').val();
+    
+        let loai = $(this).parents('form').find('.loai').val();
+    
+        let taiKhoan = { idTaiKhoan : idTaiKhoan, username : username, password : password, loai : loai };
+
+        let errors = suaTaiKhoanValidator(taiKhoan);
 
         if (errors.length > 0) {
-            refreshSuaTaikhoanAlert(errors);
+            refreshSuaTaiKhoanAlert(errors);
             return;
         }
 
-        await suaTaiKhoanAJAX(taikhoan);
+        await suaTaiKhoanAJAX(taiKhoan);
     });
 
     //Events
-    //Set taikhoan current value When model showup
+    //Set taiKhoan current value When model showup
     $('#modelSuaTaiKhoan').on('show.bs.modal', function (event) {
         let suaTaiKhoanTriggered = $(event.relatedTarget);
 
         let idTaiKhoan = suaTaiKhoanTriggered.attr('idTaiKhoan');
-        let taikhoan = taikhoans.find((item) => item.idTaiKhoan == idTaiKhoan);
+    
 
-        $('#modelSuaTaiKhoan').find('.idTaiKhoan').val(taikhoan.idTaiKhoan);
-        $('#modelSuaTaiKhoan').find('.username').val(taikhoan.username);
-        $('#modelSuaTaiKhoan').find('.password').val(taikhoan.password);
-        $('#modelSuaTaiKhoan').find('.re_password').val(taikhoan.password);
-        $('#modelSuaTaiKhoan').find('.loai').val(taikhoan.loai);
+        let taiKhoan = taiKhoans.find(
+            (item) => item.idTaiKhoan == idTaiKhoan
+        );
 
-        refreshSuaTaikhoanAlert([], "");
+
+        $('#modelSuaTaiKhoan').find('.idTaiKhoan').val(idTaiKhoan);
+    
+
+
+        $('#modelSuaTaiKhoan').find('.username').val(taiKhoan.username);
+    
+        $('#modelSuaTaiKhoan').find('.password').val(taiKhoan.password);
+    
+        $('#modelSuaTaiKhoan').find('.loai').val(taiKhoan.loai);
+    
+
+        refreshSuaTaiKhoanAlert([], "");
     });
-
-    //Initialize final
 });
 
-//Variables
-
 //Functions
-//Refresh data in model SuaTaiKhoan with data in taikhoansTypes
+//Refresh data in model SuaTaiKhoan with data in taiKhoansTypes
 function refreshDataInModelSuaTaiKhoan() {
-    let loai = $('#modelSuaTaiKhoan .loai');
-    let loaiHtml = '';
-
-    taikhoansTypes.forEach((element, index) => (loaiHtml += `<option value="${index}">${element}</option>`));
-
-    loai.html(loaiHtml);
 }
 
-//Refresh sua taikhoan Alert
-function refreshSuaTaikhoanAlert(alerts, type = 'danger') {
+//Refresh sua taiKhoan Alert
+function refreshSuaTaiKhoanAlert(alerts, type = 'danger') {
     let suaTaiKhoanAlerts = $('#modelSuaTaiKhoan .alerts');
     let suaTaiKhoanAlertsHtml = '';
     for (let alert of alerts) {
@@ -62,73 +67,67 @@ function refreshSuaTaikhoanAlert(alerts, type = 'danger') {
     suaTaiKhoanAlerts.html(suaTaiKhoanAlertsHtml);
 }
 
-//Add new taikhoan
-function suaTaiKhoanAJAX(taikhoan) {
+//Add new taiKhoan
+function suaTaiKhoanAJAX(taiKhoan) {
     return new Promise(function (resolve, reject) {
-        $.ajax({ method: 'PATCH', url: '/api/tai-khoan', data: taikhoan })
+        $.ajax({ method: 'PATCH', url: '/api/tai-khoan', data: taiKhoan })
             .done(function (data, status, xhr) {
                 let errors = data.errors;
                 let result = data;
 
                 if (errors && errors.length && errors.length > 0) {
-                    refreshSuaTaikhoanAlert(errors);
+                    refreshSuaTaiKhoanAlert(errors);
                     return;
                 }
 
                 if (result) {
-                    refreshSuaTaikhoanAlert(['Sửa thành công ' + result], 'success');
+                    refreshSuaTaiKhoanAlert(['Sửa thành công ' + result], 'success');
 
-                    editRowInTable(taikhoan);
+                    editRowInTable(taiKhoan);
 
                     $("#modelSuaTaiKhoan").modal('hide');
-                    swal({ text: 'Sửa thành công ', icon: 'success'});
+                    swal({ text: 'Sửa thành công ', icon: 'success', timer: 1000});
                 } else {
-                    refreshSuaTaikhoanAlert(['Sửa thất bại ' + result], 'danger');
+                    refreshSuaTaiKhoanAlert(['Sửa thất bại ' + result], 'danger');
                 }
             })
             .fail(function (data, status, xhr) {
                 let error = data.responseJSON.error;
                 if (error && error.code && error.message && error.detail) {
                     let errorString = `Mã lỗi ${error.code}, Tên lỗi ${error.message}, Nội dung lỗi ${error.detail}`;
-                    refreshSuaTaikhoanAlert([errorString], 'danger');
+                    refreshSuaTaiKhoanAlert([errorString], 'danger');
                 } else {
-                    refreshSuaTaikhoanAlert([data.responseText], 'danger');
+                    refreshSuaTaiKhoanAlert([data.responseText], 'danger');
                 }
             });
     });
 }
 
-//Sua Taikhoan validator
-function suaTaikhoanValidator(taikhoan) {
+//Sua TaiKhoan validator
+function suaTaiKhoanValidator(taiKhoan) {
     let errors = [];
 
-    if (!taikhoan) {
+    if (!taiKhoan) {
         errors.push('Tài khoản không tồn tại ');
     }
 
-    if (!taikhoan.idTaiKhoan) {
-        errors.push('Không thể xác định Id tài khoản ');
-    }
 
-    if (!taikhoan.username) {
-        errors.push('Tên đăng nhập không được để trống ');
+    if (!taiKhoan.idTaiKhoan) {
+        errors.push('Không thể xác định id tài khoản ');
     }
-
-    if (!taikhoan.password) {
-        errors.push('Mật khẩu không được để trống ');
+    
+    if (!taiKhoan.username) {
+        errors.push('Không thể xác định tên đăng nhập ');
     }
-
-    if (!taikhoan.re_password) {
-        errors.push('Nhập lại Mật khẩu không được để trống ');
+    
+    if (!taiKhoan.password) {
+        errors.push('Không thể xác định mật khẩu ');
     }
-
-    if (taikhoan.password != taikhoan.re_password) {
-        errors.push('Mật khẩu khác Nhập lại Mật khẩu');
+    
+    if (!taiKhoan.loai) {
+        errors.push('Không thể xác định loại ');
     }
-
-    if (!taikhoan.loai) {
-        errors.push('Loại tài khoản không được để trống ');
-    }
+    
 
     return errors;
-}
+}    

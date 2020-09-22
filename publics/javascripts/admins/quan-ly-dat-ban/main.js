@@ -1,14 +1,14 @@
 
 $(document).ready(function () {
     //Initialize Table
-    tableQuanLyTaiKhoan = $('#tableQuanLyTaiKhoan').DataTable({
+    tableQuanLyDatBan = $('#tableQuanLyDatBan').DataTable({
         columnDefs: [
 
             {
                 targets: 0,
                 render: function (data, type, row, meta) {
                     let renderData = data;
-                    return `<span class="idTaiKhoan" data="${data}">${renderData}</span>`;
+                    return `<span class="idKhachHang" data="${data}">${renderData}</span>`;
                 }
             },
     
@@ -16,7 +16,7 @@ $(document).ready(function () {
                 targets: 1,
                 render: function (data, type, row, meta) {
                     let renderData = data;
-                    return `<span class="username" data="${data}">${renderData}</span>`;
+                    return `<span class="idBan" data="${data}">${renderData}</span>`;
                 }
             },
     
@@ -24,7 +24,7 @@ $(document).ready(function () {
                 targets: 2,
                 render: function (data, type, row, meta) {
                     let renderData = data;
-                    return `<span class="password" data="${data}">${renderData}</span>`;
+                    return `<span class="thoiGianLap" data="${data}">${renderData}</span>`;
                 }
             },
     
@@ -32,22 +32,30 @@ $(document).ready(function () {
                 targets: 3,
                 render: function (data, type, row, meta) {
                     let renderData = data;
-                    return `<span class="loai" data="${data}">${renderData}</span>`;
+                    return `<span class="thoiGianNhan" data="${data}">${renderData}</span>`;
                 }
             },
     
             {
                 targets: 4,
                 render: function (data, type, row, meta) {
-                    let taiKhoan = data;
+                    let renderData = data;
+                    return `<span class="ghiChu" data="${data}">${renderData}</span>`;
+                }
+            },
+    
+            {
+                targets: 5,
+                render: function (data, type, row, meta) {
+                    let datBan = data;
                     let renderData = `
-<button type="button" class="btn btn-outline-secondary rounded-0 m-1" data-toggle="modal" data-target='#modelSuaTaiKhoan' 
-idTaiKhoan="${taiKhoan.idTaiKhoan}"
+<button type="button" class="btn btn-outline-secondary rounded-0 m-1" data-toggle="modal" data-target='#modelSuaDatBan' 
+idKhachHang="${datBan.idKhachHang}" idBan="${datBan.idBan}" thoiGianLap="${datBan.thoiGianLap}"
 >
     <i class="fas fa-edit"></i>
 </button>
 
-<button type="button" class="btn btn-outline-dark rounded-0 m-1" onclick="deleteTaiKhoanRowInTable($(this));">
+<button type="button" class="btn btn-outline-dark rounded-0 m-1" onclick="deleteDatBanRowInTable($(this));">
     <i class="fas fa-trash"></i>
 </button>
 `;
@@ -70,31 +78,31 @@ idTaiKhoan="${taiKhoan.idTaiKhoan}"
 });
 
 //Functions
-//Get taiKhoans
-function getTaiKhoans() {
+//Get datBans
+function getDatBans() {
     return new Promise(function (resolve, reject) {
-        $.get('/api/tai-khoan', {}, function (data, status, xhr) {
+        $.get('/api/dat-ban', {}, function (data, status, xhr) {
             resolve(data);
         });
     });
 }
 
-//Refresh data in table with data in taiKhoans
+//Refresh data in table with data in datBans
 function refreshTableData() {
-    tableQuanLyTaiKhoan.clear();
-    for (let taiKhoan of taiKhoans) {
-        tableQuanLyTaiKhoan.row.add([
-            taiKhoan.idTaiKhoan, taiKhoan.username, taiKhoan.password, taiKhoan.loai, taiKhoan
+    tableQuanLyDatBan.clear();
+    for (let datBan of datBans) {
+        tableQuanLyDatBan.row.add([
+            datBan.idKhachHang, datBan.idBan, datBan.thoiGianLap, datBan.thoiGianNhan, datBan.ghiChu, datBan
         ]);
     }
-    tableQuanLyTaiKhoan.draw();
+    tableQuanLyDatBan.draw();
 }
 
 //Refresh all data in page
 async function refreshPageData() {
-    refreshDataInModelThemTaiKhoan();
-    refreshDataInModelSuaTaiKhoan();
+    refreshDataInModelThemDatBan();
+    refreshDataInModelSuaDatBan();
 
-    taiKhoans = await getTaiKhoans();
+    datBans = await getDatBans();
     refreshTableData();
 }    

@@ -1,27 +1,33 @@
+
 $(document).ready(function () {
     //Initialize Button Events
-    //ThemTaikhoan Confirm
+    //ThemTaiKhoan Confirm
     $('#modelThemTaiKhoan .confirm').click(async function () {
-        let username = $(this).parents('form').find('.username').val();
-        let password = $(this).parents('form').find('.password').val();
-        let re_password = $(this).parents('form').find('.re_password').val();
-        let loai = $(this).parents('form').find('.loai').val();
-        let taikhoan = { username: username, password: password, re_password: re_password, loai: loai };
 
-        let errors = themTaikhoanValidator(taikhoan);
+        let idTaiKhoan = $(this).parents('form').find('.idTaiKhoan').val();
+    
+        let username = $(this).parents('form').find('.username').val();
+    
+        let password = $(this).parents('form').find('.password').val();
+    
+        let loai = $(this).parents('form').find('.loai').val();
+    
+        let taiKhoan = { idTaiKhoan : idTaiKhoan, username : username, password : password, loai : loai };
+
+        let errors = themTaiKhoanValidator(taiKhoan);
 
         if (errors.length > 0) {
-            refreshThemTaikhoanAlert(errors);
+            refreshThemTaiKhoanAlert(errors);
             return;
         }
 
-        await themTaiKhoanAJAX(taikhoan);
+        await themTaiKhoanAJAX(taiKhoan);
     });
 
     //Events
-    //Set taikhoan current value When model showup
+    //Set taiKhoan current value When model showup
     $('#modelThemTaiKhoan').on('show.bs.modal', function (event) {
-        refreshThemTaikhoanAlert([], "");
+        refreshThemTaiKhoanAlert([], "");
     });
 
     //Initialize final
@@ -30,18 +36,12 @@ $(document).ready(function () {
 //Variables
 
 //Functions
-//Refresh data in model ThemTaiKhoan with data in taikhoansTypes
+//Refresh data in model ThemTaiKhoan with data in taiKhoansTypes
 function refreshDataInModelThemTaiKhoan() {
-    let loai = $('#modelThemTaiKhoan .loai');
-    let loaiHtml = '';
-
-    taikhoansTypes.forEach((element, index) => (loaiHtml += `<option value="${index}">${element}</option>`));
-
-    loai.html(loaiHtml);
 }
 
-//Refresh them taikhoan Alert
-function refreshThemTaikhoanAlert(alerts, type = 'danger') {
+//Refresh them taiKhoan Alert
+function refreshThemTaiKhoanAlert(alerts, type = 'danger') {
     let themTaiKhoanAlerts = $('#modelThemTaiKhoan .alerts');
     let themTaiKhoanAlertsHtml = '';
     for (let alert of alerts) {
@@ -50,70 +50,67 @@ function refreshThemTaikhoanAlert(alerts, type = 'danger') {
     themTaiKhoanAlerts.html(themTaiKhoanAlertsHtml);
 }
 
-//Add new taikhoan
-function themTaiKhoanAJAX(taikhoan) {
+//Add new taiKhoan
+function themTaiKhoanAJAX(taiKhoan) {
     return new Promise(function (resolve, reject) {
-        $.ajax({ method: 'POST', url: '/api/tai-khoan', data: taikhoan })
+        $.ajax({ method: 'POST', url: '/api/tai-khoan', data: taiKhoan })
             .done(function (data, status, xhr) {
                 let errors = data.errors;
                 let result = data;
 
                 if (errors && errors.length && errors.length > 0) {
-                    refreshThemTaikhoanAlert(errors);
+                    refreshThemTaiKhoanAlert(errors);
                     return;
                 }
 
                 if (result) {
-                    refreshThemTaikhoanAlert(['Thêm thành công ' + result], 'success');
+                    refreshThemTaiKhoanAlert(['Thêm thành công ' + result], 'success');
 
-                    taikhoan.idTaiKhoan = result;
-                    addNewRowToTable(taikhoan);
+                    taiKhoan.idTaiKhoan = result;
+                    addNewRowToTable(taiKhoan);
 
                     $('#modelThemTaiKhoan').modal('hide');
-                    swal({ text: 'Thêm thành công ', icon: 'success' });
+                    swal({ text: 'Thêm thành công ', icon: 'success' , timer: 1000});
                 } else {
-                    refreshThemTaikhoanAlert(['Thêm thất bại ' + result], 'danger');
+                    refreshThemTaiKhoanAlert(['Thêm thất bại ' + result], 'danger');
                 }
             })
             .fail(function (data, status, xhr) {
                 let error = data.responseJSON.error;
                 if (error && error.code && error.message && error.detail) {
                     let errorString = `Mã lỗi ${error.code}, Tên lỗi ${error.message}, Nội dung lỗi ${error.detail}`;
-                    refreshThemTaikhoanAlert([errorString], 'danger');
+                    refreshThemTaiKhoanAlert([errorString], 'danger');
                 } else {
-                    refreshThemTaikhoanAlert([data.responseText], 'danger');
+                    refreshThemTaiKhoanAlert([data.responseText], 'danger');
                 }
             });
     });
 }
 
-//Them Taikhoan validator
-function themTaikhoanValidator(taikhoan) {
+//Them TaiKhoan validator
+function themTaiKhoanValidator(taiKhoan) {
     let errors = [];
 
-    if (!taikhoan) {
+    if (!taiKhoan) {
         errors.push('Tài khoản không tồn tại ');
     }
 
-    if (!taikhoan.username) {
-        errors.push('Tên đăng nhập không được để trống ');
-    }
 
-    if (!taikhoan.password) {
-        errors.push('Mật khẩu không được để trống ');
-    }
 
-    if (!taikhoan.re_password) {
-        errors.push('Nhập lại Mật khẩu không được để trống ');
-    }
 
-    if (taikhoan.password != taikhoan.re_password) {
-        errors.push('Mật khẩu khác Nhập lại Mật khẩu');
-    }
-
-    if (!taikhoan.loai) {
-        errors.push('Loại tài khoản không được để trống ');
-    }
+        if (!taiKhoan.username) {
+            errors.push('Không thể xác định tên đăng nhập ');
+        }
+        
+        if (!taiKhoan.password) {
+            errors.push('Không thể xác định mật khẩu ');
+        }
+        
+        if (!taiKhoan.loai) {
+            errors.push('Không thể xác định loại ');
+        }
+        
 
     return errors;
 }
+    

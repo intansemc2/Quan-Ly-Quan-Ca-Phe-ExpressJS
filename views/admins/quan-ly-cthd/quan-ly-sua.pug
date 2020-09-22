@@ -1,0 +1,33 @@
+
+// Model sửa chi tiết hóa đơn
+#modelSuaCthd.modal.fade(tabindex='-1', role='dialog', aria-labelledby='ModelSuaCthd aria-labelledby', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+        form.modal-content
+            .modal-header
+                h5.modal-title Sửa chi tiết hóa đơn 
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+            .modal-body                
+                .alerts
+                    // Các alert của phần này
+                input.idCthd(type='hidden')
+
+                .form-group
+                    label.small.mb-1(for='idHoaDon') Id hóa đơn  
+                    input#idHoaDon(type='int', class='form-control py-4 idHoaDon' , required='true', placeholder='Nhập Id hóa đơn')
+                .form-group
+                    label.small.mb-1(for='idSanPham') Id sản phẩm  
+                    input#idSanPham(type='int', class='form-control py-4 idSanPham' , required='true', placeholder='Nhập Id sản phẩm')
+
+                .form-group
+                    label.small.mb-1(for='soLuong') Số lượng  
+                    input#soLuong(type='int', class='form-control py-4 soLuong' , placeholder='Nhập Số lượng', required)
+                .form-group
+                    label.small.mb-1(for='donGia') Đơn giá  
+                    input#donGia(type='int', class='form-control py-4 donGia' , placeholder='Nhập Đơn giá', required)
+                .form-group
+                    label.small.mb-1(for='diemTichLuy') Điểm tích lũy  
+                    input#diemTichLuy(type='int', class='form-control py-4 diemTichLuy' , placeholder='Nhập Điểm tích lũy', required)
+            .modal-footer
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa Chi tiết hóa đơn')
+                input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')
