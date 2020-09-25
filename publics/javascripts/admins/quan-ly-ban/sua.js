@@ -4,13 +4,11 @@ $(document).ready(function () {
     //SuaBan Confirm
     $('#modelSuaBan .confirm').click(async function () {
 
-        let idBan = $(this).parents('form').find('.idBan').val();
+        let maban = $(this).parents('form').find('.maban').val();
     
         let ten = $(this).parents('form').find('.ten').val();
     
-        let ghiChu = $(this).parents('form').find('.ghiChu').val();
-    
-        let ban = { idBan : idBan, ten : ten, ghiChu : ghiChu };
+        let ban = { maban : maban, ten : ten };
 
         let errors = suaBanValidator(ban);
 
@@ -27,21 +25,19 @@ $(document).ready(function () {
     $('#modelSuaBan').on('show.bs.modal', function (event) {
         let suaBanTriggered = $(event.relatedTarget);
 
-        let idBan = suaBanTriggered.attr('idBan');
+        let maban = suaBanTriggered.attr('maban');
     
 
         let ban = bans.find(
-            (item) => item.idBan == idBan
+            (item) => item.maban == maban
         );
 
 
-        $('#modelSuaBan').find('.idBan').val(idBan);
+        $('#modelSuaBan').find('.maban').val(maban);
     
 
 
         $('#modelSuaBan').find('.ten').val(ban.ten);
-    
-        $('#modelSuaBan').find('.ghiChu').val(ban.ghiChu);
     
 
         refreshSuaBanAlert([], "");
@@ -108,8 +104,12 @@ function suaBanValidator(ban) {
     }
 
 
-    if (!ban.idBan) {
-        errors.push('Không thể xác định id bàn ');
+    if (!ban.maban) {
+        errors.push('Không thể xác định mã bàn ');
+    }
+    
+    if (!ban.ten) {
+        errors.push('Không thể xác định tên ');
     }
     
 

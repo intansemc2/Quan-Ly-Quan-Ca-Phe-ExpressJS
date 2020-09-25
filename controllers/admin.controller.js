@@ -1,3 +1,7 @@
+/*** 
+File: admin.controller.js 
+***/
+
 //Import Controllers
 const errorController = require('./error.controller');
 
@@ -11,170 +15,135 @@ const TaiKhoan = require('../models/taikhoan');
 
 //Routing Tongquat 
 module.exports.tongquat = async function (request, response, next) {
-    try {
-        response.render('admins/tong-quat', {
-            sidebarActiveTongquat: 'active',
-            breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Tổng quát', link: '/admin/tong-quat', isActive: 'active' }],
-            taikhoan: new TaiKhoan(1, 'admin')
-        });
-        next();
-    } catch (error) {
-        errorController.handle500(error, request, response, next);
-    }
-};
-
-module.exports.quanlyban = async function (request, response, next) {
-    try {
-        response.render('admins/quan-ly-ban', {
-            sidebarActiveQuanlyban: 'active',
-            breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý bàn', link: '/admin/quan-ly-ban', isActive: 'active' }],
-            taikhoan: new TaiKhoan(1, 'admin')
-        });
-        next();
-    } catch (error) {
-        errorController.handle500(error, request, response, next);
-    }
-};
-
-module.exports.quanlycthd = async function (request, response, next) {
-    try {
-        response.render('admins/quan-ly-cthd', {
-            sidebarActiveQuanlycthd: 'active',
-            breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý chi tiết hóa đơn', link: '/admin/quan-ly-cthd', isActive: 'active' }],
-            taikhoan: new TaiKhoan(1, 'admin')
-        });
-        next();
-    } catch (error) {
-        errorController.handle500(error, request, response, next);
-    }
-};
-
-module.exports.quanlyctkm = async function (request, response, next) {
-    try {
-        response.render('admins/quan-ly-ctkm', {
-            sidebarActiveQuanlyctkm: 'active',
-            breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý chi tiết khuyến mãi', link: '/admin/quan-ly-ctkm', isActive: 'active' }],
-            taikhoan: new TaiKhoan(1, 'admin')
-        });
-        next();
-    } catch (error) {
-        errorController.handle500(error, request, response, next);
-    }
-};
-
-module.exports.quanlydatban = async function (request, response, next) {
-    try {
-        response.render('admins/quan-ly-dat-ban', {
-            sidebarActiveQuanlydatban: 'active',
-            breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý đặt bàn', link: '/admin/quan-ly-dat-ban', isActive: 'active' }],
-            taikhoan: new TaiKhoan(1, 'admin')
-        });
-        next();
-    } catch (error) {
-        errorController.handle500(error, request, response, next);
-    }
-};
-
-module.exports.quanlyhoadon = async function (request, response, next) {
-    try {
-        response.render('admins/quan-ly-hoa-don', {
-            sidebarActiveQuanlyhoadon: 'active',
-            breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý hóa đơn', link: '/admin/quan-ly-hoa-don', isActive: 'active' }],
-            taikhoan: new TaiKhoan(1, 'admin')
-        });
-        next();
-    } catch (error) {
-        errorController.handle500(error, request, response, next);
-    }
-};
-
-module.exports.quanlykhachhang = async function (request, response, next) {
-    try {
-        response.render('admins/quan-ly-khach-hang', {
-            sidebarActiveQuanlykhachhang: 'active',
-            breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý khách hàng', link: '/admin/quan-ly-khach-hang', isActive: 'active' }],
-            taikhoan: new TaiKhoan(1, 'admin')
-        });
-        next();
-    } catch (error) {
-        errorController.handle500(error, request, response, next);
-    }
-};
-
-module.exports.quanlykhuyenmai = async function (request, response, next) {
-    try {
-        response.render('admins/quan-ly-khuyen-mai', {
-            sidebarActiveQuanlykhuyenmai: 'active',
-            breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý khuyến mãi', link: '/admin/quan-ly-khuyen-mai', isActive: 'active' }],
-            taikhoan: new TaiKhoan(1, 'admin')
-        });
-        next();
-    } catch (error) {
-        errorController.handle500(error, request, response, next);
-    }
-};
-
-module.exports.quanlyloaisanpham = async function (request, response, next) {
-    try {
-        response.render('admins/quan-ly-loai-san-pham', {
-            sidebarActiveQuanlyloaisanpham: 'active',
-            breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý loại sản phẩm', link: '/admin/quan-ly-loai-san-pham', isActive: 'active' }],
-            taikhoan: new TaiKhoan(1, 'admin')
-        });
-        next();
-    } catch (error) {
-        errorController.handle500(error, request, response, next);
-    }
-};
-
-module.exports.quanlynhanvien = async function (request, response, next) {
-    try {
-        response.render('admins/quan-ly-nhan-vien', {
-            sidebarActiveQuanlynhanvien: 'active',
-            breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý nhân viên', link: '/admin/quan-ly-nhan-vien', isActive: 'active' }],
-            taikhoan: new TaiKhoan(1, 'admin')
-        });
-        next();
-    } catch (error) {
-        errorController.handle500(error, request, response, next);
-    }
-};
-
-module.exports.quanlysanpham = async function (request, response, next) {
-    try {
-        response.render('admins/quan-ly-san-pham', {
-            sidebarActiveQuanlysanpham: 'active',
-            breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý sản phẩm', link: '/admin/quan-ly-san-pham', isActive: 'active' }],
-            taikhoan: new TaiKhoan(1, 'admin')
-        });
-        next();
-    } catch (error) {
-        errorController.handle500(error, request, response, next);
-    }
+try {
+    response.render('admins/tong-quat', {
+        sidebarActiveTongquat: 'active',
+        breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Tổng quát', link: '/admin/tong-quat', isActive: 'active' }],
+        taiKhoan: new TaiKhoan(1, 'admin')
+    });
+    next();
+} catch (error) {
+    errorController.handle500(error, request, response, next);
+}
 };
 
 module.exports.quanlytaikhoan = async function (request, response, next) {
-    try {
-        response.render('admins/quan-ly-tai-khoan', {
-            sidebarActiveQuanlytaikhoan: 'active',
-            breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý tài khoản', link: '/admin/quan-ly-tai-khoan', isActive: 'active' }],
-            taikhoan: new TaiKhoan(1, 'admin')
-        });
-        next();
-    } catch (error) {
-        errorController.handle500(error, request, response, next);
-    }
+try {
+    response.render('admins/quan-ly-taikhoan', {
+        sidebarActiveQuanlytaikhoan: 'active',
+        breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý tài khoản', link: '/admin/quan-ly-taikhoan', isActive: 'active' }],
+        taiKhoan: new TaiKhoan(1, 'admin')
+    });
+    next();
+} catch (error) {
+    errorController.handle500(error, request, response, next);
+}
 };
-
-module.exports.quanlythanhtoanhoadon = async function (request, response, next) {
-    try {
-        response.render('admins/quan-ly-thanh-toan-hoa-don', {
-            sidebarActiveQuanlythanhtoanhoadon: 'active',
-            breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý thanh toán hóa đơn', link: '/admin/quan-ly-thanh-toan-hoa-don', isActive: 'active' }],
-            taikhoan: new TaiKhoan(1, 'admin')
-        });
-        next();
-    } catch (error) {
-        errorController.handle500(error, request, response, next);
-    }
+module.exports.quanlynguonsanpham = async function (request, response, next) {
+try {
+    response.render('admins/quan-ly-nguonsanpham', {
+        sidebarActiveQuanlynguonsanpham: 'active',
+        breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý nguồn sản phẩm', link: '/admin/quan-ly-nguonsanpham', isActive: 'active' }],
+        taiKhoan: new TaiKhoan(1, 'admin')
+    });
+    next();
+} catch (error) {
+    errorController.handle500(error, request, response, next);
+}
+};
+module.exports.quanlyban = async function (request, response, next) {
+try {
+    response.render('admins/quan-ly-ban', {
+        sidebarActiveQuanlyban: 'active',
+        breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý bàn', link: '/admin/quan-ly-ban', isActive: 'active' }],
+        taiKhoan: new TaiKhoan(1, 'admin')
+    });
+    next();
+} catch (error) {
+    errorController.handle500(error, request, response, next);
+}
+};
+module.exports.quanlysanpham = async function (request, response, next) {
+try {
+    response.render('admins/quan-ly-sanpham', {
+        sidebarActiveQuanlysanpham: 'active',
+        breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý sản phẩm', link: '/admin/quan-ly-sanpham', isActive: 'active' }],
+        taiKhoan: new TaiKhoan(1, 'admin')
+    });
+    next();
+} catch (error) {
+    errorController.handle500(error, request, response, next);
+}
+};
+module.exports.quanlynhanvien = async function (request, response, next) {
+try {
+    response.render('admins/quan-ly-nhanvien', {
+        sidebarActiveQuanlynhanvien: 'active',
+        breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý nhân viên', link: '/admin/quan-ly-nhanvien', isActive: 'active' }],
+        taiKhoan: new TaiKhoan(1, 'admin')
+    });
+    next();
+} catch (error) {
+    errorController.handle500(error, request, response, next);
+}
+};
+module.exports.quanlykhachhang = async function (request, response, next) {
+try {
+    response.render('admins/quan-ly-khachhang', {
+        sidebarActiveQuanlykhachhang: 'active',
+        breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý khách hàng', link: '/admin/quan-ly-khachhang', isActive: 'active' }],
+        taiKhoan: new TaiKhoan(1, 'admin')
+    });
+    next();
+} catch (error) {
+    errorController.handle500(error, request, response, next);
+}
+};
+module.exports.quanlyxuathang = async function (request, response, next) {
+try {
+    response.render('admins/quan-ly-xuathang', {
+        sidebarActiveQuanlyxuathang: 'active',
+        breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý xuất hàng', link: '/admin/quan-ly-xuathang', isActive: 'active' }],
+        taiKhoan: new TaiKhoan(1, 'admin')
+    });
+    next();
+} catch (error) {
+    errorController.handle500(error, request, response, next);
+}
+};
+module.exports.quanlynhaphang = async function (request, response, next) {
+try {
+    response.render('admins/quan-ly-nhaphang', {
+        sidebarActiveQuanlynhaphang: 'active',
+        breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý nhập hàng', link: '/admin/quan-ly-nhaphang', isActive: 'active' }],
+        taiKhoan: new TaiKhoan(1, 'admin')
+    });
+    next();
+} catch (error) {
+    errorController.handle500(error, request, response, next);
+}
+};
+module.exports.quanlychitietxuathang = async function (request, response, next) {
+try {
+    response.render('admins/quan-ly-chitietxuathang', {
+        sidebarActiveQuanlychitietxuathang: 'active',
+        breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý chi tiết xuất hàng', link: '/admin/quan-ly-chitietxuathang', isActive: 'active' }],
+        taiKhoan: new TaiKhoan(1, 'admin')
+    });
+    next();
+} catch (error) {
+    errorController.handle500(error, request, response, next);
+}
+};
+module.exports.quanlychitietnhaphang = async function (request, response, next) {
+try {
+    response.render('admins/quan-ly-chitietnhaphang', {
+        sidebarActiveQuanlychitietnhaphang: 'active',
+        breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý chi tiết nhập hàng', link: '/admin/quan-ly-chitietnhaphang', isActive: 'active' }],
+        taiKhoan: new TaiKhoan(1, 'admin')
+    });
+    next();
+} catch (error) {
+    errorController.handle500(error, request, response, next);
+}
 };

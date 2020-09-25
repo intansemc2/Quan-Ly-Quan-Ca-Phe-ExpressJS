@@ -1,232 +1,237 @@
+/*** 
+File: nhanvien.database.js 
+***/
+
 //Import liblaries
 const mysql = require('mysql');
 
 //Import Class
 const baseDatabase = require('./base.database');
-const NhanVien = require('../models/nhanvien');
+const Nhanvien = require('../models/nhanvien');
 
 module.exports.createWHEREPart = function (input, isAllowGetAll = false, isPrimarykeyOnly = false) {
-    let query = '';
-    if (input) {
-        //Input is the id
-        if (typeof input === 'number' || typeof input === 'string') {
-            query += ` AND ID_NHAN_VIEN = ${mysql.escape(input)} `;
-        }
-        //Input is object
-        else if (typeof input === 'object') {
-            if (input.idNhanVien) {
-                query += ` AND ID_NHAN_VIEN = ${mysql.escape(input.idNhanVien)} `;
-                if (isPrimarykeyOnly) {
-                    return ` WHERE 1=1 ${query}`;
-                }
-            }
+let query = "";
+if (input) {
 
-            if (input.ten) {
-                query += ` AND TEN = ${mysql.escape(input.ten)} `;
-            }
-
-            if (input.sdt) {
-                query += ` AND SDT = ${mysql.escape(input.sdt)} `;
-            }
-
-            if (input.loai) {
-                query += ` AND LOAI = ${mysql.escape(input.loai)} `;
-            }
-
-            if (input.idTaiKhoan) {
-                query += ` AND ID_TAI_KHOAN = ${mysql.escape(input.idTaiKhoan)} `;
-            }
-
-            if (input.ngaySinh) {
-                query += ` AND NGAY_SINH = ${mysql.escape(input.ngaySinh)} `;
-            }
-
-            if (input.linkAnh) {
-                query += ` AND LINK_ANH = ${mysql.escape(input.linkAnh)} `;
-            }
-
-            if (input.email) {
-                query += ` AND EMAIL = ${mysql.escape(input.email)} `;
-            }
-        }
-        //Input is Array
-        else if (typeof input === 'array' && input.length > 0) {
-            query += ' AND (';
-            query += input
-                .map((item) => {
-                    if (typeof item === 'number' || typeof item === 'string') {
-                        return ` ID_NHAN_VIEN = ${mysql.escape(item)} `;
-                    }
-                    return ` ID_NHAN_VIEN = ${mysql.escape(item.idNhanVien)} `;
-                })
-                .join(' OR ');
-            query += ')';
+//Input is the id
+if (typeof input === 'number' || typeof input === 'string') {
+    query += ` AND maNhanVien = ${mysql.escape(input)} `;
+}
+//Input is object
+else if (typeof input === 'object') {
+    if (input.manhanvien) {
+        query += ` AND maNhanVien = ${mysql.escape(input.manhanvien)} `;
+        if (isPrimarykeyOnly) {
+            return ` WHERE 1=1 ${query}`;
         }
     }
-
-    if (query !== '' || (isAllowGetAll && query === '')) {
-        query = ` WHERE 1=1 ${query}`;
-    } else {
-        query = ' WHERE 1=0 ';
+    
+    if (input.mataikhoan) {
+        query += ` AND maTaiKhoan = ${mysql.escape(input.mataikhoan)} `;
     }
+            
 
-    return query;
+    if (input.ten) {
+        query += ` AND ten = ${mysql.escape(input.ten)} `;
+    }
+            
+
+    if (input.ngaysinh) {
+        query += ` AND ngaySinh = ${mysql.escape(input.ngaysinh)} `;
+    }
+            
+
+    if (input.sodienthoai) {
+        query += ` AND soDienThoai = ${mysql.escape(input.sodienthoai)} `;
+    }
+            
+
+    if (input.diachi) {
+        query += ` AND diaChi = ${mysql.escape(input.diachi)} `;
+    }
+            
+}
+//Input is Array
+else if (typeof input === 'array' && input.length > 0) {
+    query += ' AND (';
+    query += input
+        .map((item) => {
+            if (typeof item === 'number' || typeof item === 'string') {
+                return ` maNhanVien = ${mysql.escape(item)} `;
+            }
+            return ` maNhanVien = ${mysql.escape(item.manhanvien)} `;
+        })
+        .join(' OR ');
+    query += ')';
+}
+
+}
+
+if (query !== "" || (isAllowGetAll && query === '')) {
+query = ` WHERE 1=1 ${query}`;
+}
+else {
+query = " WHERE 1=0 "
+}
+
+return query;
 };
 
 module.exports.createQueryGet = function (input) {
-    let query = 'SELECT * FROM nhan_vien';
-    query += module.exports.createWHEREPart(input, true);
-    return query;
+let query = 'SELECT * FROM nhanVien';
+query += module.exports.createWHEREPart(input, true);
+return query;
 };
 
 module.exports.createQueryPost = function (input) {
-    if (!input.idNhanVien) {
-        input.idNhanVien = null;
-    }
 
-    if (!input.ten) {
-        input.ten = null;
-    }
+if (!input.manhanvien) {
+input.manhanvien = null;
+}
+    
 
-    if (!input.sdt) {
-        input.sdt = null;
-    }
+if (!input.mataikhoan) {
+input.mataikhoan = null;
+}
+    
 
-    if (!input.loai) {
-        input.loai = null;
-    }
+if (!input.ten) {
+input.ten = null;
+}
+    
 
-    if (!input.idTaiKhoan) {
-        input.idTaiKhoan = null;
-    }
+if (!input.ngaysinh) {
+input.ngaysinh = null;
+}
+    
 
-    if (!input.ngaySinh) {
-        input.ngaySinh = null;
-    }
+if (!input.sodienthoai) {
+input.sodienthoai = null;
+}
+    
 
-    if (!input.linkAnh) {
-        input.linkAnh = null;
-    }
-
-    if (!input.email) {
-        input.email = null;
-    }
-
-    let query = `INSERT INTO nhan_vien (ID_NHAN_VIEN,TEN,SDT,LOAI,ID_TAI_KHOAN,NGAY_SINH,LINK_ANH,EMAIL) VALUES ( ${mysql.escape(input.idNhanVien)},${mysql.escape(input.ten)},${mysql.escape(input.sdt)},${mysql.escape(input.loai)},${mysql.escape(input.idTaiKhoan)},${mysql.escape(input.ngaySinh)},${mysql.escape(input.linkAnh)},${mysql.escape(input.email)} )`;
-    return query;
+if (!input.diachi) {
+input.diachi = null;
+}
+    
+let query = `INSERT INTO FROM nhanVien (maNhanVien,maTaiKhoan,ten,ngaySinh,soDienThoai,diaChi) VALUES ( ${mysql.escape(input.manhanvien)},${mysql.escape(input.mataikhoan)},${mysql.escape(input.ten)},${mysql.escape(input.ngaysinh)},${mysql.escape(input.sodienthoai)},${mysql.escape(input.diachi)} )`;
+return query;
 };
 
 module.exports.createQueryPatch = function (input) {
-    let query = `UPDATE nhan_vien SET `;
-    let queryChanges = [];
+let query = `UPDATE FROM nhanVien SET `;
+let queryChanges = [];
 
-    if (input.ten) {
-        queryChanges.push(` TEN = ${mysql.escape(input.ten)} `);
-    }
 
-    if (input.sdt) {
-        queryChanges.push(` SDT = ${mysql.escape(input.sdt)} `);
-    }
+if (input.mataikhoan) {
+queryChanges.push(` maTaiKhoan = ${mysql.escape(input.mataikhoan)} `);
+}
+        
 
-    if (input.loai) {
-        queryChanges.push(` LOAI = ${mysql.escape(input.loai)} `);
-    }
+if (input.ten) {
+queryChanges.push(` ten = ${mysql.escape(input.ten)} `);
+}
+        
 
-    if (input.idTaiKhoan) {
-        queryChanges.push(` ID_TAI_KHOAN = ${mysql.escape(input.idTaiKhoan)} `);
-    }
+if (input.ngaysinh) {
+queryChanges.push(` ngaySinh = ${mysql.escape(input.ngaysinh)} `);
+}
+        
 
-    if (input.ngaySinh) {
-        queryChanges.push(` NGAY_SINH = ${mysql.escape(input.ngaySinh)} `);
-    }
+if (input.sodienthoai) {
+queryChanges.push(` soDienThoai = ${mysql.escape(input.sodienthoai)} `);
+}
+        
 
-    if (input.linkAnh) {
-        queryChanges.push(` LINK_ANH = ${mysql.escape(input.linkAnh)} `);
-    }
+if (input.diachi) {
+queryChanges.push(` diaChi = ${mysql.escape(input.diachi)} `);
+}
+        
 
-    if (input.email) {
-        queryChanges.push(` EMAIL = ${mysql.escape(input.email)} `);
-    }
 
-    if (!input.oldIdNhanVien) {
-        input.oldIdNhanVien = input.idNhanVien;
-    }
+if (!input.oldManhanvien) {
+input.oldManhanvien = input.manhanvien;
+}
+        
 
-    query += queryChanges.join(',');
-    query += module.exports.createWHEREPart({ idNhanVien: input.oldIdNhanVien, ten: input.oldTen, sdt: input.oldSdt, loai: input.oldLoai, idTaiKhoan: input.oldIdTaiKhoan, ngaySinh: input.oldNgaySinh, linkAnh: input.oldLinkAnh, email: input.oldEmail });
+query += queryChanges.join(',');
+query += module.exports.createWHEREPart({manhanvien: input.oldManhanvien,mataikhoan: input.oldMataikhoan,ten: input.oldTen,ngaysinh: input.oldNgaysinh,sodienthoai: input.oldSodienthoai,diachi: input.oldDiachi});
 
-    return query;
+
+return query;
 };
 
 module.exports.createQueryDelete = function (input) {
-    let query = `DELETE FROM nhan_vien`;
-    query += module.exports.createWHEREPart(input, true);
-    return query;
+let query = `DELETE FROM nhanVien`;
+query += module.exports.createWHEREPart(input, true);
+return query;
 };
 
 module.exports.createQueryExists = function (input, isPrimarykeyOnly) {
-    let query = `SELECT COUNT(*) AS NUMBER_ROWS FROM nhan_vien `;
+let query = `SELECT COUNT(*) AS NUMBER_ROWS FROM nhanVien `;
 
-    if (isPrimarykeyOnly) {
-        query += module.exports.createWHEREPart({ idNhanVien: input.idNhanVien }, false, true);
-    } else {
-        query += module.exports.createWHEREPart(input, false, true);
-    }
+if (isPrimarykeyOnly) {
+query += module.exports.createWHEREPart({ manhanvien: input.manhanvien }, false, true);
+} else {
+query += module.exports.createWHEREPart(input, false, true);
+}
 
-    return query;
+return query;
 };
 
 module.exports.converResultGet = function (input) {
-    let output = new NhanVien();
+let output = new Nhanvien();
 
-    output.idNhanVien = input.ID_NHAN_VIEN;
+output.manhanvien = input.maNhanVien;
+    
 
-    output.ten = input.TEN;
+output.mataikhoan = input.maTaiKhoan;
+    
 
-    output.sdt = input.SDT;
+output.ten = input.ten;
+    
 
-    output.loai = input.LOAI;
+output.ngaysinh = input.ngaySinh;
+    
 
-    output.idTaiKhoan = input.ID_TAI_KHOAN;
+output.sodienthoai = input.soDienThoai;
+    
 
-    output.ngaySinh = input.NGAY_SINH;
-
-    output.linkAnh = input.LINK_ANH;
-
-    output.email = input.EMAIL;
-
-    return output;
+output.diachi = input.diaChi;
+    
+return output;
 };
 
 module.exports.get = function (input) {
-    return baseDatabase.get(input, module.exports.createQueryGet, module.exports.converResultGet);
+return baseDatabase.get(input, module.exports.createQueryGet, module.exports.converResultGet);
 };
 
 module.exports.post = function (input) {
-    if (!input) {
-        throw new Error('Missing the input');
-    }
-    return baseDatabase.post(input, module.exports.createQueryPost);
+if (!input) {
+throw new Error("Missing the input");
+}
+return baseDatabase.post(input, module.exports.createQueryPost);
 };
 
 module.exports.put = function (input) {
-    return baseDatabase.put(input, module.exports.createQueryExists, module.exports.createQueryPatch, module.exports.createQueryPost);
+return baseDatabase.put(input, module.exports.createQueryExists, module.exports.createQueryPatch, module.exports.createQueryPost);
 };
 
 module.exports.patch = function (input) {
-    if (!input) {
-        throw new Error('Missing the input');
-    }
-    if (!input.idNhanVien && !input.oldIdNhanVien) {
-        throw new Error('Missing the identity properties');
-    }
-    return baseDatabase.patch(input, module.exports.createQueryPatch);
+if (!input) {
+throw new Error("Missing the input");
+}
+if (!input.manhanvien && !input.oldManhanvien) {
+throw new Error("Missing the identity properties");
+}
+return baseDatabase.patch(input, module.exports.createQueryPatch);
 };
 
 module.exports.delete = function (input) {
-    return baseDatabase.delete(input, module.exports.createQueryDelete);
+return baseDatabase.delete(input, module.exports.createQueryDelete);
 };
 
 module.exports.exists = function (input) {
-    return baseDatabase.exists(input, module.exports.createQueryExists);
+return baseDatabase.exists(input, module.exports.createQueryExists);
 };
+

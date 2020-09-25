@@ -1,8 +1,11 @@
+/*** 
+File: ban.js 
+***/
+
 class Ban {
-    constructor() {
-        this.idBan = null;
-        this.ten = null;
-        this.ghiChu = null;
+    constructor(maBan = null, ten = null) {
+this.maBan = maBan;
+this.ten = ten;
     }
 }
 

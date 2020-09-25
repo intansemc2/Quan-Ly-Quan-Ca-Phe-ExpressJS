@@ -1,3 +1,7 @@
+/*** 
+File: admin.router.js 
+***/
+
 //Import liblaries
 const express = require('express');
 const router = express.Router();
@@ -11,41 +15,46 @@ router.get('/', adminController.tongquat);
 //Router tongquat
 router.get('/tong-quat', adminController.tongquat);
 
+
+//Router quanlytaikhoan
+router.get('/quan-ly-taikhoan', adminController.quanlytaikhoan);
+
+
+//Router quanlynguonsanpham
+router.get('/quan-ly-nguonsanpham', adminController.quanlynguonsanpham);
+
+
 //Router quanlyban
 router.get('/quan-ly-ban', adminController.quanlyban);
 
-//Router quanlycthd
-router.get('/quan-ly-cthd', adminController.quanlycthd);
-
-//Router quanlyctkm
-router.get('/quan-ly-ctkm', adminController.quanlyctkm);
-
-//Router quanlydatban
-router.get('/quan-ly-dat-ban', adminController.quanlydatban);
-
-//Router quanlyhoadon
-router.get('/quan-ly-hoa-don', adminController.quanlyhoadon);
-
-//Router quanlykhachhang
-router.get('/quan-ly-khach-hang', adminController.quanlykhachhang);
-
-//Router quanlykhuyenmai
-router.get('/quan-ly-khuyen-mai', adminController.quanlykhuyenmai);
-
-//Router quanlyloaisanpham
-router.get('/quan-ly-loai-san-pham', adminController.quanlyloaisanpham);
-
-//Router quanlynhanvien
-router.get('/quan-ly-nhan-vien', adminController.quanlynhanvien);
 
 //Router quanlysanpham
-router.get('/quan-ly-san-pham', adminController.quanlysanpham);
+router.get('/quan-ly-sanpham', adminController.quanlysanpham);
 
-//Router quanlytaikhoan
-router.get('/quan-ly-tai-khoan', adminController.quanlytaikhoan);
 
-//Router quanlythanhtoanhoadon
-router.get('/quan-ly-thanh-toan-hoa-don', adminController.quanlythanhtoanhoadon);
+//Router quanlynhanvien
+router.get('/quan-ly-nhanvien', adminController.quanlynhanvien);
+
+
+//Router quanlykhachhang
+router.get('/quan-ly-khachhang', adminController.quanlykhachhang);
+
+
+//Router quanlyxuathang
+router.get('/quan-ly-xuathang', adminController.quanlyxuathang);
+
+
+//Router quanlynhaphang
+router.get('/quan-ly-nhaphang', adminController.quanlynhaphang);
+
+
+//Router quanlychitietxuathang
+router.get('/quan-ly-chitietxuathang', adminController.quanlychitietxuathang);
+
+
+//Router quanlychitietnhaphang
+router.get('/quan-ly-chitietnhaphang', adminController.quanlychitietnhaphang);
+
 
 //Module export
 module.exports = router;

@@ -4,13 +4,11 @@ $(document).ready(function () {
     //ThemBan Confirm
     $('#modelThemBan .confirm').click(async function () {
 
-        let idBan = $(this).parents('form').find('.idBan').val();
+        let maban = $(this).parents('form').find('.maban').val();
     
         let ten = $(this).parents('form').find('.ten').val();
     
-        let ghiChu = $(this).parents('form').find('.ghiChu').val();
-    
-        let ban = { idBan : idBan, ten : ten, ghiChu : ghiChu };
+        let ban = { maban : maban, ten : ten };
 
         let errors = themBanValidator(ban);
 
@@ -96,6 +94,10 @@ function themBanValidator(ban) {
 
 
 
+        if (!ban.ten) {
+            errors.push('Không thể xác định tên ');
+        }
+        
 
     return errors;
 }

@@ -8,7 +8,7 @@ $(document).ready(function () {
                 targets: 0,
                 render: function (data, type, row, meta) {
                     let renderData = data;
-                    return `<span class="idBan" data="${data}">${renderData}</span>`;
+                    return `<span class="maban" data="${data}">${renderData}</span>`;
                 }
             },
     
@@ -23,18 +23,10 @@ $(document).ready(function () {
             {
                 targets: 2,
                 render: function (data, type, row, meta) {
-                    let renderData = data;
-                    return `<span class="ghiChu" data="${data}">${renderData}</span>`;
-                }
-            },
-    
-            {
-                targets: 3,
-                render: function (data, type, row, meta) {
                     let ban = data;
                     let renderData = `
 <button type="button" class="btn btn-outline-secondary rounded-0 m-1" data-toggle="modal" data-target='#modelSuaBan' 
-idBan="${ban.idBan}"
+maban="${ban.maban}"
 >
     <i class="fas fa-edit"></i>
 </button>
@@ -76,7 +68,7 @@ function refreshTableData() {
     tableQuanLyBan.clear();
     for (let ban of bans) {
         tableQuanLyBan.row.add([
-            ban.idBan, ban.ten, ban.ghiChu, ban
+            ban.maban, ban.ten, ban
         ]);
     }
     tableQuanLyBan.draw();

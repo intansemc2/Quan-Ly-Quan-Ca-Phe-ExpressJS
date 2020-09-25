@@ -24,14 +24,14 @@ $(document).ready(function () {
 function deleteBanRowInTable(buttonDelete) {
     let tableRow = $(buttonDelete).parents('tr');
 
-    let idBan = $(tableRow).find('.idBan').attr('data');
+    let maban = $(tableRow).find('.maban').attr('data');
 
     let ban = bans.find(
-        (item) => item.idBan == idBan
+        (item) => item.maban == maban
     );
 
     swal({
-        title: `Bạn có chắc chắn muón xóa bàn có id bàn là "${ban.idBan}" không?`,
+        title: `Bạn có chắc chắn muón xóa bàn có mã bàn là "${ban.maban}" không?`,
         text: `Không thể khôi phục dữ liệu sau khi xóa. Qúa trình sẽ xóa luôn các thông tin liên quan trong Cơ sở dữ liệu.`,
         icon: 'warning',
         buttons: {
