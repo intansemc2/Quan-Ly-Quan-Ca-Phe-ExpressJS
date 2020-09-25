@@ -10,66 +10,66 @@
                         i.fas.fa-tachometer-alt
                     | Tổng quát 
 
-        a.nav-link(class=sidebarActiveQuanlytaikhoan, href='/admin/quan-ly-taikhoan')
-        .sb-nav-link-icon
-            i.fas.fa-user
-        | Quản lý tài khoản
+                a.nav-link(class=sidebarActiveQuanlytaikhoan, href='/admin/quan-ly-taikhoan')
+                    .sb-nav-link-icon
+                        i.fas.fa-user
+                    | Quản lý tài khoản
 
 
-        a.nav-link(class=sidebarActiveQuanlynguonsanpham, href='/admin/quan-ly-nguonsanpham')
-        .sb-nav-link-icon
-            i.fas.fa-user
-        | Quản lý nguồn sản phẩm
+                a.nav-link(class=sidebarActiveQuanlynguonsanpham, href='/admin/quan-ly-nguonsanpham')
+                    .sb-nav-link-icon
+                        i.fas.fa-user
+                    | Quản lý nguồn sản phẩm
 
 
-        a.nav-link(class=sidebarActiveQuanlyban, href='/admin/quan-ly-ban')
-        .sb-nav-link-icon
-            i.fas.fa-user
-        | Quản lý bàn
+                a.nav-link(class=sidebarActiveQuanlyban, href='/admin/quan-ly-ban')
+                    .sb-nav-link-icon
+                        i.fas.fa-user
+                    | Quản lý bàn
 
 
-        a.nav-link(class=sidebarActiveQuanlysanpham, href='/admin/quan-ly-sanpham')
-        .sb-nav-link-icon
-            i.fas.fa-user
-        | Quản lý sản phẩm
+                a.nav-link(class=sidebarActiveQuanlysanpham, href='/admin/quan-ly-sanpham')
+                    .sb-nav-link-icon
+                        i.fas.fa-user
+                    | Quản lý sản phẩm
 
 
-        a.nav-link(class=sidebarActiveQuanlynhanvien, href='/admin/quan-ly-nhanvien')
-        .sb-nav-link-icon
-            i.fas.fa-user
-        | Quản lý nhân viên
+                a.nav-link(class=sidebarActiveQuanlynhanvien, href='/admin/quan-ly-nhanvien')
+                    .sb-nav-link-icon
+                        i.fas.fa-user
+                    | Quản lý nhân viên
 
 
-        a.nav-link(class=sidebarActiveQuanlykhachhang, href='/admin/quan-ly-khachhang')
-        .sb-nav-link-icon
-            i.fas.fa-user
-        | Quản lý khách hàng
+                a.nav-link(class=sidebarActiveQuanlykhachhang, href='/admin/quan-ly-khachhang')
+                    .sb-nav-link-icon
+                        i.fas.fa-user
+                    | Quản lý khách hàng
 
 
-        a.nav-link(class=sidebarActiveQuanlyxuathang, href='/admin/quan-ly-xuathang')
-        .sb-nav-link-icon
-            i.fas.fa-user
-        | Quản lý xuất hàng
+                a.nav-link(class=sidebarActiveQuanlyxuathang, href='/admin/quan-ly-xuathang')
+                    .sb-nav-link-icon
+                        i.fas.fa-user
+                    | Quản lý xuất hàng
 
 
-        a.nav-link(class=sidebarActiveQuanlynhaphang, href='/admin/quan-ly-nhaphang')
-        .sb-nav-link-icon
-            i.fas.fa-user
-        | Quản lý nhập hàng
+                a.nav-link(class=sidebarActiveQuanlynhaphang, href='/admin/quan-ly-nhaphang')
+                    .sb-nav-link-icon
+                        i.fas.fa-user
+                    | Quản lý nhập hàng
 
 
-        a.nav-link(class=sidebarActiveQuanlychitietxuathang, href='/admin/quan-ly-chitietxuathang')
-        .sb-nav-link-icon
-            i.fas.fa-user
-        | Quản lý chi tiết xuất hàng
+                a.nav-link(class=sidebarActiveQuanlychitietxuathang, href='/admin/quan-ly-chitietxuathang')
+                    .sb-nav-link-icon
+                        i.fas.fa-user
+                    | Quản lý chi tiết xuất hàng
 
 
-        a.nav-link(class=sidebarActiveQuanlychitietnhaphang, href='/admin/quan-ly-chitietnhaphang')
-        .sb-nav-link-icon
-            i.fas.fa-user
-        | Quản lý chi tiết nhập hàng
+                a.nav-link(class=sidebarActiveQuanlychitietnhaphang, href='/admin/quan-ly-chitietnhaphang')
+                    .sb-nav-link-icon
+                        i.fas.fa-user
+                    | Quản lý chi tiết nhập hàng
 
         // Thông tin người dùng đăng nhập
         .sb-sidenav-footer
                 .small Bạn đã đăng nhập bằng tài khoản 
-                span#loginInfo(idTaiKhoan=taikhoan.idTaiKhoan, username=taikhoan.username) #{taikhoan.username}
+                span#loginInfo(maTaiKhoan=taiKhoan.maTaiKhoan, tenDangNhap=taiKhoan.tenDangNhap) #{taiKhoan.tenDangNhap}

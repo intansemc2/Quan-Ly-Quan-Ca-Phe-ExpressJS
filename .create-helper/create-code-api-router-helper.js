@@ -56,6 +56,11 @@ ${
         `;
     }).join('')
 }
+
+
+//Module export
+module.exports = router;
+
 `;
 
 ccfs.writeStringSync(`${__dirname}/results/routers`, `api.router.js`, contents);

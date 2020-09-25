@@ -31,17 +31,17 @@ ${
         let tableKeysProperties = data.properties.filter((item) => data.keys.find((key) => key === item.name));
 
         return `
-        a.nav-link(class=sidebarActiveQuanly${tablenameFile}, href='/admin/quan-ly-${tablenameFile}')
-        .sb-nav-link-icon
-            i.fas.fa-user
-        | Quản lý ${data.speak.toLowerCase()}
+                a.nav-link(class=sidebarActiveQuanly${tablenameFile}, href='/admin/quan-ly-${tablenameFile}')
+                    .sb-nav-link-icon
+                        i.fas.fa-user
+                    | Quản lý ${data.speak.toLowerCase()}
 `;
     }).join('\n') 
 }
         // Thông tin người dùng đăng nhập
         .sb-sidenav-footer
                 .small Bạn đã đăng nhập bằng tài khoản 
-                span#loginInfo(idTaiKhoan=taikhoan.idTaiKhoan, username=taikhoan.username) #{taikhoan.username}
+                span#loginInfo(maTaiKhoan=taiKhoan.maTaiKhoan, tenDangNhap=taiKhoan.tenDangNhap) #{taiKhoan.tenDangNhap}
 `;
 
 ccfs.writeStringSync(`${__dirname}/results/views/admins`, `_item_sidebar.pug`, contents);

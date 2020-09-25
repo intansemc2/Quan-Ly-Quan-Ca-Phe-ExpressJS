@@ -110,3 +110,8 @@ const router = express.Router();
         router.delete('/chitietnhaphang', apiChitietnhaphangController.delete);  
         router.use('/chitietnhaphang/exists', apiChitietnhaphangController.exists);  
         
+
+
+//Module export
+module.exports = router;
+
