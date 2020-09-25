@@ -9,10 +9,6 @@ let datas = tableData.tableData;
 let contents = '';
 
 //Create controller
-contents += `/*** 
-File: _item_sidebar.js 
-***/
-`;
 contents += `
 #layoutSidenav_nav
     nav#sidenavAccordion.sb-sidenav.accordion.sb-sidenav-dark
