@@ -21,8 +21,8 @@ for (let i = 0; i < datas.length; i += 1) {
     //Create control textarea
     contents += `/*** 
 File: ${tablenameFile}.database.js 
-***/`;
-    contents += `\n`;
+***/
+`;
 
     //Create content
     contents += `

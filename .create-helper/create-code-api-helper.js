@@ -21,10 +21,9 @@ for (let i = 0; i < datas.length; i += 1) {
     //Create controller
     contents += `/*** 
 File: api.${tablenameFile}.controller.js 
-***/`;
-    contents += `\n`;
+***/
+`;
     contents += `
-
     //Import Controllers
     const errorController = require('../error.controller');
     

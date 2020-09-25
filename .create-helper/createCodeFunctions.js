@@ -29,11 +29,13 @@ module.exports.convertNameToSqlProperty = (name) => {
 
 //Return: ABC_DEF -> AbcDef
 module.exports.convertNameToJSClass = (name) => {
-    return name
+    return module.exports.capitalizeFirst(
+        name
         .toLowerCase()
         .split(/[^a-zA-Z0-9]/)
         .map((item) => (module.exports.capitalizeFirst(item)))
-        .join('');
+        .join('')
+    );
 };
 
 //Return: ABC_DEF -> abcDef
