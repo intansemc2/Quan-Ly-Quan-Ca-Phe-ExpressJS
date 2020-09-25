@@ -17,6 +17,9 @@ node create-code-admin-manager-helper.js;
 echo 'Tạo file: create-code-admin-router-helper.js';
 node create-code-admin-router-helper.js;
 
+echo 'Tạo file: create-code-api-router-helper.js';
+node create-code-api-router-helper.js;
+
 echo 'Tạo file: create-code-api-helper.js';
 node create-code-api-helper.js;
 
