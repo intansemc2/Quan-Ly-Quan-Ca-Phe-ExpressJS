@@ -129,7 +129,7 @@ return query;
 };
 
 module.exports.createQueryGet = function (input) {
-let query = 'SELECT * FROM ${data.classname.toLowerCase()}';
+let query = 'SELECT * FROM ${data.classname}';
 query += module.exports.createWHEREPart(input, true);
 return query;
 };
@@ -144,12 +144,12 @@ input.${ccfs.convertNameToJSProperty(item.name)} = null;
     `
     )
     .join('\n')}
-let query = \`INSERT INTO ${data.classname.toLowerCase()} (${data.properties.map((item) => item.name).join(',')}) VALUES ( ${data.properties.map((item) => `\${mysql.escape(input.${ccfs.convertNameToJSProperty(item.name)})}`).join(',')} )\`;
+let query = \`INSERT INTO FROM ${data.classname} (${data.properties.map((item) => item.name).join(',')}) VALUES ( ${data.properties.map((item) => `\${mysql.escape(input.${ccfs.convertNameToJSProperty(item.name)})}`).join(',')} )\`;
 return query;
 };
 
 module.exports.createQueryPatch = function (input) {
-let query = \`UPDATE ${data.classname.toLowerCase()} SET \`;
+let query = \`UPDATE FROM ${data.classname} SET \`;
 let queryChanges = [];
 ${
     data.keys.length <= 1
@@ -207,13 +207,13 @@ return query;
 };
 
 module.exports.createQueryDelete = function (input) {
-let query = \`DELETE FROM ${data.classname.toLowerCase()}\`;
+let query = \`DELETE FROM ${data.classname}\`;
 query += module.exports.createWHEREPart(input, true);
 return query;
 };
 
 module.exports.createQueryExists = function (input, isPrimarykeyOnly) {
-let query = \`SELECT COUNT(*) AS NUMBER_ROWS FROM ${data.classname.toLowerCase()} \`;
+let query = \`SELECT COUNT(*) AS NUMBER_ROWS FROM ${data.classname} \`;
 
 if (isPrimarykeyOnly) {
 query += module.exports.createWHEREPart({ ${tableKeysProperties.map((item) => `${ccfs.convertNameToJSProperty(item.name)}: input.${ccfs.convertNameToJSProperty(item.name)}`).join(',')} }, false, true);
@@ -272,5 +272,5 @@ return baseDatabase.exists(input, module.exports.createQueryExists);
 `;
 
     //Write code to file
-    ccfs.writeStringSync(`${__dirname}/results`, `${tablenameFile}.database.js`, contents);
+    ccfs.writeStringSync(`${__dirname}/results/databases`, `${tablenameFile}.database.js`, contents);
 }
