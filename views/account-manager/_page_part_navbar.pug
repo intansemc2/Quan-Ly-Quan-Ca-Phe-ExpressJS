@@ -1,0 +1,17 @@
+nav#userNavbar.navbar.navbar-expand-lg.navbar-light
+    a.navbar-brand(href='/user#userCarouselTopShow')
+        i.fa.fa-coffee
+
+    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNavDropdown', aria-controls='navbarNavDropdown', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+    #navbarNavDropdown.collapse.navbar-collapse
+        ul.navbar-nav
+            li.nav-item
+                a.nav-link(href='/account.manager') Quản lí Tài khoản 
+            li.nav-item.dropdown
+                a#navbarDropdownPages.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                    | Trang
+                .dropdown-menu(aria-labelledby='navbarDropdownPages')
+                    a.dropdown-item(href='/admin') Trang ADMIN
+                    a.dropdown-item(href='/staff') Trang STAFF
+                    a.dropdown-item(href='/user') Trang USER

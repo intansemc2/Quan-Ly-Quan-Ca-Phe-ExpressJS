@@ -1,0 +1,37 @@
+extends ../layouts/_layout_main_bootstrap
+
+block custom_stylesheets
+    //Custom stylesheets   
+
+    //Css for item
+
+    //Css for page part
+    link(rel='stylesheet', href='/stylesheets/users/_page_part_navbar.css') 
+    
+
+block content
+    .min-vh-100.d-flex.flex-column
+        //Navbar
+        include _page_part_navbar
+        ///Navbar
+
+        //Content
+        .container.mt-auto.mb-auto
+            include _page_part_login
+            //- include _page_part_logout
+            //- include _page_part_sign_in
+            //- include _page_part_reset_password
+            //- include _page_part_account_information
+            //- include _page_part_client_information
+            //- include _page_part_delete_account
+            //- include _page_part_delete_information
+        ///Content
+
+        //Footer
+        include ../items/_item_footer
+        ///Footer
+
+block custom_javascripts    
+    //Custom Javascript libraries 
+
+    //Custom javascript files

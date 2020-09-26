@@ -8,9 +8,9 @@ const dotenv = require('dotenv');
 const adminRouters = require('./routers/admin.router');
 const userRouters = require('./routers/user.router');
 const staffRouters = require('./routers/staff.router');
-const loginRouters = require('./routers/login.router');
-const errorRouters = require('./routers/error.router');
+const accountManagerRouters = require('./routers/account.manager.router');
 const apiRouters = require('./routers/api.router');
+const errorRouters = require('./routers/error.router');
 
 //DotENV
 dotenv.config();
@@ -41,7 +41,7 @@ app.get('/', (request, response, next) => {
 app.use('/admin', adminRouters);
 app.use('/user', userRouters);
 app.use('/staff', staffRouters);
-app.use('/login', loginRouters);
+app.use('/account.manager', accountManagerRouters);
 app.use('/api', apiRouters);
 
 //Handle other request

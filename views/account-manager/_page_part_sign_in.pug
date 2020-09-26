@@ -1,0 +1,54 @@
+.card.mb-3.w-100
+    .card-header
+        i.fas.fa-user.mr-1
+        | Đăng ký tài khoản khách hàng  
+    .card-body
+        form
+            .form-group
+                span.small.text-danger (*) Phần bắt buộc phải nhập 
+            .form-group
+                label.small.mb-1 Tên đăng nhập 
+                    span.text-danger (*)
+                input.form-control.py-4(name='username',type='text', placeholder='Nhập Tên đăng nhập ', required)
+            .form-group
+                label.small.mb-1 Mật khẩu 
+                    span.text-danger (*)
+                input.form-control.py-4(name='password', type='password', placeholder='Nhập Mật khẩu ', required)
+            .form-group
+                label.small.mb-1 Nhập lại Mật khẩu 
+                    span.text-danger (*)
+                input.form-control.py-4(name='repassword', type='password', placeholder='Nhập lại Mật khẩu ', required)
+            .form-group
+                label.small.mb-1 Tên khách hàng 
+                    span.text-danger (*)
+                input.form-control.py-4(name='username',type='text', placeholder='Nhập Tên khách hàng ', required)
+            .form-group
+                label.small.mb-1 Số điện thoại 
+                    span.text-danger (*)
+                input.form-control.py-4(name='username',type='text', placeholder='Nhập Số điện thoại ', required)
+            .form-group
+                label.small.mb-1 Email
+                input.form-control.py-4(name='username',type='email', placeholder='Nhập Email ')
+            .form-group
+                label.small.mb-1 Liên kết tài khoản   
+                .py-4
+                    .btn-group.mr-3.mb-1(role='group')
+                        .btn.btn-dark.disabled(type='button')
+                            i.fab.fa-google
+                            | &nbsp; Google
+                        .btn.btn-outline-dark(type='button') accountName
+                        .btn.btn-outline-dark(type='button') &times;
+                        .btn.btn-outline-secondary(type='button') 
+                            i.fa.fa-map-pin
+                    .btn-group.mr-3.mb-1(role='group')
+                        .btn.btn-dark.disabled(type='button')
+                            i.fab.fa-facebook
+                            | &nbsp; Facebook  
+                        .btn.btn-outline-dark(type='button') accountName
+                        .btn.btn-outline-dark(type='button') &times;
+                        .btn.btn-outline-secondary(type='button') 
+                            i.fa.fa-map-pin
+            .form-group.d-flex.align-items-center.justify-content-end.mb-0
+                span
+                    input.btn.btn-outline-dark.rounded-0.mx-1(name='reset', type='reset', value='Cài lại')  
+                    input.btn.btn-outline-secondary.rounded-0(name='loginSubmit', type='submit', value='Đăng nhập')  

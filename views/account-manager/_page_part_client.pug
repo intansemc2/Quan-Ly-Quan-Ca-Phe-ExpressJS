@@ -1,0 +1,29 @@
+#userClientComment
+    .mt-5.pt-5.mb-5.text-center
+        .display-4 Ý kiến phản hồi của khách hàng 
+
+    div
+        // Swiper
+        .swiper-container
+            .swiper-wrapper
+                - for(let i=0; i<10; i+=1)
+                    .swiper-slide 
+                        .card.text-left(style='height: 500px; max-width: 800px;')
+                            .row.no-gutters.h-100
+                                .col-md-4
+                                    .card-img.h-100(style='background-image: url("/images/coffees/212272.jpg"); background-size: cover;')
+                                .col-md-8
+                                    .card-body
+                                        h5.card-title Lorem Ipsum
+                                        p.card-text
+                                            | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet corporis dolore esse numquam ut, odio quod asperiores. Debitis dolores numquam eaque quae? Quisquam commodi quae cumque officia sequi molestias vel.
+                                        p.card-text
+                                            small.text-muted Last updated 3 mins ago
+            // Add Arrows
+            .swiper-button-next
+                i.fa.fa-chevron-right
+            .swiper-button-prev
+                i.fa.fa-chevron-left
+
+
+    
