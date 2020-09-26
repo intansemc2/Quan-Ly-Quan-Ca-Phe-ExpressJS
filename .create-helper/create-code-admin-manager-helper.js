@@ -80,11 +80,11 @@ block content
                                 table#tableQuanLy${tablenameRemoved}.table.table-bordered.table-striped.table-hover(width='100%', cellspacing='0')
                                     thead
                                         tr
-${data.properties.map((item) => `                                            th ${item.speak}`).join('\n')}
+${data.properties.map((item) => `                                            th ${ccfs.capitalize(item.speak)}`).join('\n')}
                                             th Thao tác 
                                     tfoot
                                         tr
-${data.properties.map((item) => `                                            th ${item.speak}`).join('\n')} 
+${data.properties.map((item) => `                                            th ${ccfs.capitalize(item.speak)}`).join('\n')} 
                                             th Thao tác 
                                     tbody
                                         //Table Content
