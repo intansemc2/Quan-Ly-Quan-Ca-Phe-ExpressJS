@@ -16,7 +16,7 @@ const TaiKhoan = require('../models/taikhoan');
 //Routing Tongquat 
 module.exports.index = async function (request, response, next) {
 try {
-    response.render('account-manager/index', {
+    response.render('account.manager/index', {
         sessionTaiKhoan: new TaiKhoan(1, 'admin')
     });
     next();
