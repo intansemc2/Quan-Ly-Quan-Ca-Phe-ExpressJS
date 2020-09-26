@@ -67,10 +67,10 @@ function themkhachhangAJAX(khachhang) {
                     return;
                 }
 
-                if (result) {
+                if (result && result.affectedRows > 0) {
                     refreshThemkhachhangAlert(['Thêm thành công ' + result], 'success');
 
-                    khachhang.makhachhang = result;                    
+                    khachhang.makhachhang = result.insertId;                    
                     addNewRowToTable(khachhang);
 
                     $('#modelThemkhachhang').modal('hide');

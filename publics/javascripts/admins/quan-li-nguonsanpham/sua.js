@@ -80,7 +80,7 @@ function suanguonsanphamAJAX(nguonsanpham) {
                     return;
                 }
 
-                if (result) {
+                if (result && result.affectedRows > 0) {
                     refreshSuanguonsanphamAlert(['Sửa thành công ' + result], 'success');
 
                     editRowInTable(nguonsanpham);

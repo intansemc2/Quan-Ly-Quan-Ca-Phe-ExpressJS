@@ -84,7 +84,7 @@ function suanhaphangAJAX(nhaphang) {
                     return;
                 }
 
-                if (result) {
+                if (result && result.affectedRows > 0) {
                     refreshSuanhaphangAlert(['Sửa thành công ' + result], 'success');
 
                     editRowInTable(nhaphang);

@@ -72,7 +72,7 @@ function suabanAJAX(ban) {
                     return;
                 }
 
-                if (result) {
+                if (result && result.affectedRows > 0) {
                     refreshSuabanAlert(['Sửa thành công ' + result], 'success');
 
                     editRowInTable(ban);

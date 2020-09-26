@@ -49,9 +49,9 @@ function deletenhanvienRowInTable(buttonDelete) {
 
 //Delete nhanvien
 function deletenhanvienAJAX(nhanvien) {
-    $.ajax({ method: 'DELETE', url: '/api/nhanvien', data: { idnhanvien: nhanvien.idnhanvien } })
+    $.ajax({ method: 'DELETE', url: '/api/nhanvien', data: { manhanvien : nhanvien.manhanvien } })
         .done(function (data, status, xhr) {
-            if (data && data > 0) {
+            if (data && data.affectedRows > 0) {
                 swal('Đã xóa thành công !', { icon: 'success' , timer: 1000});
 
                 let tableRow = getRowInTable(nhanvien);
@@ -76,8 +76,8 @@ function deletenhanvienAJAX(nhanvien) {
 function deleteAllAJAX() {
     $.ajax({ method: 'DELETE', url: '/api/nhanvien', data: {} })
         .done(function (data, status, xhr) {
-            if (data && data > 0) {
-                swal(`Đã xóa thành công ${data} tài khoản !`, { icon: 'success' , timer: 1000});
+            if (data && data.affectedRows > 0) {
+                swal(`Đã xóa thành công ${data.affectedRows} tài khoản !`, { icon: 'success' , timer: 1000});
 
                 tableQuanLynhanvien.clear().draw();
             } else {

@@ -103,22 +103,22 @@ let queryChanges = [];
 
 
 if (input.manhaphang) {
-queryChanges.push(` AND maNhapHang = ${mysql.escape(input.manhaphang)} `);
+queryChanges.push(` maNhapHang = ${mysql.escape(input.manhaphang)} `);
 }
         
 
 if (input.masanpham) {
-queryChanges.push(` AND maSanPham = ${mysql.escape(input.masanpham)} `);
+queryChanges.push(` maSanPham = ${mysql.escape(input.masanpham)} `);
 }
         
 
 if (input.soluong) {
-queryChanges.push(` AND soLuong = ${mysql.escape(input.soluong)} `);
+queryChanges.push(` soLuong = ${mysql.escape(input.soluong)} `);
 }
         
 
 if (input.dongia) {
-queryChanges.push(` AND donGia = ${mysql.escape(input.dongia)} `);
+queryChanges.push(` donGia = ${mysql.escape(input.dongia)} `);
 }
         
 

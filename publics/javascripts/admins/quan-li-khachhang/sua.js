@@ -88,7 +88,7 @@ function suakhachhangAJAX(khachhang) {
                     return;
                 }
 
-                if (result) {
+                if (result && result.affectedRows > 0) {
                     refreshSuakhachhangAlert(['Sửa thành công ' + result], 'success');
 
                     editRowInTable(khachhang);

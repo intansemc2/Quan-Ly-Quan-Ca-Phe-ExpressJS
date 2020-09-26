@@ -62,7 +62,7 @@ module.exports.post = function (input, createQueryPost) {
 
             //Handle finish
             connection.end();
-            reslove(results.insertId);
+            reslove({ affectedRows: results.affectedRows, changedRows: results.changedRows, insertId: results.insertId });
         });
     });
 };
@@ -87,7 +87,7 @@ module.exports.patch = function (input, createQueryPatch) {
 
             //Handle finish
             connection.end();
-            reslove(results.affectedRows);
+            reslove({ affectedRows: results.affectedRows, changedRows: results.changedRows, insertId: results.insertId });
         });
     });
 };
@@ -112,7 +112,7 @@ module.exports.delete = function (input, createQueryDelete) {
 
             //Handle finish
             connection.end();
-            reslove(results.affectedRows);
+            reslove({ affectedRows: results.affectedRows, changedRows: results.changedRows, insertId: results.insertId });
         });
     });
 };

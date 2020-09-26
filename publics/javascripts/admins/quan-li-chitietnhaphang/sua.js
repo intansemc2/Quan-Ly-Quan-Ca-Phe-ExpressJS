@@ -82,7 +82,7 @@ function suachitietnhaphangAJAX(chitietnhaphang) {
                     return;
                 }
 
-                if (result) {
+                if (result && result.affectedRows > 0) {
                     refreshSuachitietnhaphangAlert(['Sửa thành công ' + result], 'success');
 
                     editRowInTable(chitietnhaphang);

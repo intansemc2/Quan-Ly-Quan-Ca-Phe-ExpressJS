@@ -49,9 +49,9 @@ function deletebanRowInTable(buttonDelete) {
 
 //Delete ban
 function deletebanAJAX(ban) {
-    $.ajax({ method: 'DELETE', url: '/api/ban', data: { idban: ban.idban } })
+    $.ajax({ method: 'DELETE', url: '/api/ban', data: { maban : ban.maban } })
         .done(function (data, status, xhr) {
-            if (data && data > 0) {
+            if (data && data.affectedRows > 0) {
                 swal('Đã xóa thành công !', { icon: 'success' , timer: 1000});
 
                 let tableRow = getRowInTable(ban);
@@ -76,8 +76,8 @@ function deletebanAJAX(ban) {
 function deleteAllAJAX() {
     $.ajax({ method: 'DELETE', url: '/api/ban', data: {} })
         .done(function (data, status, xhr) {
-            if (data && data > 0) {
-                swal(`Đã xóa thành công ${data} tài khoản !`, { icon: 'success' , timer: 1000});
+            if (data && data.affectedRows > 0) {
+                swal(`Đã xóa thành công ${data.affectedRows} tài khoản !`, { icon: 'success' , timer: 1000});
 
                 tableQuanLyban.clear().draw();
             } else {

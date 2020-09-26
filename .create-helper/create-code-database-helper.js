@@ -180,7 +180,7 @@ ${data.properties
     .map(
         (item) => `
 if (input.${ccfs.removeNCharLowercase(item.name)}) {
-queryChanges.push(\` AND ${item.name} = \${mysql.escape(input.${ccfs.removeNCharLowercase(item.name)})} \`);
+queryChanges.push(\` ${item.name} = \${mysql.escape(input.${ccfs.removeNCharLowercase(item.name)})} \`);
 }
         `
     )

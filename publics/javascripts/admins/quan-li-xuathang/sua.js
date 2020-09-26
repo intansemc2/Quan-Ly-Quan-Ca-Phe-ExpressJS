@@ -88,7 +88,7 @@ function suaxuathangAJAX(xuathang) {
                     return;
                 }
 
-                if (result) {
+                if (result && result.affectedRows > 0) {
                     refreshSuaxuathangAlert(['Sửa thành công ' + result], 'success');
 
                     editRowInTable(xuathang);

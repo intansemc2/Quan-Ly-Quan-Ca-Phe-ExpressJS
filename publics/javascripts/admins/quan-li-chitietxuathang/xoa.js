@@ -50,9 +50,9 @@ function deletechitietxuathangRowInTable(buttonDelete) {
 
 //Delete chitietxuathang
 function deletechitietxuathangAJAX(chitietxuathang) {
-    $.ajax({ method: 'DELETE', url: '/api/chitietxuathang', data: { idchitietxuathang: chitietxuathang.idchitietxuathang } })
+    $.ajax({ method: 'DELETE', url: '/api/chitietxuathang', data: { maxuathang : chitietxuathang.maxuathang, masanpham : chitietxuathang.masanpham } })
         .done(function (data, status, xhr) {
-            if (data && data > 0) {
+            if (data && data.affectedRows > 0) {
                 swal('Đã xóa thành công !', { icon: 'success' , timer: 1000});
 
                 let tableRow = getRowInTable(chitietxuathang);
@@ -77,8 +77,8 @@ function deletechitietxuathangAJAX(chitietxuathang) {
 function deleteAllAJAX() {
     $.ajax({ method: 'DELETE', url: '/api/chitietxuathang', data: {} })
         .done(function (data, status, xhr) {
-            if (data && data > 0) {
-                swal(`Đã xóa thành công ${data} tài khoản !`, { icon: 'success' , timer: 1000});
+            if (data && data.affectedRows > 0) {
+                swal(`Đã xóa thành công ${data.affectedRows} tài khoản !`, { icon: 'success' , timer: 1000});
 
                 tableQuanLychitietxuathang.clear().draw();
             } else {

@@ -63,7 +63,7 @@ function themchitietnhaphangAJAX(chitietnhaphang) {
                     return;
                 }
 
-                if (result) {
+                if (result && result.affectedRows > 0) {
                     refreshThemchitietnhaphangAlert(['Thêm thành công ' + result], 'success');
 
                                         

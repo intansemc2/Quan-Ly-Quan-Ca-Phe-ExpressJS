@@ -49,9 +49,9 @@ function deletesanphamRowInTable(buttonDelete) {
 
 //Delete sanpham
 function deletesanphamAJAX(sanpham) {
-    $.ajax({ method: 'DELETE', url: '/api/sanpham', data: { idsanpham: sanpham.idsanpham } })
+    $.ajax({ method: 'DELETE', url: '/api/sanpham', data: { masanpham : sanpham.masanpham } })
         .done(function (data, status, xhr) {
-            if (data && data > 0) {
+            if (data && data.affectedRows > 0) {
                 swal('Đã xóa thành công !', { icon: 'success' , timer: 1000});
 
                 let tableRow = getRowInTable(sanpham);
@@ -76,8 +76,8 @@ function deletesanphamAJAX(sanpham) {
 function deleteAllAJAX() {
     $.ajax({ method: 'DELETE', url: '/api/sanpham', data: {} })
         .done(function (data, status, xhr) {
-            if (data && data > 0) {
-                swal(`Đã xóa thành công ${data} tài khoản !`, { icon: 'success' , timer: 1000});
+            if (data && data.affectedRows > 0) {
+                swal(`Đã xóa thành công ${data.affectedRows} tài khoản !`, { icon: 'success' , timer: 1000});
 
                 tableQuanLysanpham.clear().draw();
             } else {

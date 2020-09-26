@@ -134,22 +134,8 @@ block custom_javascripts
                 .alerts
                     // Các alert của phần này
                 input.id${tablenameRemoved}(type='hidden')
-${tableKeysProperties.map(item => ccfs.createFormInputElement(
-    ccfs.removeNCharLowercase(item.name).toLowerCase(),
-    item.speak,
-    item.type.toLowerCase(),
-    [ccfs.removeNCharLowercase(item.name).toLowerCase()],
-    [`required`, `placeholder='Nhập ${item.speak}'`],
-    4*4
-)).join('')}
-${tableNotKeysProperties.map(item => ccfs.createFormInputElement(
-    ccfs.removeNCharLowercase(item.name).toLowerCase(),
-    item.speak,
-    item.type.toLowerCase(),
-    [ccfs.removeNCharLowercase(item.name).toLowerCase()],
-    [`placeholder='Nhập ${item.speak}'`, item.isNull ? `` : `required`],
-    4*4
-)).join('')}
+${tableKeysProperties.map((item) => ccfs.createFormInputElement(ccfs.removeNCharLowercase(item.name).toLowerCase(), item.speak, item.type.toLowerCase(), [ccfs.removeNCharLowercase(item.name).toLowerCase()], [`required`, `placeholder='Nhập ${item.speak}'`], 4 * 4)).join('')}
+${tableNotKeysProperties.map((item) => ccfs.createFormInputElement(ccfs.removeNCharLowercase(item.name).toLowerCase(), item.speak, item.type.toLowerCase(), [ccfs.removeNCharLowercase(item.name).toLowerCase()], [`placeholder='Nhập ${item.speak}'`, item.isNull ? `` : `required`], 4 * 4)).join('')}
             .modal-footer
                 input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa ${ccfs.removeNCharLowercase(data.speak)}')
                 input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')
@@ -171,28 +157,9 @@ ${tableNotKeysProperties.map(item => ccfs.createFormInputElement(
             .modal-body
                 .alerts
                     // Các alert của phần này
-${
-    tableKeysProperties.length > 1 ? 
-    tableKeysProperties.map(item => ccfs.createFormInputElement(
-ccfs.removeNCharLowercase(item.name).toLowerCase(),
-item.speak,
-item.type.toLowerCase(),
-[ccfs.removeNCharLowercase(item.name).toLowerCase()],
-[`required='true'`, `placeholder='Nhập ${item.speak}'`],
-4*4
-)).join('')
-    :
-    ``
-}
+${tableKeysProperties.length > 1 ? tableKeysProperties.map((item) => ccfs.createFormInputElement(ccfs.removeNCharLowercase(item.name).toLowerCase(), item.speak, item.type.toLowerCase(), [ccfs.removeNCharLowercase(item.name).toLowerCase()], [`required='true'`, `placeholder='Nhập ${item.speak}'`], 4 * 4)).join('') : ``}
 
-${tableNotKeysProperties.map(item => ccfs.createFormInputElement(
-ccfs.removeNCharLowercase(item.name).toLowerCase(),
-item.speak,
-item.type.toLowerCase(),
-[ccfs.removeNCharLowercase(item.name).toLowerCase()],
-[`placeholder='Nhập ${item.speak}'`, item.isNull ? `` : `required`],
-4*4
-)).join('')}
+${tableNotKeysProperties.map((item) => ccfs.createFormInputElement(ccfs.removeNCharLowercase(item.name).toLowerCase(), item.speak, item.type.toLowerCase(), [ccfs.removeNCharLowercase(item.name).toLowerCase()], [`placeholder='Nhập ${item.speak}'`, item.isNull ? `` : `required`], 4 * 4)).join('')}
             .modal-footer
                 input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Thêm ${ccfs.removeNCharLowercase(data.speak)}')
                 input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')
@@ -208,8 +175,9 @@ item.type.toLowerCase(),
     //Initialize Table
     tableQuanLy${tablenameRemoved} = \$('#tableQuanLy${tablenameRemoved}').DataTable({
         columnDefs: [
-${
-    data.properties.map((item, index) => `
+${data.properties
+    .map(
+        (item, index) => `
             {
                 targets: ${index},
                 render: function (data, type, row, meta) {
@@ -217,17 +185,16 @@ ${
                     return \`<span class="${ccfs.removeNCharLowercase(item.name).toLowerCase()}" data="\${data}">\${renderData}</span>\`;
                 }
             },
-    `).join('')
-}
+    `
+    )
+    .join('')}
             {
                 targets: ${data.properties.length},
                 render: function (data, type, row, meta) {
                     let ${ccfs.removeNCharLowercase(data.classname)} = data;
                     let renderData = \`
 <button type="button" class="btn btn-outline-secondary rounded-0 m-1" data-toggle="modal" data-target='#modelSua${tablenameRemoved}' 
-${
-    tableKeysProperties.map(item => `${ccfs.removeNCharLowercase(item.name)}="\${${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}}"`).join(' ')
-}
+${tableKeysProperties.map((item) => `${ccfs.removeNCharLowercase(item.name)}="\${${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}}"`).join(' ')}
 >
     <i class="fas fa-edit"></i>
 </button>
@@ -269,7 +236,7 @@ function refreshTableData() {
     tableQuanLy${tablenameRemoved}.clear();
     for (let ${ccfs.removeNCharLowercase(data.classname)} of ${ccfs.removeNCharLowercase(data.classname)}s) {
         tableQuanLy${tablenameRemoved}.row.add([
-            ${data.properties.map(item => `${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}`).join(', ')}, ${ccfs.removeNCharLowercase(data.classname)}
+            ${data.properties.map((item) => `${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}`).join(', ')}, ${ccfs.removeNCharLowercase(data.classname)}
         ]);
     }
     tableQuanLy${tablenameRemoved}.draw();
@@ -294,12 +261,14 @@ async function refreshPageData() {
     //Initialize Button Events
     //Sua${tablenameRemoved} Confirm
     \$('#modelSua${tablenameRemoved} .confirm').click(async function () {
-${
-    data.properties.map(item => `
+${data.properties
+    .map(
+        (item) => `
         let ${ccfs.removeNCharLowercase(item.name)} = \$(this).parents('form').find('.${ccfs.removeNCharLowercase(item.name)}').val();
-    `).join('')
-}
-        let ${ccfs.removeNCharLowercase(data.classname)} = { ${data.properties.map(item => `${ccfs.removeNCharLowercase(item.name)} : ${ccfs.removeNCharLowercase(item.name)}`).join(', ')} };
+    `
+    )
+    .join('')}
+        let ${ccfs.removeNCharLowercase(data.classname)} = { ${data.properties.map((item) => `${ccfs.removeNCharLowercase(item.name)} : ${ccfs.removeNCharLowercase(item.name)}`).join(', ')} };
 
         let errors = sua${tablenameRemoved}Validator(${ccfs.removeNCharLowercase(data.classname)});
 
@@ -315,27 +284,33 @@ ${
     //Set ${ccfs.removeNCharLowercase(data.classname)} current value When model showup
     \$('#modelSua${tablenameRemoved}').on('show.bs.modal', function (event) {
         let sua${tablenameRemoved}Triggered = \$(event.relatedTarget);
-${
-    tableKeysProperties.map(item => `
+${tableKeysProperties
+    .map(
+        (item) => `
         let ${ccfs.removeNCharLowercase(item.name)} = sua${tablenameRemoved}Triggered.attr('${ccfs.removeNCharLowercase(item.name)}');
-    `).join('')
-}
+    `
+    )
+    .join('')}
 
         let ${ccfs.removeNCharLowercase(data.classname)} = ${ccfs.removeNCharLowercase(data.classname)}s.find(
-            (item) => ${tableKeysProperties.map(item => `item.${ccfs.removeNCharLowercase(item.name)} == ${ccfs.removeNCharLowercase(item.name)}`).join(' && ')}
+            (item) => ${tableKeysProperties.map((item) => `item.${ccfs.removeNCharLowercase(item.name)} == ${ccfs.removeNCharLowercase(item.name)}`).join(' && ')}
         );
 
-${
-    tableKeysProperties.map(item => `
+${tableKeysProperties
+    .map(
+        (item) => `
         \$('#modelSua${tablenameRemoved}').find('.${ccfs.removeNCharLowercase(item.name)}').val(${ccfs.removeNCharLowercase(item.name)});
-    `).join('')
-}
+    `
+    )
+    .join('')}
 
-${
-    tableNotKeysProperties.map(item => `
+${tableNotKeysProperties
+    .map(
+        (item) => `
         \$('#modelSua${tablenameRemoved}').find('.${ccfs.removeNCharLowercase(item.name)}').val(${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)});
-    `).join('')
-}
+    `
+    )
+    .join('')}
 
         refreshSua${tablenameRemoved}Alert([], "");
     });
@@ -369,7 +344,7 @@ function sua${tablenameRemoved}AJAX(${ccfs.removeNCharLowercase(data.classname)}
                     return;
                 }
 
-                if (result) {
+                if (result && result.affectedRows > 0) {
                     refreshSua${tablenameRemoved}Alert(['Sửa thành công ' + result], 'success');
 
                     editRowInTable(${ccfs.removeNCharLowercase(data.classname)});
@@ -400,16 +375,17 @@ function sua${tablenameRemoved}Validator(${ccfs.removeNCharLowercase(data.classn
         errors.push('${ccfs.removeNCharLowercase(data.speak)} không tồn tại ');
     }
 
-${
-    data.properties.map(item => 
-        item.isNull ? ``
-        :
-        `
+${data.properties
+    .map((item) =>
+        item.isNull
+            ? ``
+            : `
     if (!${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}) {
         errors.push('Không thể xác định ${item.speak.toLowerCase()} ');
     }
-    `).join('')
-}
+    `
+    )
+    .join('')}
 
     return errors;
 }    
@@ -422,18 +398,18 @@ ${
     contents += `
 //Get a row in table
 function getRowInTable(${ccfs.removeNCharLowercase(data.classname)}) {
-    return \$('#tableQuanLy${tablenameRemoved}')${tableKeysProperties.map(item => `.find(\`.${ccfs.removeNCharLowercase(item.name)}[data="\${${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}}"]\`).parents('tr')`).join('')};
+    return \$('#tableQuanLy${tablenameRemoved}')${tableKeysProperties.map((item) => `.find(\`.${ccfs.removeNCharLowercase(item.name)}[data="\${${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}}"]\`).parents('tr')`).join('')};
 }
 
 //Add new row to table
 function addNewRowToTable(${ccfs.removeNCharLowercase(data.classname)}) {
     tableQuanLy${tablenameRemoved}.row.add([
-        ${data.properties.map(item => `${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}`).join(', ')}, ${ccfs.removeNCharLowercase(data.classname)}
+        ${data.properties.map((item) => `${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}`).join(', ')}, ${ccfs.removeNCharLowercase(data.classname)}
     ]).draw();
 
     //Change in ${ccfs.removeNCharLowercase(data.classname)}s
     ${ccfs.removeNCharLowercase(data.classname)}s.push({ 
-        ${data.properties.map(item => `${ccfs.removeNCharLowercase(item.name)}: ${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}`).join(', ')}
+        ${data.properties.map((item) => `${ccfs.removeNCharLowercase(item.name)}: ${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}`).join(', ')}
     });
 }
 
@@ -441,16 +417,20 @@ function addNewRowToTable(${ccfs.removeNCharLowercase(data.classname)}) {
 function editRowInTable(${ccfs.removeNCharLowercase(data.classname)}) {
     let old${tablenameRemoved}Row = getRowInTable(${ccfs.removeNCharLowercase(data.classname)});
     tableQuanLy${tablenameRemoved}.row(old${tablenameRemoved}Row).data([
-        ${data.properties.map(item => `${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}`).join(', ')}, ${ccfs.removeNCharLowercase(data.classname)}
+        ${data.properties.map((item) => `${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}`).join(', ')}, ${ccfs.removeNCharLowercase(data.classname)}
     ]).draw();
 
     //Change in ${ccfs.removeNCharLowercase(data.classname)}s
     let ${ccfs.removeNCharLowercase(data.classname)}Reference = ${ccfs.removeNCharLowercase(data.classname)}s.find(
-        (item) => ${tableKeysProperties.map(item => `item.${ccfs.removeNCharLowercase(item.name)} == ${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}`).join(' && ')}
+        (item) => ${tableKeysProperties.map((item) => `item.${ccfs.removeNCharLowercase(item.name)} == ${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}`).join(' && ')}
     );
     
-    ${data.properties.map(item => `${ccfs.removeNCharLowercase(data.classname)}Reference.${ccfs.removeNCharLowercase(item.name)} = ${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)};
-    `).join('')}
+    ${data.properties
+        .map(
+            (item) => `${ccfs.removeNCharLowercase(data.classname)}Reference.${ccfs.removeNCharLowercase(item.name)} = ${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)};
+    `
+        )
+        .join('')}
 }
 
 //Delete row in table
@@ -460,7 +440,7 @@ function deleteRowInTable(${ccfs.removeNCharLowercase(data.classname)}) {
 
     //Change in ${ccfs.removeNCharLowercase(data.classname)}s
     ${ccfs.removeNCharLowercase(data.classname)}s = ${ccfs.removeNCharLowercase(data.classname)}s.filter(
-        (item) => ${tableKeysProperties.map(item => `item.${ccfs.removeNCharLowercase(item.name)} != ${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}`).join(' && ')}
+        (item) => ${tableKeysProperties.map((item) => `item.${ccfs.removeNCharLowercase(item.name)} != ${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}`).join(' && ')}
     );
 }
     
@@ -475,12 +455,14 @@ function deleteRowInTable(${ccfs.removeNCharLowercase(data.classname)}) {
     //Initialize Button Events
     //Them${tablenameRemoved} Confirm
     \$('#modelThem${tablenameRemoved} .confirm').click(async function () {
-${
-    data.properties.map(item => `
+${data.properties
+    .map(
+        (item) => `
         let ${ccfs.removeNCharLowercase(item.name)} = \$(this).parents('form').find('.${ccfs.removeNCharLowercase(item.name)}').val();
-    `).join('')
-}
-        let ${ccfs.removeNCharLowercase(data.classname)} = { ${data.properties.map(item => `${ccfs.removeNCharLowercase(item.name)} : ${ccfs.removeNCharLowercase(item.name)}`).join(', ')} };
+    `
+    )
+    .join('')}
+        let ${ccfs.removeNCharLowercase(data.classname)} = { ${data.properties.map((item) => `${ccfs.removeNCharLowercase(item.name)} : ${ccfs.removeNCharLowercase(item.name)}`).join(', ')} };
 
         let errors = them${tablenameRemoved}Validator(${ccfs.removeNCharLowercase(data.classname)});
 
@@ -531,15 +513,10 @@ function them${tablenameRemoved}AJAX(${ccfs.removeNCharLowercase(data.classname)
                     return;
                 }
 
-                if (result) {
+                if (result && result.affectedRows > 0) {
                     refreshThem${tablenameRemoved}Alert(['Thêm thành công ' + result], 'success');
 
-                    ${
-                        tableKeysProperties.length == 1 ? 
-                        `${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(tableKeysProperties[0].name)} = result;`
-                        :
-                        ``
-                    }                    
+                    ${tableKeysProperties.length == 1 ? `${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(tableKeysProperties[0].name)} = result.insertId;` : ``}                    
                     addNewRowToTable(${ccfs.removeNCharLowercase(data.classname)});
 
                     \$('#modelThem${tablenameRemoved}').modal('hide');
@@ -569,26 +546,30 @@ function them${tablenameRemoved}Validator(${ccfs.removeNCharLowercase(data.class
     }
 
 ${
-    tableKeysProperties.length > 1 ? 
-    tableKeysProperties.map(item => `
+    tableKeysProperties.length > 1
+        ? tableKeysProperties
+              .map(
+                  (item) => `
         if (!${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}) {
             errors.push('Không thể xác định ${item.speak.toLowerCase()} ');
         }
-        `).join('')
-    :
-    ``
+        `
+              )
+              .join('')
+        : ``
 }
 
-${
-    tableNotKeysProperties.map(item => 
-        item.isNull ? `` 
-        :
-        `
+${tableNotKeysProperties
+    .map((item) =>
+        item.isNull
+            ? ``
+            : `
         if (!${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}) {
             errors.push('Không thể xác định ${item.speak.toLowerCase()} ');
         }
-        `).join('')
-}
+        `
+    )
+    .join('')}
 
     return errors;
 }
@@ -635,19 +616,19 @@ let tableQuanLy${tablenameRemoved} = {};
 //Functions
 function delete${tablenameRemoved}RowInTable(buttonDelete) {
     let tableRow = \$(buttonDelete).parents('tr');
-${
-    tableKeysProperties.map(item => `
-    let ${ccfs.removeNCharLowercase(item.name)} = \$(tableRow).find('.${ccfs.removeNCharLowercase(item.name)}').attr('data');`).join('')
-}
+${tableKeysProperties
+    .map(
+        (item) => `
+    let ${ccfs.removeNCharLowercase(item.name)} = \$(tableRow).find('.${ccfs.removeNCharLowercase(item.name)}').attr('data');`
+    )
+    .join('')}
 
     let ${ccfs.removeNCharLowercase(data.classname)} = ${ccfs.removeNCharLowercase(data.classname)}s.find(
-        (item) => ${tableKeysProperties.map(item => `item.${ccfs.removeNCharLowercase(item.name)} == ${ccfs.removeNCharLowercase(item.name)}`).join(' && ')}
+        (item) => ${tableKeysProperties.map((item) => `item.${ccfs.removeNCharLowercase(item.name)} == ${ccfs.removeNCharLowercase(item.name)}`).join(' && ')}
     );
 
     swal({
-        title: \`Bạn có chắc chắn muón xóa ${data.speak} có ${ 
-            tableKeysProperties.map(item => `${item.speak} là "\${${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}}"`).join(', ')
-        } không?\`,
+        title: \`Bạn có chắc chắn muón xóa ${data.speak} có ${tableKeysProperties.map((item) => `${item.speak} là "\${${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}}"`).join(', ')} không?\`,
         text: \`Không thể khôi phục dữ liệu sau khi xóa. Qúa trình sẽ xóa luôn các thông tin liên quan trong Cơ sở dữ liệu.\`,
         icon: 'warning',
         buttons: {
@@ -665,9 +646,9 @@ ${
 
 //Delete ${ccfs.removeNCharLowercase(data.classname)}
 function delete${tablenameRemoved}AJAX(${ccfs.removeNCharLowercase(data.classname)}) {
-    \$.ajax({ method: 'DELETE', url: '/api/${ccfs.removeNCharLowercase(data.classname)}', data: { id${tablenameRemoved}: ${ccfs.removeNCharLowercase(data.classname)}.id${tablenameRemoved} } })
+    \$.ajax({ method: 'DELETE', url: '/api/${ccfs.removeNCharLowercase(data.classname)}', data: { ${tableKeysProperties.map((item) => `${ccfs.removeNCharLowercase(item.name)} : ${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}`).join(', ')} } })
         .done(function (data, status, xhr) {
-            if (data && data > 0) {
+            if (data && data.affectedRows > 0) {
                 swal('Đã xóa thành công !', { icon: 'success' , timer: 1000});
 
                 let tableRow = getRowInTable(${ccfs.removeNCharLowercase(data.classname)});
@@ -692,8 +673,8 @@ function delete${tablenameRemoved}AJAX(${ccfs.removeNCharLowercase(data.classnam
 function deleteAllAJAX() {
     \$.ajax({ method: 'DELETE', url: '/api/${ccfs.removeNCharLowercase(data.classname)}', data: {} })
         .done(function (data, status, xhr) {
-            if (data && data > 0) {
-                swal(\`Đã xóa thành công \${data} tài khoản !\`, { icon: 'success' , timer: 1000});
+            if (data && data.affectedRows > 0) {
+                swal(\`Đã xóa thành công \${data.affectedRows} tài khoản !\`, { icon: 'success' , timer: 1000});
 
                 tableQuanLy${tablenameRemoved}.clear().draw();
             } else {

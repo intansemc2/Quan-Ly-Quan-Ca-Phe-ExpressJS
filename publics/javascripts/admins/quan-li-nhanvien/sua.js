@@ -88,7 +88,7 @@ function suanhanvienAJAX(nhanvien) {
                     return;
                 }
 
-                if (result) {
+                if (result && result.affectedRows > 0) {
                     refreshSuanhanvienAlert(['Sửa thành công ' + result], 'success');
 
                     editRowInTable(nhanvien);

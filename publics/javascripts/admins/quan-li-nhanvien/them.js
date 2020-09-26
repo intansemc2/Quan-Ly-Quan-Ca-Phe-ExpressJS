@@ -67,10 +67,10 @@ function themnhanvienAJAX(nhanvien) {
                     return;
                 }
 
-                if (result) {
+                if (result && result.affectedRows > 0) {
                     refreshThemnhanvienAlert(['Thêm thành công ' + result], 'success');
 
-                    nhanvien.manhanvien = result;                    
+                    nhanvien.manhanvien = result.insertId;                    
                     addNewRowToTable(nhanvien);
 
                     $('#modelThemnhanvien').modal('hide');

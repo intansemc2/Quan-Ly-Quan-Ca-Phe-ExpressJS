@@ -65,10 +65,10 @@ function themnhaphangAJAX(nhaphang) {
                     return;
                 }
 
-                if (result) {
+                if (result && result.affectedRows > 0) {
                     refreshThemnhaphangAlert(['Thêm thành công ' + result], 'success');
 
-                    nhaphang.manhaphang = result;                    
+                    nhaphang.manhaphang = result.insertId;                    
                     addNewRowToTable(nhaphang);
 
                     $('#modelThemnhaphang').modal('hide');

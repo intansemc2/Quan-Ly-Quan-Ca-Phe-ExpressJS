@@ -63,10 +63,10 @@ function themtaikhoanAJAX(taikhoan) {
                     return;
                 }
 
-                if (result) {
+                if (result && result.affectedRows > 0) {
                     refreshThemtaikhoanAlert(['Thêm thành công ' + result], 'success');
 
-                    taikhoan.mataikhoan = result;                    
+                    taikhoan.mataikhoan = result.insertId;                    
                     addNewRowToTable(taikhoan);
 
                     $('#modelThemtaikhoan').modal('hide');

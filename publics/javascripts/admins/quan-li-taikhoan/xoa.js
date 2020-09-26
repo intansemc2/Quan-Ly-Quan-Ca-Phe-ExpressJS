@@ -49,9 +49,9 @@ function deletetaikhoanRowInTable(buttonDelete) {
 
 //Delete taikhoan
 function deletetaikhoanAJAX(taikhoan) {
-    $.ajax({ method: 'DELETE', url: '/api/taikhoan', data: { idtaikhoan: taikhoan.idtaikhoan } })
+    $.ajax({ method: 'DELETE', url: '/api/taikhoan', data: { mataikhoan : taikhoan.mataikhoan } })
         .done(function (data, status, xhr) {
-            if (data && data > 0) {
+            if (data && data.affectedRows > 0) {
                 swal('Đã xóa thành công !', { icon: 'success' , timer: 1000});
 
                 let tableRow = getRowInTable(taikhoan);
@@ -76,8 +76,8 @@ function deletetaikhoanAJAX(taikhoan) {
 function deleteAllAJAX() {
     $.ajax({ method: 'DELETE', url: '/api/taikhoan', data: {} })
         .done(function (data, status, xhr) {
-            if (data && data > 0) {
-                swal(`Đã xóa thành công ${data} tài khoản !`, { icon: 'success' , timer: 1000});
+            if (data && data.affectedRows > 0) {
+                swal(`Đã xóa thành công ${data.affectedRows} tài khoản !`, { icon: 'success' , timer: 1000});
 
                 tableQuanLytaikhoan.clear().draw();
             } else {

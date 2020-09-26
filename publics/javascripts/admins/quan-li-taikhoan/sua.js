@@ -80,7 +80,7 @@ function suataikhoanAJAX(taikhoan) {
                     return;
                 }
 
-                if (result) {
+                if (result && result.affectedRows > 0) {
                     refreshSuataikhoanAlert(['Sửa thành công ' + result], 'success');
 
                     editRowInTable(taikhoan);

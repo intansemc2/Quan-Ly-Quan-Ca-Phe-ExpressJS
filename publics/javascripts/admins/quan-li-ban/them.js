@@ -59,10 +59,10 @@ function thembanAJAX(ban) {
                     return;
                 }
 
-                if (result) {
+                if (result && result.affectedRows > 0) {
                     refreshThembanAlert(['Thêm thành công ' + result], 'success');
 
-                    ban.maban = result;                    
+                    ban.maban = result.insertId;                    
                     addNewRowToTable(ban);
 
                     $('#modelThemban').modal('hide');

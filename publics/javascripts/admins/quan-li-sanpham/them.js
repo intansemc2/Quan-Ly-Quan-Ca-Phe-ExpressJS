@@ -65,10 +65,10 @@ function themsanphamAJAX(sanpham) {
                     return;
                 }
 
-                if (result) {
+                if (result && result.affectedRows > 0) {
                     refreshThemsanphamAlert(['Thêm thành công ' + result], 'success');
 
-                    sanpham.masanpham = result;                    
+                    sanpham.masanpham = result.insertId;                    
                     addNewRowToTable(sanpham);
 
                     $('#modelThemsanpham').modal('hide');

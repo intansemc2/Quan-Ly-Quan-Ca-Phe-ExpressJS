@@ -49,9 +49,9 @@ function deletekhachhangRowInTable(buttonDelete) {
 
 //Delete khachhang
 function deletekhachhangAJAX(khachhang) {
-    $.ajax({ method: 'DELETE', url: '/api/khachhang', data: { idkhachhang: khachhang.idkhachhang } })
+    $.ajax({ method: 'DELETE', url: '/api/khachhang', data: { makhachhang : khachhang.makhachhang } })
         .done(function (data, status, xhr) {
-            if (data && data > 0) {
+            if (data && data.affectedRows > 0) {
                 swal('Đã xóa thành công !', { icon: 'success' , timer: 1000});
 
                 let tableRow = getRowInTable(khachhang);
@@ -76,8 +76,8 @@ function deletekhachhangAJAX(khachhang) {
 function deleteAllAJAX() {
     $.ajax({ method: 'DELETE', url: '/api/khachhang', data: {} })
         .done(function (data, status, xhr) {
-            if (data && data > 0) {
-                swal(`Đã xóa thành công ${data} tài khoản !`, { icon: 'success' , timer: 1000});
+            if (data && data.affectedRows > 0) {
+                swal(`Đã xóa thành công ${data.affectedRows} tài khoản !`, { icon: 'success' , timer: 1000});
 
                 tableQuanLykhachhang.clear().draw();
             } else {

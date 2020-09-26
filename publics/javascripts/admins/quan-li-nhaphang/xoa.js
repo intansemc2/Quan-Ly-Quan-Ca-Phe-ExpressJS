@@ -49,9 +49,9 @@ function deletenhaphangRowInTable(buttonDelete) {
 
 //Delete nhaphang
 function deletenhaphangAJAX(nhaphang) {
-    $.ajax({ method: 'DELETE', url: '/api/nhaphang', data: { idnhaphang: nhaphang.idnhaphang } })
+    $.ajax({ method: 'DELETE', url: '/api/nhaphang', data: { manhaphang : nhaphang.manhaphang } })
         .done(function (data, status, xhr) {
-            if (data && data > 0) {
+            if (data && data.affectedRows > 0) {
                 swal('Đã xóa thành công !', { icon: 'success' , timer: 1000});
 
                 let tableRow = getRowInTable(nhaphang);
@@ -76,8 +76,8 @@ function deletenhaphangAJAX(nhaphang) {
 function deleteAllAJAX() {
     $.ajax({ method: 'DELETE', url: '/api/nhaphang', data: {} })
         .done(function (data, status, xhr) {
-            if (data && data > 0) {
-                swal(`Đã xóa thành công ${data} tài khoản !`, { icon: 'success' , timer: 1000});
+            if (data && data.affectedRows > 0) {
+                swal(`Đã xóa thành công ${data.affectedRows} tài khoản !`, { icon: 'success' , timer: 1000});
 
                 tableQuanLynhaphang.clear().draw();
             } else {

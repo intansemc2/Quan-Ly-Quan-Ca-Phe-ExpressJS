@@ -67,10 +67,10 @@ function themxuathangAJAX(xuathang) {
                     return;
                 }
 
-                if (result) {
+                if (result && result.affectedRows > 0) {
                     refreshThemxuathangAlert(['Thêm thành công ' + result], 'success');
 
-                    xuathang.maxuathang = result;                    
+                    xuathang.maxuathang = result.insertId;                    
                     addNewRowToTable(xuathang);
 
                     $('#modelThemxuathang').modal('hide');
