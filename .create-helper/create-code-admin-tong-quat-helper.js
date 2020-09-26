@@ -10,7 +10,7 @@ let contents = '';
 
 //Create controller
 contents += `
-extends ../layouts/_layout_main_bootstrap
+extends ../layouts/_layout_admin_main_bootstrap
 
 block custom_stylesheets
     //Custom Stylesheet files

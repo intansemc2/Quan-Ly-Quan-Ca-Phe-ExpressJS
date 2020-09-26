@@ -1,0 +1,31 @@
+doctype html
+html(lang="vi")
+    head
+        //Metadata
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
+        meta(name='description', content='')
+        meta(name='author', content='')
+        //Title
+        title #{title}
+        
+        //Bootstrap css file
+        link(type="text/css", rel="stylesheet", href="/liblaries/bootstrap.min.css")
+
+        block custom_stylesheets
+
+    body.sb-nav-fixed
+        block content
+        
+        //Jquery js file
+        script(type="text/javascript", src="/liblaries/jquery-3.4.1.min.js")
+        //Bootstrap js file
+        script(type="text/javascript", src="/liblaries/bootstrap.bundle.min.js")
+        //Fontawesome js file
+        script(type="text/javascript", src="/liblaries/fontawesome-all.min.js")
+
+        block custom_javascripts
+
+
+    

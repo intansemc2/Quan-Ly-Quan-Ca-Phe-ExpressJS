@@ -22,7 +22,7 @@ for (let i = 0; i < datas.length; i += 1) {
     //Create content
     contents = '';
     contents += `
-extends ../layouts/_layout_main_bootstrap
+extends ../layouts/_layout_admin_main_bootstrap
 
 block custom_stylesheets
     //Stylesheet library files
