@@ -2,7 +2,7 @@
 #layoutSidenav_nav
     nav#sidenavAccordion.sb-sidenav.accordion.sb-sidenav-dark
         // Menu của sidebar
-        .sb-sidenav-menu.d-flex.flex-column.justtify-content-between
+        .sb-sidenav-menu
             .nav
                 .sb-sidenav-menu-heading Nội dung chính 
                 a.nav-link(class=sidebarActiveTongquat, href='/admin/tong-quat')
@@ -10,13 +10,13 @@
                         i.fas.fa-tachometer-alt
                     | Tổng quát 
 
-                a.nav-link(class=sidebarActiveQuanlytaikhoan, href='/admin/quan-li-taikhoan')
+                a.nav-link(class=sidebarActiveQuanlytaiKhoan, href='/admin/quan-li-taiKhoan')
                     .sb-nav-link-icon
                         i.fas.fa-user
                     | Quản lý tài khoản
 
 
-                a.nav-link(class=sidebarActiveQuanlynguonsanpham, href='/admin/quan-li-nguonsanpham')
+                a.nav-link(class=sidebarActiveQuanlynguonSanPham, href='/admin/quan-li-nguonSanPham')
                     .sb-nav-link-icon
                         i.fas.fa-user
                     | Quản lý nguồn sản phẩm
@@ -28,48 +28,48 @@
                     | Quản lý bàn
 
 
-                a.nav-link(class=sidebarActiveQuanlysanpham, href='/admin/quan-li-sanpham')
+                a.nav-link(class=sidebarActiveQuanlysanPham, href='/admin/quan-li-sanPham')
                     .sb-nav-link-icon
                         i.fas.fa-user
                     | Quản lý sản phẩm
 
 
-                a.nav-link(class=sidebarActiveQuanlynhanvien, href='/admin/quan-li-nhanvien')
+                a.nav-link(class=sidebarActiveQuanlynhanVien, href='/admin/quan-li-nhanVien')
                     .sb-nav-link-icon
                         i.fas.fa-user
                     | Quản lý nhân viên
 
 
-                a.nav-link(class=sidebarActiveQuanlykhachhang, href='/admin/quan-li-khachhang')
+                a.nav-link(class=sidebarActiveQuanlykhachHang, href='/admin/quan-li-khachHang')
                     .sb-nav-link-icon
                         i.fas.fa-user
                     | Quản lý khách hàng
 
 
-                a.nav-link(class=sidebarActiveQuanlyxuathang, href='/admin/quan-li-xuathang')
+                a.nav-link(class=sidebarActiveQuanlyxuatHang, href='/admin/quan-li-xuatHang')
                     .sb-nav-link-icon
                         i.fas.fa-user
                     | Quản lý xuất hàng
 
 
-                a.nav-link(class=sidebarActiveQuanlynhaphang, href='/admin/quan-li-nhaphang')
+                a.nav-link(class=sidebarActiveQuanlynhapHang, href='/admin/quan-li-nhapHang')
                     .sb-nav-link-icon
                         i.fas.fa-user
                     | Quản lý nhập hàng
 
 
-                a.nav-link(class=sidebarActiveQuanlychitietxuathang, href='/admin/quan-li-chitietxuathang')
+                a.nav-link(class=sidebarActiveQuanlychiTietXuatHang, href='/admin/quan-li-chiTietXuatHang')
                     .sb-nav-link-icon
                         i.fas.fa-user
                     | Quản lý chi tiết xuất hàng
 
 
-                a.nav-link(class=sidebarActiveQuanlychitietnhaphang, href='/admin/quan-li-chitietnhaphang')
+                a.nav-link(class=sidebarActiveQuanlychiTietNhapHang, href='/admin/quan-li-chiTietNhapHang')
                     .sb-nav-link-icon
                         i.fas.fa-user
                     | Quản lý chi tiết nhập hàng
 
         // Thông tin người dùng đăng nhập
         .sb-sidenav-footer
-                .small Bạn đã đăng nhập bằng tài khoản 
-                span#loginInfo(mataikhoan=taikhoan.mataikhoan, tendangnhap=taikhoan.tendangnhap) #{taikhoan.tendangnhap}
+            .small Bạn đã đăng nhập bằng tài khoản 
+            span#loginInfo(maTaiKhoan=taiKhoan.maTaiKhoan, tenDangNhap=taiKhoan.tenDangNhap) #{taiKhoan.tenDangNhap}

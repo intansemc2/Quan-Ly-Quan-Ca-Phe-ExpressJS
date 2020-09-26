@@ -1,0 +1,36 @@
+
+// Model sửa xuất hàng
+#modelSuaxuatHang.modal.fade(tabindex='-1', role='dialog', aria-labelledby='ModelSuaxuatHang aria-labelledby', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+        form.modal-content
+            .modal-header
+                h5.modal-title Sửa xuất hàng 
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+            .modal-body                
+                .alerts
+                    // Các alert của phần này
+                input.idxuatHang(type='hidden')
+
+                .form-group
+                    label.small.mb-1(for='maXuatHang') Mã xuất hàng  
+                    input#maXuatHang(type='int', class='form-control py-4 maXuatHang' , disabled, required, placeholder='Nhập mã xuất hàng')
+
+                .form-group
+                    label.small.mb-1(for='ngayGioXuat') Ngày giờ xuất  
+                    input#ngayGioXuat(type='datetime', class='form-control py-4 ngayGioXuat' , placeholder='Nhập ngày giờ xuất', required)
+                .form-group
+                    label.small.mb-1(for='maNhanVien') Mã nhân viên  
+                    input#maNhanVien(type='int', class='form-control py-4 maNhanVien' , placeholder='Nhập mã nhân viên', required)
+                .form-group
+                    label.small.mb-1(for='maKhachHang') Mã khách hàng  
+                    input#maKhachHang(type='int', class='form-control py-4 maKhachHang' , placeholder='Nhập mã khách hàng', required)
+                .form-group
+                    label.small.mb-1(for='maBan') Mã bàn  
+                    input#maBan(type='int', class='form-control py-4 maBan' , placeholder='Nhập mã bàn', required)
+                .form-group
+                    label.small.mb-1(for='ghiChu') Ghi chú  
+                    input#ghiChu(type='int', class='form-control py-4 ghiChu' , placeholder='Nhập ghi chú', )
+            .modal-footer
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa xuất hàng')
+                input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')

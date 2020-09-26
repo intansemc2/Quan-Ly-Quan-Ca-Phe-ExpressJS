@@ -8,7 +8,7 @@ $(document).ready(function () {
                 targets: 0,
                 render: function (data, type, row, meta) {
                     let renderData = data;
-                    return `<span class="maban" data="${data}">${renderData}</span>`;
+                    return `<span class="maBan" data="${data}">${renderData}</span>`;
                 }
             },
     
@@ -26,7 +26,7 @@ $(document).ready(function () {
                     let ban = data;
                     let renderData = `
 <button type="button" class="btn btn-outline-secondary rounded-0 m-1" data-toggle="modal" data-target='#modelSuaban' 
-maban="${ban.maban}"
+maBan="${ban.maBan}"
 >
     <i class="fas fa-edit"></i>
 </button>
@@ -68,7 +68,7 @@ function refreshTableData() {
     tableQuanLyban.clear();
     for (let ban of bans) {
         tableQuanLyban.row.add([
-            ban.maban, ban.ten, ban
+            ban.maBan, ban.ten, ban
         ]);
     }
     tableQuanLyban.draw();

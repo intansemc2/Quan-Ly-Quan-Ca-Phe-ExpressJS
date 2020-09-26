@@ -1,0 +1,30 @@
+
+// Model sửa chi tiết nhập hàng
+#modelSuachiTietNhapHang.modal.fade(tabindex='-1', role='dialog', aria-labelledby='ModelSuachiTietNhapHang aria-labelledby', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+        form.modal-content
+            .modal-header
+                h5.modal-title Sửa chi tiết nhập hàng 
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+            .modal-body                
+                .alerts
+                    // Các alert của phần này
+                input.idchiTietNhapHang(type='hidden')
+
+                .form-group
+                    label.small.mb-1(for='maNhapHang') Mã nhập hàng  
+                    input#maNhapHang(type='int', class='form-control py-4 maNhapHang' , , required, placeholder='Nhập mã nhập hàng')
+                .form-group
+                    label.small.mb-1(for='maSanPham') Mã sản phẩm  
+                    input#maSanPham(type='int', class='form-control py-4 maSanPham' , , required, placeholder='Nhập mã sản phẩm')
+
+                .form-group
+                    label.small.mb-1(for='soLuong') Số lượng  
+                    input#soLuong(type='int', class='form-control py-4 soLuong' , placeholder='Nhập số lượng', required)
+                .form-group
+                    label.small.mb-1(for='donGia') Đơn giá  
+                    input#donGia(type='int', class='form-control py-4 donGia' , placeholder='Nhập đơn giá', required)
+            .modal-footer
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa chi tiết nhập hàng')
+                input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')

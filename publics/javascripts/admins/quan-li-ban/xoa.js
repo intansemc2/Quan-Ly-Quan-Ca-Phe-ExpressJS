@@ -24,14 +24,14 @@ $(document).ready(function () {
 function deletebanRowInTable(buttonDelete) {
     let tableRow = $(buttonDelete).parents('tr');
 
-    let maban = $(tableRow).find('.maban').attr('data');
+    let maBan = $(tableRow).find('.maBan').attr('data');
 
     let ban = bans.find(
-        (item) => item.maban == maban
+        (item) => item.maBan == maBan
     );
 
     swal({
-        title: `Bạn có chắc chắn muón xóa bàn có mã bàn là "${ban.maban}" không?`,
+        title: `Bạn có chắc chắn muón xóa bàn có mã bàn là "${ban.maBan}" không?`,
         text: `Không thể khôi phục dữ liệu sau khi xóa. Qúa trình sẽ xóa luôn các thông tin liên quan trong Cơ sở dữ liệu.`,
         icon: 'warning',
         buttons: {
@@ -49,7 +49,7 @@ function deletebanRowInTable(buttonDelete) {
 
 //Delete ban
 function deletebanAJAX(ban) {
-    $.ajax({ method: 'DELETE', url: '/api/ban', data: { maban : ban.maban } })
+    $.ajax({ method: 'DELETE', url: '/api/ban', data: { maBan : ban.maBan } })
         .done(function (data, status, xhr) {
             if (data && data.affectedRows > 0) {
                 swal('Đã xóa thành công !', { icon: 'success' , timer: 1000});

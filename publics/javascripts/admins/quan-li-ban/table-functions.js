@@ -1,18 +1,18 @@
 
 //Get a row in table
 function getRowInTable(ban) {
-    return $('#tableQuanLyban').find(`.maban[data="${ban.maban}"]`).parents('tr');
+    return $('#tableQuanLyban').find(`.maBan[data="${ban.maBan}"]`).parents('tr');
 }
 
 //Add new row to table
 function addNewRowToTable(ban) {
     tableQuanLyban.row.add([
-        ban.maban, ban.ten, ban
+        ban.maBan, ban.ten, ban
     ]).draw();
 
     //Change in bans
     bans.push({ 
-        maban: ban.maban, ten: ban.ten
+        maBan: ban.maBan, ten: ban.ten
     });
 }
 
@@ -20,15 +20,15 @@ function addNewRowToTable(ban) {
 function editRowInTable(ban) {
     let oldbanRow = getRowInTable(ban);
     tableQuanLyban.row(oldbanRow).data([
-        ban.maban, ban.ten, ban
+        ban.maBan, ban.ten, ban
     ]).draw();
 
     //Change in bans
     let banReference = bans.find(
-        (item) => item.maban == ban.maban
+        (item) => item.maBan == ban.maBan
     );
     
-    banReference.maban = ban.maban;
+    banReference.maBan = ban.maBan;
     banReference.ten = ban.ten;
     
 }
@@ -40,7 +40,7 @@ function deleteRowInTable(ban) {
 
     //Change in bans
     bans = bans.filter(
-        (item) => item.maban != ban.maban
+        (item) => item.maBan != ban.maBan
     );
 }
     

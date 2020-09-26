@@ -6,10 +6,10 @@ File: admin.controller.js
 const errorController = require('./error.controller');
 
 //Import Databases
-const taikhoanDatabase = require('../databases/taikhoan.database');
+const taikhoanDatabase = require('../databases/taiKhoan.database');
 
 //Import Models
-const TaiKhoan = require('../models/taikhoan');
+const TaiKhoan = require('../models/taiKhoan');
 
 //Routings
 

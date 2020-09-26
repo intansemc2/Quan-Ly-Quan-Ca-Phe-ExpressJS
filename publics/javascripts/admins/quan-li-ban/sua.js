@@ -4,11 +4,11 @@ $(document).ready(function () {
     //Suaban Confirm
     $('#modelSuaban .confirm').click(async function () {
 
-        let maban = $(this).parents('form').find('.maban').val();
+        let maBan = $(this).parents('form').find('.maBan').val();
     
         let ten = $(this).parents('form').find('.ten').val();
     
-        let ban = { maban : maban, ten : ten };
+        let ban = { maBan : maBan, ten : ten };
 
         let errors = suabanValidator(ban);
 
@@ -25,15 +25,15 @@ $(document).ready(function () {
     $('#modelSuaban').on('show.bs.modal', function (event) {
         let suabanTriggered = $(event.relatedTarget);
 
-        let maban = suabanTriggered.attr('maban');
+        let maBan = suabanTriggered.attr('maBan');
     
 
         let ban = bans.find(
-            (item) => item.maban == maban
+            (item) => item.maBan == maBan
         );
 
 
-        $('#modelSuaban').find('.maban').val(maban);
+        $('#modelSuaban').find('.maBan').val(maBan);
     
 
 
@@ -104,7 +104,7 @@ function suabanValidator(ban) {
     }
 
 
-    if (!ban.maban) {
+    if (!ban.maBan) {
         errors.push('Không thể xác định mã bàn ');
     }
     

@@ -1,0 +1,30 @@
+
+// Model thêm chi tiết xuất hàng
+#modelThemchiTietXuatHang.modal.fade(tabindex='-1', role='dialog', aria-labelledby='Model aria-labelledby', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+        form.modal-content
+            .modal-header
+                h5.modal-title Thêm chi tiết xuất hàng 
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+            .modal-body
+                .alerts
+                    // Các alert của phần này
+
+                .form-group
+                    label.small.mb-1(for='maXuatHang') Mã xuất hàng  
+                    input#maXuatHang(type='int', class='form-control py-4 maXuatHang' , required='true', placeholder='Nhập mã xuất hàng')
+                .form-group
+                    label.small.mb-1(for='maSanPham') Mã sản phẩm  
+                    input#maSanPham(type='int', class='form-control py-4 maSanPham' , required='true', placeholder='Nhập mã sản phẩm')
+
+
+                .form-group
+                    label.small.mb-1(for='soLuong') Số lượng  
+                    input#soLuong(type='int', class='form-control py-4 soLuong' , placeholder='Nhập số lượng', required)
+                .form-group
+                    label.small.mb-1(for='donGia') Đơn giá  
+                    input#donGia(type='int', class='form-control py-4 donGia' , placeholder='Nhập đơn giá', required)
+            .modal-footer
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Thêm chi tiết xuất hàng')
+                input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')

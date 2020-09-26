@@ -3,8 +3,8 @@ File: ban.js
 ***/
 
 class ban {
-    constructor(maban = null, ten = null) {
-this.maban = maban;
+    constructor(maBan = null, ten = null) {
+this.maBan = maBan;
 this.ten = ten;
     }
 }

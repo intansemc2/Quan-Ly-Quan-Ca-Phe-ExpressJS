@@ -19,13 +19,10 @@ nav.sb-topnav.navbar.navbar-expand.navbar-dark.bg-dark
         li.nav-item.dropdown
             a#userDropdown.nav-link.dropdown-toggle(href='', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
                 i.fas.fa-user.fa-fw
-                span#loginInfo(mataikhoan=taikhoan.mataikhoan, tendangnhap=taikhoan.tendangnhap) #{taikhoan.tendangnhap}
+                span#loginInfo(maTaiKhoan=taiKhoan.maTaiKhoan, tenDangNhap=taiKhoan.tenDangNhap) #{taiKhoan.tenDangNhap}
             // Thông tin tài khoản
-            .dropdown-menu.dropdown-menu-right(aria-labelledby='userDropdown')
-                a.dropdown-item(href='/login/account-info') Thông tin tài khoản 
-                a.dropdown-item(href='/login/change-account-info') Thay đổi thông tin tài khoản 
-                .dropdown-divider
-                a.dropdown-item(href='/login/logout') Đăng xuất
+            .dropdown-menu.dropdown-menu-right(aria-labelledby='userDropdown')                
+                a.dropdown-item(href='/account.manager') Quản lí tài khoản
                 .dropdown-divider
                 a.dropdown-item(href='/staff') Trang dành cho STAFF
                 a.dropdown-item(href='/user') Trang dành cho USER

@@ -1,0 +1,36 @@
+
+// Model sửa nhân viên
+#modelSuanhanVien.modal.fade(tabindex='-1', role='dialog', aria-labelledby='ModelSuanhanVien aria-labelledby', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+        form.modal-content
+            .modal-header
+                h5.modal-title Sửa nhân viên 
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+            .modal-body                
+                .alerts
+                    // Các alert của phần này
+                input.idnhanVien(type='hidden')
+
+                .form-group
+                    label.small.mb-1(for='maNhanVien') Mã nhân viên  
+                    input#maNhanVien(type='int', class='form-control py-4 maNhanVien' , disabled, required, placeholder='Nhập mã nhân viên')
+
+                .form-group
+                    label.small.mb-1(for='maTaiKhoan') Mã tài khoản  
+                    input#maTaiKhoan(type='int', class='form-control py-4 maTaiKhoan' , placeholder='Nhập mã tài khoản', required)
+                .form-group
+                    label.small.mb-1(for='ten') Tên  
+                    input#ten(type='string', class='form-control py-4 ten' , placeholder='Nhập tên', required)
+                .form-group
+                    label.small.mb-1(for='ngaySinh') Ngày sinh  
+                    input#ngaySinh(type='date', class='form-control py-4 ngaySinh' , placeholder='Nhập ngày sinh', required)
+                .form-group
+                    label.small.mb-1(for='soDienThoai') Số điện thoại  
+                    input#soDienThoai(type='string', class='form-control py-4 soDienThoai' , placeholder='Nhập số điện thoại', required)
+                .form-group
+                    label.small.mb-1(for='diaChi') Địa chỉ  
+                    input#diaChi(type='string', class='form-control py-4 diaChi' , placeholder='Nhập địa chỉ', required)
+            .modal-footer
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa nhân viên')
+                input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')

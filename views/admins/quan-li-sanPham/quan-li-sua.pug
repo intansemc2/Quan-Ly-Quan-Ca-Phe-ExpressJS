@@ -1,0 +1,33 @@
+
+// Model sửa sản phẩm
+#modelSuasanPham.modal.fade(tabindex='-1', role='dialog', aria-labelledby='ModelSuasanPham aria-labelledby', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+        form.modal-content
+            .modal-header
+                h5.modal-title Sửa sản phẩm 
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+            .modal-body                
+                .alerts
+                    // Các alert của phần này
+                input.idsanPham(type='hidden')
+
+                .form-group
+                    label.small.mb-1(for='maSanPham') Mã sản phẩm  
+                    input#maSanPham(type='int', class='form-control py-4 maSanPham' , disabled, required, placeholder='Nhập mã sản phẩm')
+
+                .form-group
+                    label.small.mb-1(for='ten') Tên  
+                    input#ten(type='string', class='form-control py-4 ten' , placeholder='Nhập tên', required)
+                .form-group
+                    label.small.mb-1(for='linkAnh') Link ảnh  
+                    input#linkAnh(type='string', class='form-control py-4 linkAnh' , placeholder='Nhập link ảnh', )
+                .form-group
+                    label.small.mb-1(for='loai') Loại  
+                    input#loai(type='string', class='form-control py-4 loai' , placeholder='Nhập loại', )
+                .form-group
+                    label.small.mb-1(for='gia') Giá  
+                    input#gia(type='int', class='form-control py-4 gia' , placeholder='Nhập giá', required)
+            .modal-footer
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa sản phẩm')
+                input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')

@@ -1,0 +1,30 @@
+
+// Model sửa tài khoản
+#modelSuataiKhoan.modal.fade(tabindex='-1', role='dialog', aria-labelledby='ModelSuataiKhoan aria-labelledby', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+        form.modal-content
+            .modal-header
+                h5.modal-title Sửa tài khoản 
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+            .modal-body                
+                .alerts
+                    // Các alert của phần này
+                input.idtaiKhoan(type='hidden')
+
+                .form-group
+                    label.small.mb-1(for='maTaiKhoan') Mã tài khoản  
+                    input#maTaiKhoan(type='int', class='form-control py-4 maTaiKhoan' , disabled, required, placeholder='Nhập mã tài khoản')
+
+                .form-group
+                    label.small.mb-1(for='tenDangNhap') Tên đăng nhập  
+                    input#tenDangNhap(type='string', class='form-control py-4 tenDangNhap' , placeholder='Nhập tên đăng nhập', required)
+                .form-group
+                    label.small.mb-1(for='matKhau') Mật khẩu  
+                    input#matKhau(type='string', class='form-control py-4 matKhau' , placeholder='Nhập mật khẩu', required)
+                .form-group
+                    label.small.mb-1(for='loai') Loại tài khoản  
+                    input#loai(type='string', class='form-control py-4 loai' , placeholder='Nhập loại tài khoản', required)
+            .modal-footer
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa tài khoản')
+                input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')

@@ -4,11 +4,11 @@ $(document).ready(function () {
     //Themban Confirm
     $('#modelThemban .confirm').click(async function () {
 
-        let maban = $(this).parents('form').find('.maban').val();
+        let maBan = $(this).parents('form').find('.maBan').val();
     
         let ten = $(this).parents('form').find('.ten').val();
     
-        let ban = { maban : maban, ten : ten };
+        let ban = { maBan : maBan, ten : ten };
 
         let errors = thembanValidator(ban);
 
@@ -62,7 +62,7 @@ function thembanAJAX(ban) {
                 if (result && result.affectedRows > 0) {
                     refreshThembanAlert(['Thêm thành công ' + result], 'success');
 
-                    ban.maban = result.insertId;                    
+                    ban.maBan = result.insertId;                    
                     addNewRowToTable(ban);
 
                     $('#modelThemban').modal('hide');

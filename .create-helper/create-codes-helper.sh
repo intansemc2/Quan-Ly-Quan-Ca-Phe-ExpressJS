@@ -1,5 +1,8 @@
 #! /bin/bash
 
+echo 'Xóa kết quả cũ  ...';
+rm -r ./results/*;
+
 echo 'Bắt đầu tạo ...';
 
 echo 'Tạo file: create-code-admin-controller-helper.js';
@@ -10,6 +13,9 @@ node create-code-admin-item-navbar-helper.js;
 
 echo 'Tạo file: create-code-admin-item-sidebar-helper.js';
 node create-code-admin-item-sidebar-helper.js;
+
+echo 'Tạo file: create-code-admin-tong-quat-helper.js';
+node create-code-admin-tong-quat-helper.js;
 
 echo 'Tạo file: create-code-admin-manager-helper.js';
 node create-code-admin-manager-helper.js;

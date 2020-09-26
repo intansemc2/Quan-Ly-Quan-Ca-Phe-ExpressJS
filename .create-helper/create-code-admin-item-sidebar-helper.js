@@ -13,7 +13,7 @@ contents += `
 #layoutSidenav_nav
     nav#sidenavAccordion.sb-sidenav.accordion.sb-sidenav-dark
         // Menu của sidebar
-        .sb-sidenav-menu.d-flex.flex-column.justtify-content-between
+        .sb-sidenav-menu
             .nav
                 .sb-sidenav-menu-heading Nội dung chính 
                 a.nav-link(class=sidebarActiveTongquat, href='/admin/tong-quat')
@@ -35,8 +35,8 @@ ${
 }
         // Thông tin người dùng đăng nhập
         .sb-sidenav-footer
-                .small Bạn đã đăng nhập bằng tài khoản 
-                span#loginInfo(mataikhoan=taikhoan.mataikhoan, tendangnhap=taikhoan.tendangnhap) #{taikhoan.tendangnhap}
+            .small Bạn đã đăng nhập bằng tài khoản 
+            span#loginInfo(maTaiKhoan=taiKhoan.maTaiKhoan, tenDangNhap=taiKhoan.tenDangNhap) #{taiKhoan.tenDangNhap}
 `;
 
 ccfs.writeStringSync(`${__dirname}/results/views/admins`, `_item_sidebar.pug`, contents);

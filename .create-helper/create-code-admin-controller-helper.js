@@ -18,10 +18,10 @@ contents += `
 const errorController = require('./error.controller');
 
 //Import Databases
-const taikhoanDatabase = require('../databases/taikhoan.database');
+const taikhoanDatabase = require('../databases/taiKhoan.database');
 
 //Import Models
-const TaiKhoan = require('../models/taikhoan');
+const TaiKhoan = require('../models/taiKhoan');
 
 //Routings
 
@@ -31,7 +31,7 @@ try {
     response.render('admins/tong-quat', {
         sidebarActiveTongquat: 'active',
         breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Tổng quát', link: '/admin/tong-quat', isActive: 'active' }],
-        taikhoan: new TaiKhoan(1, 'admin')
+        taiKhoan: new TaiKhoan(1, 'admin')
     });
     next();
 } catch (error) {
@@ -49,7 +49,7 @@ try {
     response.render('admins/quan-li-${tablenameRemoved}', {
         sidebarActiveQuanly${tablenameRemoved}: 'active',
         breadcrumbs: [{ name: 'Admin', link: '/admin'}, { name: 'Quản lý ${data.speak.toLowerCase()}', link: '/admin/quan-li-${tablenameRemoved}', isActive: 'active' }],
-        taikhoan: new TaiKhoan(1, 'admin')
+        taiKhoan: new TaiKhoan(1, 'admin')
     });
     next();
 } catch (error) {

@@ -16,44 +16,44 @@ router.get('/', adminController.tongquat);
 router.get('/tong-quat', adminController.tongquat);
 
 
-//Router quanlytaikhoan
-router.get('/quan-li-taikhoan', adminController.quanlytaikhoan);
+//Router quanlytaiKhoan
+router.get('/quan-li-taiKhoan', adminController.quanlytaiKhoan);
 
 
-//Router quanlynguonsanpham
-router.get('/quan-li-nguonsanpham', adminController.quanlynguonsanpham);
+//Router quanlynguonSanPham
+router.get('/quan-li-nguonSanPham', adminController.quanlynguonSanPham);
 
 
 //Router quanlyban
 router.get('/quan-li-ban', adminController.quanlyban);
 
 
-//Router quanlysanpham
-router.get('/quan-li-sanpham', adminController.quanlysanpham);
+//Router quanlysanPham
+router.get('/quan-li-sanPham', adminController.quanlysanPham);
 
 
-//Router quanlynhanvien
-router.get('/quan-li-nhanvien', adminController.quanlynhanvien);
+//Router quanlynhanVien
+router.get('/quan-li-nhanVien', adminController.quanlynhanVien);
 
 
-//Router quanlykhachhang
-router.get('/quan-li-khachhang', adminController.quanlykhachhang);
+//Router quanlykhachHang
+router.get('/quan-li-khachHang', adminController.quanlykhachHang);
 
 
-//Router quanlyxuathang
-router.get('/quan-li-xuathang', adminController.quanlyxuathang);
+//Router quanlyxuatHang
+router.get('/quan-li-xuatHang', adminController.quanlyxuatHang);
 
 
-//Router quanlynhaphang
-router.get('/quan-li-nhaphang', adminController.quanlynhaphang);
+//Router quanlynhapHang
+router.get('/quan-li-nhapHang', adminController.quanlynhapHang);
 
 
-//Router quanlychitietxuathang
-router.get('/quan-li-chitietxuathang', adminController.quanlychitietxuathang);
+//Router quanlychiTietXuatHang
+router.get('/quan-li-chiTietXuatHang', adminController.quanlychiTietXuatHang);
 
 
-//Router quanlychitietnhaphang
-router.get('/quan-li-chitietnhaphang', adminController.quanlychitietnhaphang);
+//Router quanlychiTietNhapHang
+router.get('/quan-li-chiTietNhapHang', adminController.quanlychiTietNhapHang);
 
 
 //Module export
