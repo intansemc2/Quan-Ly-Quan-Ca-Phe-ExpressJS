@@ -36,7 +36,7 @@ ${
         // Thông tin người dùng đăng nhập
         .sb-sidenav-footer
                 .small Bạn đã đăng nhập bằng tài khoản 
-                span#loginInfo(maTaiKhoan=taiKhoan.maTaiKhoan, tenDangNhap=taiKhoan.tenDangNhap) #{taiKhoan.tenDangNhap}
+                span#loginInfo(mataikhoan=taikhoan.mataikhoan, tendangnhap=taikhoan.tendangnhap) #{taikhoan.tendangnhap}
 `;
 
 ccfs.writeStringSync(`${__dirname}/results/views/admins`, `_item_sidebar.pug`, contents);

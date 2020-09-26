@@ -134,10 +134,10 @@ block custom_javascripts
                 .alerts
                     // Các alert của phần này
                 input.id${tablenameRemoved}(type='hidden')
-${tableKeysProperties.map((item) => ccfs.createFormInputElement(ccfs.removeNCharLowercase(item.name).toLowerCase(), item.speak, item.type.toLowerCase(), [ccfs.removeNCharLowercase(item.name).toLowerCase()], [`required`, `placeholder='Nhập ${item.speak}'`], 4 * 4)).join('')}
-${tableNotKeysProperties.map((item) => ccfs.createFormInputElement(ccfs.removeNCharLowercase(item.name).toLowerCase(), item.speak, item.type.toLowerCase(), [ccfs.removeNCharLowercase(item.name).toLowerCase()], [`placeholder='Nhập ${item.speak}'`, item.isNull ? `` : `required`], 4 * 4)).join('')}
+${tableKeysProperties.map((item) => ccfs.createFormInputElement(ccfs.removeNCharLowercase(item.name).toLowerCase(), ccfs.capitalize(item.speak), item.type.toLowerCase(), [ccfs.removeNCharLowercase(item.name).toLowerCase()], [tableKeysProperties.length > 1 ? `` : `disabled` , `required`, `placeholder='Nhập ${item.speak}'`], 4 * 4)).join('')}
+${tableNotKeysProperties.map((item) => ccfs.createFormInputElement(ccfs.removeNCharLowercase(item.name).toLowerCase(), ccfs.capitalize(item.speak), item.type.toLowerCase(), [ccfs.removeNCharLowercase(item.name).toLowerCase()], [`placeholder='Nhập ${item.speak}'`, item.isNull ? `` : `required`], 4 * 4)).join('')}
             .modal-footer
-                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa ${ccfs.removeNCharLowercase(data.speak)}')
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa ${data.speak}')
                 input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')
 `;
 
@@ -157,11 +157,11 @@ ${tableNotKeysProperties.map((item) => ccfs.createFormInputElement(ccfs.removeNC
             .modal-body
                 .alerts
                     // Các alert của phần này
-${tableKeysProperties.length > 1 ? tableKeysProperties.map((item) => ccfs.createFormInputElement(ccfs.removeNCharLowercase(item.name).toLowerCase(), item.speak, item.type.toLowerCase(), [ccfs.removeNCharLowercase(item.name).toLowerCase()], [`required='true'`, `placeholder='Nhập ${item.speak}'`], 4 * 4)).join('') : ``}
+${tableKeysProperties.length > 1 ? tableKeysProperties.map((item) => ccfs.createFormInputElement(ccfs.removeNCharLowercase(item.name).toLowerCase(), ccfs.capitalize(item.speak), item.type.toLowerCase(), [ccfs.removeNCharLowercase(item.name).toLowerCase()], [`required='true'`, `placeholder='Nhập ${item.speak}'`], 4 * 4)).join('') : ``}
 
-${tableNotKeysProperties.map((item) => ccfs.createFormInputElement(ccfs.removeNCharLowercase(item.name).toLowerCase(), item.speak, item.type.toLowerCase(), [ccfs.removeNCharLowercase(item.name).toLowerCase()], [`placeholder='Nhập ${item.speak}'`, item.isNull ? `` : `required`], 4 * 4)).join('')}
+${tableNotKeysProperties.map((item) => ccfs.createFormInputElement(ccfs.removeNCharLowercase(item.name).toLowerCase(), ccfs.capitalize(item.speak), item.type.toLowerCase(), [ccfs.removeNCharLowercase(item.name).toLowerCase()], [`placeholder='Nhập ${item.speak}'`, item.isNull ? `` : `required`], 4 * 4)).join('')}
             .modal-footer
-                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Thêm ${ccfs.removeNCharLowercase(data.speak)}')
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Thêm ${data.speak}')
                 input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')
 `;
 
