@@ -94,12 +94,12 @@ if (!input.diachi) {
 input.diachi = null;
 }
     
-let query = `INSERT INTO FROM nguonSanPham (maNguonSanPham,ten,soDienThoai,diaChi) VALUES ( ${mysql.escape(input.manguonsanpham)},${mysql.escape(input.ten)},${mysql.escape(input.sodienthoai)},${mysql.escape(input.diachi)} )`;
+let query = `INSERT INTO nguonSanPham (maNguonSanPham,ten,soDienThoai,diaChi) VALUES ( ${mysql.escape(input.manguonsanpham)},${mysql.escape(input.ten)},${mysql.escape(input.sodienthoai)},${mysql.escape(input.diachi)} )`;
 return query;
 };
 
 module.exports.createQueryPatch = function (input) {
-let query = `UPDATE FROM nguonSanPham SET `;
+let query = `UPDATE nguonSanPham SET `;
 let queryChanges = [];
 
 

@@ -94,12 +94,12 @@ if (!input.loai) {
 input.loai = null;
 }
     
-let query = `INSERT INTO FROM taiKhoan (maTaiKhoan,tenDangNhap,matKhau,loai) VALUES ( ${mysql.escape(input.mataikhoan)},${mysql.escape(input.tendangnhap)},${mysql.escape(input.matkhau)},${mysql.escape(input.loai)} )`;
+let query = `INSERT INTO taiKhoan (maTaiKhoan,tenDangNhap,matKhau,loai) VALUES ( ${mysql.escape(input.mataikhoan)},${mysql.escape(input.tendangnhap)},${mysql.escape(input.matkhau)},${mysql.escape(input.loai)} )`;
 return query;
 };
 
 module.exports.createQueryPatch = function (input) {
-let query = `UPDATE FROM taiKhoan SET `;
+let query = `UPDATE taiKhoan SET `;
 let queryChanges = [];
 
 

@@ -114,12 +114,12 @@ if (!input.ghichu) {
 input.ghichu = null;
 }
     
-let query = `INSERT INTO FROM khachHang (maKhachHang,maTaiKhoan,ten,ngaySinh,soDienThoai,ghiChu) VALUES ( ${mysql.escape(input.makhachhang)},${mysql.escape(input.mataikhoan)},${mysql.escape(input.ten)},${mysql.escape(input.ngaysinh)},${mysql.escape(input.sodienthoai)},${mysql.escape(input.ghichu)} )`;
+let query = `INSERT INTO khachHang (maKhachHang,maTaiKhoan,ten,ngaySinh,soDienThoai,ghiChu) VALUES ( ${mysql.escape(input.makhachhang)},${mysql.escape(input.mataikhoan)},${mysql.escape(input.ten)},${mysql.escape(input.ngaysinh)},${mysql.escape(input.sodienthoai)},${mysql.escape(input.ghichu)} )`;
 return query;
 };
 
 module.exports.createQueryPatch = function (input) {
-let query = `UPDATE FROM khachHang SET `;
+let query = `UPDATE khachHang SET `;
 let queryChanges = [];
 
 

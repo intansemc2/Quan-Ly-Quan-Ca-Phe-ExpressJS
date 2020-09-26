@@ -74,12 +74,12 @@ if (!input.ten) {
 input.ten = null;
 }
     
-let query = `INSERT INTO FROM ban (maBan,ten) VALUES ( ${mysql.escape(input.maban)},${mysql.escape(input.ten)} )`;
+let query = `INSERT INTO ban (maBan,ten) VALUES ( ${mysql.escape(input.maban)},${mysql.escape(input.ten)} )`;
 return query;
 };
 
 module.exports.createQueryPatch = function (input) {
-let query = `UPDATE FROM ban SET `;
+let query = `UPDATE ban SET `;
 let queryChanges = [];
 
 

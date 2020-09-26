@@ -144,12 +144,12 @@ input.${ccfs.convertNameToJSProperty(item.name)} = null;
     `
     )
     .join('\n')}
-let query = \`INSERT INTO FROM ${data.classname} (${data.properties.map((item) => item.name).join(',')}) VALUES ( ${data.properties.map((item) => `\${mysql.escape(input.${ccfs.convertNameToJSProperty(item.name)})}`).join(',')} )\`;
+let query = \`INSERT INTO ${data.classname} (${data.properties.map((item) => item.name).join(',')}) VALUES ( ${data.properties.map((item) => `\${mysql.escape(input.${ccfs.convertNameToJSProperty(item.name)})}`).join(',')} )\`;
 return query;
 };
 
 module.exports.createQueryPatch = function (input) {
-let query = \`UPDATE FROM ${data.classname} SET \`;
+let query = \`UPDATE ${data.classname} SET \`;
 let queryChanges = [];
 ${
     data.keys.length <= 1

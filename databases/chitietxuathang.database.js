@@ -93,12 +93,12 @@ if (!input.dongia) {
 input.dongia = null;
 }
     
-let query = `INSERT INTO FROM chiTietXuatHang (maXuatHang,maSanPham,soLuong,donGia) VALUES ( ${mysql.escape(input.maxuathang)},${mysql.escape(input.masanpham)},${mysql.escape(input.soluong)},${mysql.escape(input.dongia)} )`;
+let query = `INSERT INTO chiTietXuatHang (maXuatHang,maSanPham,soLuong,donGia) VALUES ( ${mysql.escape(input.maxuathang)},${mysql.escape(input.masanpham)},${mysql.escape(input.soluong)},${mysql.escape(input.dongia)} )`;
 return query;
 };
 
 module.exports.createQueryPatch = function (input) {
-let query = `UPDATE FROM chiTietXuatHang SET `;
+let query = `UPDATE chiTietXuatHang SET `;
 let queryChanges = [];
 
 

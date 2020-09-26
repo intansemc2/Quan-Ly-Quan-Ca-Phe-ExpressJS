@@ -147,8 +147,7 @@ module.exports.put = async function (input, createQueryExists, createQueryPatch,
     let result = undefined;
     if (isExists) {
         result = await module.exports.patch(input, createQueryPatch);
-    }
-    else {
+    } else {
         result = await module.exports.post(input, createQueryPost);
     }
     return result;
