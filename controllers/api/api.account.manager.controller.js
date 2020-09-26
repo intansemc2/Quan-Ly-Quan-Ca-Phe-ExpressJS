@@ -1,19 +1,21 @@
-/*** 
-File: api.ban.controller.js 
-***/
-
 //Import Controllers
 const errorController = require('../error.controller');
 
 //Import Databases
-const banDatabase = require('../../databases/ban.database');
-const ban = require('../../models/ban');
+const taikhoanDatabase = require('../../databases/taikhoan.database');
 
+//Import Models
+const TaiKhoan = require('../../models/taikhoan');
+
+//Get login information
 module.exports.get = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await banDatabase.get(input);
+        let output = input;
+
+        //
+
         response.json(output);
         next();
     } catch (error) {
@@ -21,11 +23,15 @@ module.exports.get = async function (request, response, next) {
     }
 };
 
+//Add new login information
 module.exports.post = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await banDatabase.post(input);
+        let output = input;
+
+        //
+
         response.json(output);
         next();
     } catch (error) {
@@ -33,11 +39,16 @@ module.exports.post = async function (request, response, next) {
     }
 };
 
+//Add new login information if not exists
+//Edit login information if exists
 module.exports.put = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await banDatabase.put(input);
+        let output = input;
+
+        //
+
         response.json(output);
         next();
     } catch (error) {
@@ -45,11 +56,15 @@ module.exports.put = async function (request, response, next) {
     }
 };
 
+//Edit login information
 module.exports.patch = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await banDatabase.patch(input);
+        let output = input;
+
+        //
+
         response.json(output);
         next();
     } catch (error) {
@@ -57,11 +72,15 @@ module.exports.patch = async function (request, response, next) {
     }
 };
 
+//Delete login information
 module.exports.delete = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await banDatabase.delete(input);
+        let output = input;
+
+        //
+
         response.json(output);
         next();
     } catch (error) {
@@ -69,11 +88,15 @@ module.exports.delete = async function (request, response, next) {
     }
 };
 
+//Check login information
 module.exports.exists = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = await banDatabase.exists(input);
+        let output = input;
+
+        //
+
         response.json(output);
         next();
     } catch (error) {

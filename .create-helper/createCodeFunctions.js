@@ -82,7 +82,7 @@ module.exports.capitalize = (input) => {
 
 // 
 module.exports.removeNCharLowercase = function(inputString) {
-    return inputString.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
+    return inputString.replace(/[^a-zA-Z0-9]/g, '');
 }
 
 //Create form
