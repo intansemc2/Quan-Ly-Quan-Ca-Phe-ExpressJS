@@ -22,15 +22,10 @@ const router = express.Router();
 ${
     datas.map(data => {
         //Pre-process
-        let tablenameFile = ccfs.convertNameToJSClass(data.classname).toLowerCase();
-        let tablenameClass = ccfs.convertNameToJSClass(data.classname);
-        let tablenameObject = ccfs.convertNameToSqlProperty(data.classname);
-
-        let tableNotKeysProperties = data.properties.filter((item) => !data.keys.find((key) => key === item.name));
-        let tableKeysProperties = data.properties.filter((item) => data.keys.find((key) => key === item.name));
+        let tablenameRemoved = ccfs.removeNCharLowercase(data.classname);
 
         return `
-        const api${tablenameClass}Controller = require('../controllers/api/api.${tablenameFile}.controller');
+        const api${tablenameRemoved}Controller = require('../controllers/api/api.${tablenameRemoved}.controller');
         `;
     }).join('')
 }
@@ -38,21 +33,16 @@ ${
 ${
     datas.map(data => {
         //Pre-process
-        let tablenameFile = ccfs.convertNameToJSClass(data.classname).toLowerCase();
-        let tablenameClass = ccfs.convertNameToJSClass(data.classname);
-        let tablenameObject = ccfs.convertNameToSqlProperty(data.classname);
-
-        let tableNotKeysProperties = data.properties.filter((item) => !data.keys.find((key) => key === item.name));
-        let tableKeysProperties = data.properties.filter((item) => data.keys.find((key) => key === item.name));
+        let tablenameRemoved = ccfs.removeNCharLowercase(data.classname);
 
         return `
-        //Routers for ${tablenameClass}  
-        router.get('/${tablenameFile}', api${tablenameClass}Controller.get);  
-        router.post('/${tablenameFile}', api${tablenameClass}Controller.post);  
-        router.put('/${tablenameFile}', api${tablenameClass}Controller.put);  
-        router.patch('/${tablenameFile}', api${tablenameClass}Controller.patch);  
-        router.delete('/${tablenameFile}', api${tablenameClass}Controller.delete);  
-        router.use('/${tablenameFile}/exists', api${tablenameClass}Controller.exists);  
+        //Routers for ${tablenameRemoved}  
+        router.get('/${tablenameRemoved}', api${tablenameRemoved}Controller.get);  
+        router.post('/${tablenameRemoved}', api${tablenameRemoved}Controller.post);  
+        router.put('/${tablenameRemoved}', api${tablenameRemoved}Controller.put);  
+        router.patch('/${tablenameRemoved}', api${tablenameRemoved}Controller.patch);  
+        router.delete('/${tablenameRemoved}', api${tablenameRemoved}Controller.delete);  
+        router.use('/${tablenameRemoved}/exists', api${tablenameRemoved}Controller.exists);  
         `;
     }).join('')
 }

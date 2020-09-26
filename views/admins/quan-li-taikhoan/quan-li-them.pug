@@ -1,0 +1,27 @@
+
+// Model thêm tài khoản
+#modelThemtaikhoan.modal.fade(tabindex='-1', role='dialog', aria-labelledby='Model aria-labelledby', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+        form.modal-content
+            .modal-header
+                h5.modal-title Thêm tài khoản 
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+            .modal-body
+                .alerts
+                    // Các alert của phần này
+
+
+
+                .form-group
+                    label.small.mb-1(for='tendangnhap') tên đăng nhập  
+                    input#tendangnhap(type='string', class='form-control py-4 tendangnhap' , placeholder='Nhập tên đăng nhập', required)
+                .form-group
+                    label.small.mb-1(for='matkhau') mật khẩu  
+                    input#matkhau(type='string', class='form-control py-4 matkhau' , placeholder='Nhập mật khẩu', required)
+                .form-group
+                    label.small.mb-1(for='loai') loại tài khoản  
+                    input#loai(type='string', class='form-control py-4 loai' , placeholder='Nhập loại tài khoản', required)
+            .modal-footer
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Thêm tikhon')
+                input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')

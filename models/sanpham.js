@@ -2,14 +2,14 @@
 File: sanpham.js 
 ***/
 
-class Sanpham {
-    constructor(maSanPham = null, ten = null, linkAnh = null, loai = null, gia = null) {
-this.maSanPham = maSanPham;
+class sanpham {
+    constructor(masanpham = null, ten = null, linkanh = null, loai = null, gia = null) {
+this.masanpham = masanpham;
 this.ten = ten;
-this.linkAnh = linkAnh;
+this.linkanh = linkanh;
 this.loai = loai;
 this.gia = gia;
     }
 }
 
-module.exports = Sanpham;
+module.exports = sanpham;

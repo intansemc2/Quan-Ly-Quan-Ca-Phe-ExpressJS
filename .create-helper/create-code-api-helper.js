@@ -11,16 +11,11 @@ for (let i = 0; i < datas.length; i += 1) {
     let data = datas[i];
 
     //Pre-process
-    let tablenameFile = ccfs.convertNameToJSClass(data.classname).toLowerCase();
-    let tablenameClass = ccfs.convertNameToJSClass(data.classname);
-    let tablenameObject = ccfs.convertNameToSqlProperty(data.classname);
-
-    let tableNotKeysProperties = data.properties.filter((item) => !data.keys.find((key) => key === item.name));
-    let tableKeysProperties = data.properties.filter((item) => data.keys.find((key) => key === item.name));
+    let tablenameRemoved = ccfs.removeNCharLowercase(data.classname);
 
     //Create controller
     contents += `/*** 
-File: api.${tablenameFile}.controller.js 
+File: api.${tablenameRemoved}.controller.js 
 ***/
 `;
     contents += `
@@ -28,14 +23,14 @@ File: api.${tablenameFile}.controller.js
     const errorController = require('../error.controller');
     
     //Import Databases
-    const ${tablenameFile}Database = require('../../databases/${tablenameFile}.database');
-    const ${tablenameClass} = require('../../models/${tablenameFile}');
+    const ${tablenameRemoved}Database = require('../../databases/${tablenameRemoved}.database');
+    const ${tablenameRemoved} = require('../../models/${tablenameRemoved}');
     
     module.exports.get = async function (request, response, next) {
         try {
             request.headers.accept = 'application/json';
             let input = request.body;
-            let output = await ${tablenameFile}Database.get(input);
+            let output = await ${tablenameRemoved}Database.get(input);
             response.json(output);
             next();
         } catch (error) {
@@ -47,7 +42,7 @@ File: api.${tablenameFile}.controller.js
         try {
             request.headers.accept = 'application/json';
             let input = request.body;
-            let output = await ${tablenameFile}Database.post(input);
+            let output = await ${tablenameRemoved}Database.post(input);
             response.json(output);
             next();
         } catch (error) {
@@ -59,7 +54,7 @@ File: api.${tablenameFile}.controller.js
         try {
             request.headers.accept = 'application/json';
             let input = request.body;
-            let output = await ${tablenameFile}Database.put(input);
+            let output = await ${tablenameRemoved}Database.put(input);
             response.json(output);
             next();
         } catch (error) {
@@ -71,7 +66,7 @@ File: api.${tablenameFile}.controller.js
         try {
             request.headers.accept = 'application/json';
             let input = request.body;
-            let output = await ${tablenameFile}Database.patch(input);
+            let output = await ${tablenameRemoved}Database.patch(input);
             response.json(output);
             next();
         } catch (error) {
@@ -83,7 +78,7 @@ File: api.${tablenameFile}.controller.js
         try {
             request.headers.accept = 'application/json';
             let input = request.body;
-            let output = await ${tablenameFile}Database.delete(input);
+            let output = await ${tablenameRemoved}Database.delete(input);
             response.json(output);
             next();
         } catch (error) {
@@ -95,7 +90,7 @@ File: api.${tablenameFile}.controller.js
         try {
             request.headers.accept = 'application/json';
             let input = request.body;
-            let output = await ${tablenameFile}Database.exists(input);
+            let output = await ${tablenameRemoved}Database.exists(input);
             response.json(output);
             next();
         } catch (error) {
@@ -104,5 +99,5 @@ File: api.${tablenameFile}.controller.js
     };    
 
 `;
-    ccfs.writeStringSync(`${__dirname}/results/controllers/api`, `api.${tablenameFile}.controller.js`, contents);
+    ccfs.writeStringSync(`${__dirname}/results/controllers/api`, `api.${tablenameRemoved}.controller.js`, contents);
 }

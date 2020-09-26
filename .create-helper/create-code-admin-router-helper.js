@@ -30,16 +30,11 @@ router.get('/tong-quat', adminController.tongquat);
 ${
     datas.map(data => {
         //Pre-process
-        let tablenameFile = ccfs.convertNameToJSClass(data.classname).toLowerCase();
-        let tablenameClass = ccfs.convertNameToJSClass(data.classname);
-        let tablenameObject = ccfs.convertNameToSqlProperty(data.classname);
-
-        let tableNotKeysProperties = data.properties.filter((item) => !data.keys.find((key) => key === item.name));
-        let tableKeysProperties = data.properties.filter((item) => data.keys.find((key) => key === item.name));
+        let tablenameRemoved = ccfs.removeNCharLowercase(data.classname);
 
         return `
-//Router quanly${tablenameFile}
-router.get('/quan-ly-${tablenameFile}', adminController.quanly${tablenameFile});
+//Router quanly${tablenameRemoved}
+router.get('/quan-li-${tablenameRemoved}', adminController.quanly${tablenameRemoved});
 `;
     }).join('\n') 
 }

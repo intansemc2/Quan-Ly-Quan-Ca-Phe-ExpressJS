@@ -7,7 +7,7 @@ File: api.chitietxuathang.controller.js
     
     //Import Databases
     const chitietxuathangDatabase = require('../../databases/chitietxuathang.database');
-    const Chitietxuathang = require('../../models/chitietxuathang');
+    const chitietxuathang = require('../../models/chitietxuathang');
     
     module.exports.get = async function (request, response, next) {
         try {

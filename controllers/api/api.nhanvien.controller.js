@@ -7,7 +7,7 @@ File: api.nhanvien.controller.js
     
     //Import Databases
     const nhanvienDatabase = require('../../databases/nhanvien.database');
-    const Nhanvien = require('../../models/nhanvien');
+    const nhanvien = require('../../models/nhanvien');
     
     module.exports.get = async function (request, response, next) {
         try {

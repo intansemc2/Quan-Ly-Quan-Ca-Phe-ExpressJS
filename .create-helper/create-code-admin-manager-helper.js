@@ -11,14 +11,12 @@ for (let i = 0; i < datas.length; i += 1) {
     let data = datas[i];
 
     //Pre-process
-    let tablenameFile = ccfs.convertNameToJSClass(data.classname).toLowerCase();
-    let tablenameClass = ccfs.convertNameToJSClass(data.classname);
-    let tablenameObject = ccfs.convertNameToSqlProperty(data.classname);
+    let tablenameRemoved = ccfs.removeNCharLowercase(data.classname);
 
     let tableNotKeysProperties = data.properties.filter((item) => !data.keys.find((key) => key === item.name));
     let tableKeysProperties = data.properties.filter((item) => data.keys.find((key) => key === item.name));
 
-    let forderName = ccfs.convertTableNameToFolderName(`quan_ly_${data.classname}`);
+    let forderName = `quan-li-${tablenameRemoved}`;
 
     //Views
     //Create content
@@ -60,17 +58,17 @@ block content
                             i.fas.fa-toolbox.mr-1
                             | Các thao tác chung
                         .card-body
-                            button.btn.btn-outline-secondary.rounded-0(type='button', data-toggle='modal', data-target='#modelThem${tablenameClass}') Thêm mới  
+                            button.btn.btn-outline-secondary.rounded-0(type='button', data-toggle='modal', data-target='#modelThem${tablenameRemoved}') Thêm mới  
                             span.mx-1
                             button#deleteAll.btn.btn-outline-dark.rounded-0 Xóa tất cả 
                             span.mx-1
                             button#refreshAll.btn.btn-outline-dark.rounded-0 Làm mới 
 
                     // Model thêm ${data.speak}
-                    include ${forderName}/quan-ly-them
+                    include ${forderName}/quan-li-them
 
                     // Model sửa ${data.speak}
-                    include ${forderName}/quan-ly-sua
+                    include ${forderName}/quan-li-sua
 
                     //Start Table
                     .card.my-4
@@ -78,15 +76,15 @@ block content
                             i.fas.fa-table.mr-1
                             | Bảng quản lý ${data.speak} 
                         .card-body
-                            #tableQuanLy${tablenameClass}Container.table-responsive
-                                table#tableQuanLy${tablenameClass}.table.table-bordered.table-striped.table-hover(width='100%', cellspacing='0')
+                            #tableQuanLy${tablenameRemoved}Container.table-responsive
+                                table#tableQuanLy${tablenameRemoved}.table.table-bordered.table-striped.table-hover(width='100%', cellspacing='0')
                                     thead
                                         tr
-${data.properties.map((item) => `                                            th ${ccfs.capitalizeFirst(item.speak)}`).join('\n')}
+${data.properties.map((item) => `                                            th ${item.speak}`).join('\n')}
                                             th Thao tác 
                                     tfoot
                                         tr
-${data.properties.map((item) => `                                            th ${ccfs.capitalizeFirst(item.speak)}`).join('\n')} 
+${data.properties.map((item) => `                                            th ${item.speak}`).join('\n')} 
                                             th Thao tác 
                                     tbody
                                         //Table Content
@@ -125,7 +123,7 @@ block custom_javascripts
     contents = '';
     contents += `
 // Model sửa ${data.speak}
-#modelSua${tablenameClass}.modal.fade(tabindex='-1', role='dialog', aria-labelledby='ModelSua${tablenameClass} aria-labelledby', aria-hidden='true')
+#modelSua${tablenameRemoved}.modal.fade(tabindex='-1', role='dialog', aria-labelledby='ModelSua${tablenameRemoved} aria-labelledby', aria-hidden='true')
     .modal-dialog.modal-dialog-centered(role='document')
         form.modal-content
             .modal-header
@@ -135,35 +133,35 @@ block custom_javascripts
             .modal-body                
                 .alerts
                     // Các alert của phần này
-                input.id${tablenameClass}(type='hidden')
+                input.id${tablenameRemoved}(type='hidden')
 ${tableKeysProperties.map(item => ccfs.createFormInputElement(
-    ccfs.convertNameToJSId(item.name),
-    ccfs.capitalizeFirst(item.speak),
+    ccfs.removeNCharLowercase(item.name).toLowerCase(),
+    item.speak,
     item.type.toLowerCase(),
-    [ccfs.convertNameToJSId(item.name)],
-    [`required='true'`, `placeholder='Nhập ${ccfs.capitalizeFirst(item.speak)}'`],
+    [ccfs.removeNCharLowercase(item.name).toLowerCase()],
+    [`required`, `placeholder='Nhập ${item.speak}'`],
     4*4
 )).join('')}
 ${tableNotKeysProperties.map(item => ccfs.createFormInputElement(
-    ccfs.convertNameToJSId(item.name),
-    ccfs.capitalizeFirst(item.speak),
+    ccfs.removeNCharLowercase(item.name).toLowerCase(),
+    item.speak,
     item.type.toLowerCase(),
-    [ccfs.convertNameToJSId(item.name)],
-    [`placeholder='Nhập ${ccfs.capitalizeFirst(item.speak)}'`, item.isNull ? `` : `required`],
+    [ccfs.removeNCharLowercase(item.name).toLowerCase()],
+    [`placeholder='Nhập ${item.speak}'`, item.isNull ? `` : `required`],
     4*4
 )).join('')}
             .modal-footer
-                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa ${ccfs.capitalizeFirst(data.speak)}')
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa ${ccfs.removeNCharLowercase(data.speak)}')
                 input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')
 `;
 
-    ccfs.writeStringSync(`${__dirname}/results/views/admins/${forderName}`, `quan-ly-sua.pug`, contents);
+    ccfs.writeStringSync(`${__dirname}/results/views/admins/${forderName}`, `quan-li-sua.pug`, contents);
 
     //Create add
     contents = '';
     contents += `
 // Model thêm ${data.speak}
-#modelThem${tablenameClass}.modal.fade(tabindex='-1', role='dialog', aria-labelledby='Model aria-labelledby', aria-hidden='true')
+#modelThem${tablenameRemoved}.modal.fade(tabindex='-1', role='dialog', aria-labelledby='Model aria-labelledby', aria-hidden='true')
     .modal-dialog.modal-dialog-centered(role='document')
         form.modal-content
             .modal-header
@@ -176,11 +174,11 @@ ${tableNotKeysProperties.map(item => ccfs.createFormInputElement(
 ${
     tableKeysProperties.length > 1 ? 
     tableKeysProperties.map(item => ccfs.createFormInputElement(
-ccfs.convertNameToJSId(item.name),
-ccfs.capitalizeFirst(item.speak),
+ccfs.removeNCharLowercase(item.name).toLowerCase(),
+item.speak,
 item.type.toLowerCase(),
-[ccfs.convertNameToJSId(item.name)],
-[`required='true'`, `placeholder='Nhập ${ccfs.capitalizeFirst(item.speak)}'`],
+[ccfs.removeNCharLowercase(item.name).toLowerCase()],
+[`required='true'`, `placeholder='Nhập ${item.speak}'`],
 4*4
 )).join('')
     :
@@ -188,19 +186,19 @@ item.type.toLowerCase(),
 }
 
 ${tableNotKeysProperties.map(item => ccfs.createFormInputElement(
-ccfs.convertNameToJSId(item.name),
-ccfs.capitalizeFirst(item.speak),
+ccfs.removeNCharLowercase(item.name).toLowerCase(),
+item.speak,
 item.type.toLowerCase(),
-[ccfs.convertNameToJSId(item.name)],
-[`placeholder='Nhập ${ccfs.capitalizeFirst(item.speak)}'`, item.isNull ? `` : `required`],
+[ccfs.removeNCharLowercase(item.name).toLowerCase()],
+[`placeholder='Nhập ${item.speak}'`, item.isNull ? `` : `required`],
 4*4
 )).join('')}
             .modal-footer
-                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Thêm ${ccfs.capitalizeFirst(data.speak)}')
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Thêm ${ccfs.removeNCharLowercase(data.speak)}')
                 input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')
 `;
 
-    ccfs.writeStringSync(`${__dirname}/results/views/admins/${forderName}`, `quan-ly-them.pug`, contents);
+    ccfs.writeStringSync(`${__dirname}/results/views/admins/${forderName}`, `quan-li-them.pug`, contents);
 
     //Javascript
     //Create main.js
@@ -208,7 +206,7 @@ item.type.toLowerCase(),
     contents += `
 \$(document).ready(function () {
     //Initialize Table
-    tableQuanLy${tablenameClass} = \$('#tableQuanLy${tablenameClass}').DataTable({
+    tableQuanLy${tablenameRemoved} = \$('#tableQuanLy${tablenameRemoved}').DataTable({
         columnDefs: [
 ${
     data.properties.map((item, index) => `
@@ -216,7 +214,7 @@ ${
                 targets: ${index},
                 render: function (data, type, row, meta) {
                     let renderData = data;
-                    return \`<span class="${ccfs.convertNameToJSId(item.name)}" data="\${data}">\${renderData}</span>\`;
+                    return \`<span class="${ccfs.removeNCharLowercase(item.name).toLowerCase()}" data="\${data}">\${renderData}</span>\`;
                 }
             },
     `).join('')
@@ -224,17 +222,17 @@ ${
             {
                 targets: ${data.properties.length},
                 render: function (data, type, row, meta) {
-                    let ${ccfs.convertNameToJSId(data.classname)} = data;
+                    let ${ccfs.removeNCharLowercase(data.classname)} = data;
                     let renderData = \`
-<button type="button" class="btn btn-outline-secondary rounded-0 m-1" data-toggle="modal" data-target='#modelSua${tablenameClass}' 
+<button type="button" class="btn btn-outline-secondary rounded-0 m-1" data-toggle="modal" data-target='#modelSua${tablenameRemoved}' 
 ${
-    tableKeysProperties.map(item => `${ccfs.convertNameToJSId(item.name)}="\${${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}}"`).join(' ')
+    tableKeysProperties.map(item => `${ccfs.removeNCharLowercase(item.name)}="\${${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}}"`).join(' ')
 }
 >
     <i class="fas fa-edit"></i>
 </button>
 
-<button type="button" class="btn btn-outline-dark rounded-0 m-1" onclick="delete${tablenameClass}RowInTable(\$(this));">
+<button type="button" class="btn btn-outline-dark rounded-0 m-1" onclick="delete${tablenameRemoved}RowInTable(\$(this));">
     <i class="fas fa-trash"></i>
 </button>
 \`;
@@ -257,32 +255,32 @@ ${
 });
 
 //Functions
-//Get ${ccfs.convertNameToJSId(data.classname)}s
-function get${tablenameClass}s() {
+//Get ${ccfs.removeNCharLowercase(data.classname)}s
+function get${tablenameRemoved}s() {
     return new Promise(function (resolve, reject) {
-        \$.get('/api/${ccfs.convertNameToJSApiId(data.classname)}', {}, function (data, status, xhr) {
+        \$.get('/api/${ccfs.removeNCharLowercase(data.classname)}', {}, function (data, status, xhr) {
             resolve(data);
         });
     });
 }
 
-//Refresh data in table with data in ${ccfs.convertNameToJSId(data.classname)}s
+//Refresh data in table with data in ${ccfs.removeNCharLowercase(data.classname)}s
 function refreshTableData() {
-    tableQuanLy${tablenameClass}.clear();
-    for (let ${ccfs.convertNameToJSId(data.classname)} of ${ccfs.convertNameToJSId(data.classname)}s) {
-        tableQuanLy${tablenameClass}.row.add([
-            ${data.properties.map(item => `${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}`).join(', ')}, ${ccfs.convertNameToJSId(data.classname)}
+    tableQuanLy${tablenameRemoved}.clear();
+    for (let ${ccfs.removeNCharLowercase(data.classname)} of ${ccfs.removeNCharLowercase(data.classname)}s) {
+        tableQuanLy${tablenameRemoved}.row.add([
+            ${data.properties.map(item => `${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}`).join(', ')}, ${ccfs.removeNCharLowercase(data.classname)}
         ]);
     }
-    tableQuanLy${tablenameClass}.draw();
+    tableQuanLy${tablenameRemoved}.draw();
 }
 
 //Refresh all data in page
 async function refreshPageData() {
-    refreshDataInModelThem${tablenameClass}();
-    refreshDataInModelSua${tablenameClass}();
+    refreshDataInModelThem${tablenameRemoved}();
+    refreshDataInModelSua${tablenameRemoved}();
 
-    ${ccfs.convertNameToJSId(data.classname)}s = await get${tablenameClass}s();
+    ${ccfs.removeNCharLowercase(data.classname)}s = await get${tablenameRemoved}s();
     refreshTableData();
 }    
 `;
@@ -294,112 +292,112 @@ async function refreshPageData() {
     contents += `
 \$(document).ready(function () {
     //Initialize Button Events
-    //Sua${tablenameClass} Confirm
-    \$('#modelSua${tablenameClass} .confirm').click(async function () {
+    //Sua${tablenameRemoved} Confirm
+    \$('#modelSua${tablenameRemoved} .confirm').click(async function () {
 ${
     data.properties.map(item => `
-        let ${ccfs.convertNameToJSId(item.name)} = \$(this).parents('form').find('.${ccfs.convertNameToJSId(item.name)}').val();
+        let ${ccfs.removeNCharLowercase(item.name)} = \$(this).parents('form').find('.${ccfs.removeNCharLowercase(item.name)}').val();
     `).join('')
 }
-        let ${ccfs.convertNameToJSId(data.classname)} = { ${data.properties.map(item => `${ccfs.convertNameToJSId(item.name)} : ${ccfs.convertNameToJSId(item.name)}`).join(', ')} };
+        let ${ccfs.removeNCharLowercase(data.classname)} = { ${data.properties.map(item => `${ccfs.removeNCharLowercase(item.name)} : ${ccfs.removeNCharLowercase(item.name)}`).join(', ')} };
 
-        let errors = sua${tablenameClass}Validator(${ccfs.convertNameToJSId(data.classname)});
+        let errors = sua${tablenameRemoved}Validator(${ccfs.removeNCharLowercase(data.classname)});
 
         if (errors.length > 0) {
-            refreshSua${tablenameClass}Alert(errors);
+            refreshSua${tablenameRemoved}Alert(errors);
             return;
         }
 
-        await sua${tablenameClass}AJAX(${ccfs.convertNameToJSId(data.classname)});
+        await sua${tablenameRemoved}AJAX(${ccfs.removeNCharLowercase(data.classname)});
     });
 
     //Events
-    //Set ${ccfs.convertNameToJSId(data.classname)} current value When model showup
-    \$('#modelSua${tablenameClass}').on('show.bs.modal', function (event) {
-        let sua${tablenameClass}Triggered = \$(event.relatedTarget);
+    //Set ${ccfs.removeNCharLowercase(data.classname)} current value When model showup
+    \$('#modelSua${tablenameRemoved}').on('show.bs.modal', function (event) {
+        let sua${tablenameRemoved}Triggered = \$(event.relatedTarget);
 ${
     tableKeysProperties.map(item => `
-        let ${ccfs.convertNameToJSId(item.name)} = sua${tablenameClass}Triggered.attr('${ccfs.convertNameToJSId(item.name)}');
+        let ${ccfs.removeNCharLowercase(item.name)} = sua${tablenameRemoved}Triggered.attr('${ccfs.removeNCharLowercase(item.name)}');
     `).join('')
 }
 
-        let ${ccfs.convertNameToJSId(data.classname)} = ${ccfs.convertNameToJSId(data.classname)}s.find(
-            (item) => ${tableKeysProperties.map(item => `item.${ccfs.convertNameToJSId(item.name)} == ${ccfs.convertNameToJSId(item.name)}`).join(' && ')}
+        let ${ccfs.removeNCharLowercase(data.classname)} = ${ccfs.removeNCharLowercase(data.classname)}s.find(
+            (item) => ${tableKeysProperties.map(item => `item.${ccfs.removeNCharLowercase(item.name)} == ${ccfs.removeNCharLowercase(item.name)}`).join(' && ')}
         );
 
 ${
     tableKeysProperties.map(item => `
-        \$('#modelSua${tablenameClass}').find('.${ccfs.convertNameToJSId(item.name)}').val(${ccfs.convertNameToJSId(item.name)});
+        \$('#modelSua${tablenameRemoved}').find('.${ccfs.removeNCharLowercase(item.name)}').val(${ccfs.removeNCharLowercase(item.name)});
     `).join('')
 }
 
 ${
     tableNotKeysProperties.map(item => `
-        \$('#modelSua${tablenameClass}').find('.${ccfs.convertNameToJSId(item.name)}').val(${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)});
+        \$('#modelSua${tablenameRemoved}').find('.${ccfs.removeNCharLowercase(item.name)}').val(${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)});
     `).join('')
 }
 
-        refreshSua${tablenameClass}Alert([], "");
+        refreshSua${tablenameRemoved}Alert([], "");
     });
 });
 
 //Functions
-//Refresh data in model Sua${tablenameClass} with data in ${ccfs.convertNameToJSId(data.classname)}sTypes
-function refreshDataInModelSua${tablenameClass}() {
+//Refresh data in model Sua${tablenameRemoved} with data in ${ccfs.removeNCharLowercase(data.classname)}sTypes
+function refreshDataInModelSua${tablenameRemoved}() {
 }
 
-//Refresh sua ${ccfs.convertNameToJSId(data.classname)} Alert
-function refreshSua${tablenameClass}Alert(alerts, type = 'danger') {
-    let sua${tablenameClass}Alerts = \$('#modelSua${tablenameClass} .alerts');
-    let sua${tablenameClass}AlertsHtml = '';
+//Refresh sua ${ccfs.removeNCharLowercase(data.classname)} Alert
+function refreshSua${tablenameRemoved}Alert(alerts, type = 'danger') {
+    let sua${tablenameRemoved}Alerts = \$('#modelSua${tablenameRemoved} .alerts');
+    let sua${tablenameRemoved}AlertsHtml = '';
     for (let alert of alerts) {
-        sua${tablenameClass}AlertsHtml += createAlerts(type, alert);
+        sua${tablenameRemoved}AlertsHtml += createAlerts(type, alert);
     }
-    sua${tablenameClass}Alerts.html(sua${tablenameClass}AlertsHtml);
+    sua${tablenameRemoved}Alerts.html(sua${tablenameRemoved}AlertsHtml);
 }
 
-//Add new ${ccfs.convertNameToJSId(data.classname)}
-function sua${tablenameClass}AJAX(${ccfs.convertNameToJSId(data.classname)}) {
+//Add new ${ccfs.removeNCharLowercase(data.classname)}
+function sua${tablenameRemoved}AJAX(${ccfs.removeNCharLowercase(data.classname)}) {
     return new Promise(function (resolve, reject) {
-        \$.ajax({ method: 'PATCH', url: '/api/${ccfs.convertNameToJSApiId(data.classname)}', data: ${ccfs.convertNameToJSId(data.classname)} })
+        \$.ajax({ method: 'PATCH', url: '/api/${ccfs.removeNCharLowercase(data.classname)}', data: ${ccfs.removeNCharLowercase(data.classname)} })
             .done(function (data, status, xhr) {
                 let errors = data.errors;
                 let result = data;
 
                 if (errors && errors.length && errors.length > 0) {
-                    refreshSua${tablenameClass}Alert(errors);
+                    refreshSua${tablenameRemoved}Alert(errors);
                     return;
                 }
 
                 if (result) {
-                    refreshSua${tablenameClass}Alert(['Sửa thành công ' + result], 'success');
+                    refreshSua${tablenameRemoved}Alert(['Sửa thành công ' + result], 'success');
 
-                    editRowInTable(${ccfs.convertNameToJSId(data.classname)});
+                    editRowInTable(${ccfs.removeNCharLowercase(data.classname)});
 
-                    \$("#modelSua${tablenameClass}").modal('hide');
+                    \$("#modelSua${tablenameRemoved}").modal('hide');
                     swal({ text: 'Sửa thành công ', icon: 'success', timer: 1000});
                 } else {
-                    refreshSua${tablenameClass}Alert(['Sửa thất bại ' + result], 'danger');
+                    refreshSua${tablenameRemoved}Alert(['Sửa thất bại ' + result], 'danger');
                 }
             })
             .fail(function (data, status, xhr) {
                 let error = data.responseJSON.error;
                 if (error && error.code && error.message && error.detail) {
                     let errorString = \`Mã lỗi \${error.code}, Tên lỗi \${error.message}, Nội dung lỗi \${error.detail}\`;
-                    refreshSua${tablenameClass}Alert([errorString], 'danger');
+                    refreshSua${tablenameRemoved}Alert([errorString], 'danger');
                 } else {
-                    refreshSua${tablenameClass}Alert([data.responseText], 'danger');
+                    refreshSua${tablenameRemoved}Alert([data.responseText], 'danger');
                 }
             });
     });
 }
 
-//Sua ${tablenameClass} validator
-function sua${tablenameClass}Validator(${ccfs.convertNameToJSId(data.classname)}) {
+//Sua ${tablenameRemoved} validator
+function sua${tablenameRemoved}Validator(${ccfs.removeNCharLowercase(data.classname)}) {
     let errors = [];
 
-    if (!${ccfs.convertNameToJSId(data.classname)}) {
-        errors.push('${ccfs.capitalizeFirst(data.speak)} không tồn tại ');
+    if (!${ccfs.removeNCharLowercase(data.classname)}) {
+        errors.push('${ccfs.removeNCharLowercase(data.speak)} không tồn tại ');
     }
 
 ${
@@ -407,7 +405,7 @@ ${
         item.isNull ? ``
         :
         `
-    if (!${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}) {
+    if (!${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}) {
         errors.push('Không thể xác định ${item.speak.toLowerCase()} ');
     }
     `).join('')
@@ -423,46 +421,46 @@ ${
     contents = '';
     contents += `
 //Get a row in table
-function getRowInTable(${ccfs.convertNameToJSId(data.classname)}) {
-    return \$('#tableQuanLy${tablenameClass}')${tableKeysProperties.map(item => `.find(\`.${ccfs.convertNameToJSId(item.name)}[data="\${${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}}"]\`).parents('tr')`).join('')};
+function getRowInTable(${ccfs.removeNCharLowercase(data.classname)}) {
+    return \$('#tableQuanLy${tablenameRemoved}')${tableKeysProperties.map(item => `.find(\`.${ccfs.removeNCharLowercase(item.name)}[data="\${${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}}"]\`).parents('tr')`).join('')};
 }
 
 //Add new row to table
-function addNewRowToTable(${ccfs.convertNameToJSId(data.classname)}) {
-    tableQuanLy${tablenameClass}.row.add([
-        ${data.properties.map(item => `${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}`).join(', ')}, ${ccfs.convertNameToJSId(data.classname)}
+function addNewRowToTable(${ccfs.removeNCharLowercase(data.classname)}) {
+    tableQuanLy${tablenameRemoved}.row.add([
+        ${data.properties.map(item => `${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}`).join(', ')}, ${ccfs.removeNCharLowercase(data.classname)}
     ]).draw();
 
-    //Change in ${ccfs.convertNameToJSId(data.classname)}s
-    ${ccfs.convertNameToJSId(data.classname)}s.push({ 
-        ${data.properties.map(item => `${ccfs.convertNameToJSId(item.name)}: ${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}`).join(', ')}
+    //Change in ${ccfs.removeNCharLowercase(data.classname)}s
+    ${ccfs.removeNCharLowercase(data.classname)}s.push({ 
+        ${data.properties.map(item => `${ccfs.removeNCharLowercase(item.name)}: ${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}`).join(', ')}
     });
 }
 
 //Edit row in table
-function editRowInTable(${ccfs.convertNameToJSId(data.classname)}) {
-    let old${tablenameClass}Row = getRowInTable(${ccfs.convertNameToJSId(data.classname)});
-    tableQuanLy${tablenameClass}.row(old${tablenameClass}Row).data([
-        ${data.properties.map(item => `${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}`).join(', ')}, ${ccfs.convertNameToJSId(data.classname)}
+function editRowInTable(${ccfs.removeNCharLowercase(data.classname)}) {
+    let old${tablenameRemoved}Row = getRowInTable(${ccfs.removeNCharLowercase(data.classname)});
+    tableQuanLy${tablenameRemoved}.row(old${tablenameRemoved}Row).data([
+        ${data.properties.map(item => `${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}`).join(', ')}, ${ccfs.removeNCharLowercase(data.classname)}
     ]).draw();
 
-    //Change in ${ccfs.convertNameToJSId(data.classname)}s
-    let ${ccfs.convertNameToJSId(data.classname)}Reference = ${ccfs.convertNameToJSId(data.classname)}s.find(
-        (item) => ${tableKeysProperties.map(item => `item.${ccfs.convertNameToJSId(item.name)} == ${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}`).join(' && ')}
+    //Change in ${ccfs.removeNCharLowercase(data.classname)}s
+    let ${ccfs.removeNCharLowercase(data.classname)}Reference = ${ccfs.removeNCharLowercase(data.classname)}s.find(
+        (item) => ${tableKeysProperties.map(item => `item.${ccfs.removeNCharLowercase(item.name)} == ${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}`).join(' && ')}
     );
     
-    ${data.properties.map(item => `${ccfs.convertNameToJSId(data.classname)}Reference.${ccfs.convertNameToJSId(item.name)} = ${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)};
+    ${data.properties.map(item => `${ccfs.removeNCharLowercase(data.classname)}Reference.${ccfs.removeNCharLowercase(item.name)} = ${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)};
     `).join('')}
 }
 
 //Delete row in table
-function deleteRowInTable(${ccfs.convertNameToJSId(data.classname)}) {
-    let old${tablenameClass}Row = getRowInTable(${ccfs.convertNameToJSId(data.classname)});
-    tableQuanLy${tablenameClass}.row(old${tablenameClass}Row).remove().draw();
+function deleteRowInTable(${ccfs.removeNCharLowercase(data.classname)}) {
+    let old${tablenameRemoved}Row = getRowInTable(${ccfs.removeNCharLowercase(data.classname)});
+    tableQuanLy${tablenameRemoved}.row(old${tablenameRemoved}Row).remove().draw();
 
-    //Change in ${ccfs.convertNameToJSId(data.classname)}s
-    ${ccfs.convertNameToJSId(data.classname)}s = ${ccfs.convertNameToJSId(data.classname)}s.filter(
-        (item) => ${tableKeysProperties.map(item => `item.${ccfs.convertNameToJSId(item.name)} != ${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}`).join(' && ')}
+    //Change in ${ccfs.removeNCharLowercase(data.classname)}s
+    ${ccfs.removeNCharLowercase(data.classname)}s = ${ccfs.removeNCharLowercase(data.classname)}s.filter(
+        (item) => ${tableKeysProperties.map(item => `item.${ccfs.removeNCharLowercase(item.name)} != ${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}`).join(' && ')}
     );
 }
     
@@ -475,29 +473,29 @@ function deleteRowInTable(${ccfs.convertNameToJSId(data.classname)}) {
     contents += `
 \$(document).ready(function () {
     //Initialize Button Events
-    //Them${tablenameClass} Confirm
-    \$('#modelThem${tablenameClass} .confirm').click(async function () {
+    //Them${tablenameRemoved} Confirm
+    \$('#modelThem${tablenameRemoved} .confirm').click(async function () {
 ${
     data.properties.map(item => `
-        let ${ccfs.convertNameToJSId(item.name)} = \$(this).parents('form').find('.${ccfs.convertNameToJSId(item.name)}').val();
+        let ${ccfs.removeNCharLowercase(item.name)} = \$(this).parents('form').find('.${ccfs.removeNCharLowercase(item.name)}').val();
     `).join('')
 }
-        let ${ccfs.convertNameToJSId(data.classname)} = { ${data.properties.map(item => `${ccfs.convertNameToJSId(item.name)} : ${ccfs.convertNameToJSId(item.name)}`).join(', ')} };
+        let ${ccfs.removeNCharLowercase(data.classname)} = { ${data.properties.map(item => `${ccfs.removeNCharLowercase(item.name)} : ${ccfs.removeNCharLowercase(item.name)}`).join(', ')} };
 
-        let errors = them${tablenameClass}Validator(${ccfs.convertNameToJSId(data.classname)});
+        let errors = them${tablenameRemoved}Validator(${ccfs.removeNCharLowercase(data.classname)});
 
         if (errors.length > 0) {
-            refreshThem${tablenameClass}Alert(errors);
+            refreshThem${tablenameRemoved}Alert(errors);
             return;
         }
 
-        await them${tablenameClass}AJAX(${ccfs.convertNameToJSId(data.classname)});
+        await them${tablenameRemoved}AJAX(${ccfs.removeNCharLowercase(data.classname)});
     });
 
     //Events
-    //Set ${ccfs.convertNameToJSId(data.classname)} current value When model showup
-    \$('#modelThem${tablenameClass}').on('show.bs.modal', function (event) {
-        refreshThem${tablenameClass}Alert([], "");
+    //Set ${ccfs.removeNCharLowercase(data.classname)} current value When model showup
+    \$('#modelThem${tablenameRemoved}').on('show.bs.modal', function (event) {
+        refreshThem${tablenameRemoved}Alert([], "");
     });
 
     //Initialize final
@@ -506,69 +504,74 @@ ${
 //Variables
 
 //Functions
-//Refresh data in model Them${tablenameClass} with data in ${ccfs.convertNameToJSId(data.classname)}sTypes
-function refreshDataInModelThem${tablenameClass}() {
+//Refresh data in model Them${tablenameRemoved} with data in ${ccfs.removeNCharLowercase(data.classname)}sTypes
+function refreshDataInModelThem${tablenameRemoved}() {
 }
 
-//Refresh them ${ccfs.convertNameToJSId(data.classname)} Alert
-function refreshThem${tablenameClass}Alert(alerts, type = 'danger') {
-    let them${tablenameClass}Alerts = \$('#modelThem${tablenameClass} .alerts');
-    let them${tablenameClass}AlertsHtml = '';
+//Refresh them ${ccfs.removeNCharLowercase(data.classname)} Alert
+function refreshThem${tablenameRemoved}Alert(alerts, type = 'danger') {
+    let them${tablenameRemoved}Alerts = \$('#modelThem${tablenameRemoved} .alerts');
+    let them${tablenameRemoved}AlertsHtml = '';
     for (let alert of alerts) {
-        them${tablenameClass}AlertsHtml += createAlerts(type, alert);
+        them${tablenameRemoved}AlertsHtml += createAlerts(type, alert);
     }
-    them${tablenameClass}Alerts.html(them${tablenameClass}AlertsHtml);
+    them${tablenameRemoved}Alerts.html(them${tablenameRemoved}AlertsHtml);
 }
 
-//Add new ${ccfs.convertNameToJSId(data.classname)}
-function them${tablenameClass}AJAX(${ccfs.convertNameToJSId(data.classname)}) {
+//Add new ${ccfs.removeNCharLowercase(data.classname)}
+function them${tablenameRemoved}AJAX(${ccfs.removeNCharLowercase(data.classname)}) {
     return new Promise(function (resolve, reject) {
-        \$.ajax({ method: 'POST', url: '/api/${ccfs.convertNameToJSApiId(data.classname)}', data: ${ccfs.convertNameToJSId(data.classname)} })
+        \$.ajax({ method: 'POST', url: '/api/${ccfs.removeNCharLowercase(data.classname)}', data: ${ccfs.removeNCharLowercase(data.classname)} })
             .done(function (data, status, xhr) {
                 let errors = data.errors;
                 let result = data;
 
                 if (errors && errors.length && errors.length > 0) {
-                    refreshThem${tablenameClass}Alert(errors);
+                    refreshThem${tablenameRemoved}Alert(errors);
                     return;
                 }
 
                 if (result) {
-                    refreshThem${tablenameClass}Alert(['Thêm thành công ' + result], 'success');
+                    refreshThem${tablenameRemoved}Alert(['Thêm thành công ' + result], 'success');
 
-                    ${ccfs.convertNameToJSId(data.classname)}.id${tablenameClass} = result;
-                    addNewRowToTable(${ccfs.convertNameToJSId(data.classname)});
+                    ${
+                        tableKeysProperties.length == 1 ? 
+                        `${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(tableKeysProperties[0].name)} = result;`
+                        :
+                        ``
+                    }                    
+                    addNewRowToTable(${ccfs.removeNCharLowercase(data.classname)});
 
-                    \$('#modelThem${tablenameClass}').modal('hide');
+                    \$('#modelThem${tablenameRemoved}').modal('hide');
                     swal({ text: 'Thêm thành công ', icon: 'success' , timer: 1000});
                 } else {
-                    refreshThem${tablenameClass}Alert(['Thêm thất bại ' + result], 'danger');
+                    refreshThem${tablenameRemoved}Alert(['Thêm thất bại ' + result], 'danger');
                 }
             })
             .fail(function (data, status, xhr) {
                 let error = data.responseJSON.error;
                 if (error && error.code && error.message && error.detail) {
                     let errorString = \`Mã lỗi \${error.code}, Tên lỗi \${error.message}, Nội dung lỗi \${error.detail}\`;
-                    refreshThem${tablenameClass}Alert([errorString], 'danger');
+                    refreshThem${tablenameRemoved}Alert([errorString], 'danger');
                 } else {
-                    refreshThem${tablenameClass}Alert([data.responseText], 'danger');
+                    refreshThem${tablenameRemoved}Alert([data.responseText], 'danger');
                 }
             });
     });
 }
 
-//Them ${tablenameClass} validator
-function them${tablenameClass}Validator(${ccfs.convertNameToJSId(data.classname)}) {
+//Them ${tablenameRemoved} validator
+function them${tablenameRemoved}Validator(${ccfs.removeNCharLowercase(data.classname)}) {
     let errors = [];
 
-    if (!${ccfs.convertNameToJSId(data.classname)}) {
-        errors.push('${ccfs.capitalizeFirst(data.speak)} không tồn tại ');
+    if (!${ccfs.removeNCharLowercase(data.classname)}) {
+        errors.push('${ccfs.removeNCharLowercase(data.speak)} không tồn tại ');
     }
 
 ${
     tableKeysProperties.length > 1 ? 
     tableKeysProperties.map(item => `
-        if (!${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}) {
+        if (!${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}) {
             errors.push('Không thể xác định ${item.speak.toLowerCase()} ');
         }
         `).join('')
@@ -581,7 +584,7 @@ ${
         item.isNull ? `` 
         :
         `
-        if (!${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}) {
+        if (!${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}) {
             errors.push('Không thể xác định ${item.speak.toLowerCase()} ');
         }
         `).join('')
@@ -598,8 +601,8 @@ ${
     contents = '';
     contents += `
 //Variables
-let ${ccfs.convertNameToJSId(data.classname)}s = [];
-let tableQuanLy${tablenameClass} = {};
+let ${ccfs.removeNCharLowercase(data.classname)}s = [];
+let tableQuanLy${tablenameRemoved} = {};
     
 `;
 
@@ -630,45 +633,45 @@ let tableQuanLy${tablenameClass} = {};
 });
 
 //Functions
-function delete${tablenameClass}RowInTable(buttonDelete) {
+function delete${tablenameRemoved}RowInTable(buttonDelete) {
     let tableRow = \$(buttonDelete).parents('tr');
 ${
     tableKeysProperties.map(item => `
-    let ${ccfs.convertNameToJSId(item.name)} = \$(tableRow).find('.${ccfs.convertNameToJSId(item.name)}').attr('data');`).join('')
+    let ${ccfs.removeNCharLowercase(item.name)} = \$(tableRow).find('.${ccfs.removeNCharLowercase(item.name)}').attr('data');`).join('')
 }
 
-    let ${ccfs.convertNameToJSId(data.classname)} = ${ccfs.convertNameToJSId(data.classname)}s.find(
-        (item) => ${tableKeysProperties.map(item => `item.${ccfs.convertNameToJSId(item.name)} == ${ccfs.convertNameToJSId(item.name)}`).join(' && ')}
+    let ${ccfs.removeNCharLowercase(data.classname)} = ${ccfs.removeNCharLowercase(data.classname)}s.find(
+        (item) => ${tableKeysProperties.map(item => `item.${ccfs.removeNCharLowercase(item.name)} == ${ccfs.removeNCharLowercase(item.name)}`).join(' && ')}
     );
 
     swal({
         title: \`Bạn có chắc chắn muón xóa ${data.speak} có ${ 
-            tableKeysProperties.map(item => `${item.speak} là "\${${ccfs.convertNameToJSId(data.classname)}.${ccfs.convertNameToJSId(item.name)}}"`).join(', ')
+            tableKeysProperties.map(item => `${item.speak} là "\${${ccfs.removeNCharLowercase(data.classname)}.${ccfs.removeNCharLowercase(item.name)}}"`).join(', ')
         } không?\`,
         text: \`Không thể khôi phục dữ liệu sau khi xóa. Qúa trình sẽ xóa luôn các thông tin liên quan trong Cơ sở dữ liệu.\`,
         icon: 'warning',
         buttons: {
-            confirm: { text: 'Đồng ý', value: ${ccfs.convertNameToJSId(data.classname)}, visible: true, closeModal: true },
+            confirm: { text: 'Đồng ý', value: ${ccfs.removeNCharLowercase(data.classname)}, visible: true, closeModal: true },
             cancel: { text: 'Không', value: false, visible: true, closeModal: true },
         }
     }).then(function (theChoosenOne) {
         if (theChoosenOne) {
-            delete${tablenameClass}AJAX(theChoosenOne);
+            delete${tablenameRemoved}AJAX(theChoosenOne);
         } else {
             swal('Đã hủy thao tác! Dữ liệu vẫn an toàn!', {timer: 1000});
         }
     });
 }
 
-//Delete ${ccfs.convertNameToJSId(data.classname)}
-function delete${tablenameClass}AJAX(${ccfs.convertNameToJSId(data.classname)}) {
-    \$.ajax({ method: 'DELETE', url: '/api/${ccfs.convertNameToJSApiId(data.classname)}', data: { id${tablenameClass}: ${ccfs.convertNameToJSId(data.classname)}.id${tablenameClass} } })
+//Delete ${ccfs.removeNCharLowercase(data.classname)}
+function delete${tablenameRemoved}AJAX(${ccfs.removeNCharLowercase(data.classname)}) {
+    \$.ajax({ method: 'DELETE', url: '/api/${ccfs.removeNCharLowercase(data.classname)}', data: { id${tablenameRemoved}: ${ccfs.removeNCharLowercase(data.classname)}.id${tablenameRemoved} } })
         .done(function (data, status, xhr) {
             if (data && data > 0) {
                 swal('Đã xóa thành công !', { icon: 'success' , timer: 1000});
 
-                let tableRow = getRowInTable(${ccfs.convertNameToJSId(data.classname)});
-                tableQuanLy${tablenameClass}.row(tableRow).remove().draw();
+                let tableRow = getRowInTable(${ccfs.removeNCharLowercase(data.classname)});
+                tableQuanLy${tablenameRemoved}.row(tableRow).remove().draw();
             } else {
                 swal('Đã xóa không thành công !', { icon: 'error' , timer: 1000});
             }
@@ -685,14 +688,14 @@ function delete${tablenameClass}AJAX(${ccfs.convertNameToJSId(data.classname)}) 
         });
 }
 
-//Delete ${ccfs.convertNameToJSId(data.classname)}
+//Delete ${ccfs.removeNCharLowercase(data.classname)}
 function deleteAllAJAX() {
-    \$.ajax({ method: 'DELETE', url: '/api/${ccfs.convertNameToJSApiId(data.classname)}', data: {} })
+    \$.ajax({ method: 'DELETE', url: '/api/${ccfs.removeNCharLowercase(data.classname)}', data: {} })
         .done(function (data, status, xhr) {
             if (data && data > 0) {
                 swal(\`Đã xóa thành công \${data} tài khoản !\`, { icon: 'success' , timer: 1000});
 
-                tableQuanLy${tablenameClass}.clear().draw();
+                tableQuanLy${tablenameRemoved}.clear().draw();
             } else {
                 swal('Đã xóa không thành công !', { icon: 'error' , timer: 1000});
             }

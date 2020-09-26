@@ -7,7 +7,7 @@ File: api.xuathang.controller.js
     
     //Import Databases
     const xuathangDatabase = require('../../databases/xuathang.database');
-    const Xuathang = require('../../models/xuathang');
+    const xuathang = require('../../models/xuathang');
     
     module.exports.get = async function (request, response, next) {
         try {

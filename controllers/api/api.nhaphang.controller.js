@@ -7,7 +7,7 @@ File: api.nhaphang.controller.js
     
     //Import Databases
     const nhaphangDatabase = require('../../databases/nhaphang.database');
-    const Nhaphang = require('../../models/nhaphang');
+    const nhaphang = require('../../models/nhaphang');
     
     module.exports.get = async function (request, response, next) {
         try {

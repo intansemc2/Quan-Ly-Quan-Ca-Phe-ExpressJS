@@ -1,0 +1,48 @@
+
+//Get a row in table
+function getRowInTable(nguonsanpham) {
+    return $('#tableQuanLynguonsanpham').find(`.manguonsanpham[data="${nguonsanpham.manguonsanpham}"]`).parents('tr');
+}
+
+//Add new row to table
+function addNewRowToTable(nguonsanpham) {
+    tableQuanLynguonsanpham.row.add([
+        nguonsanpham.manguonsanpham, nguonsanpham.ten, nguonsanpham.sodienthoai, nguonsanpham.diachi, nguonsanpham
+    ]).draw();
+
+    //Change in nguonsanphams
+    nguonsanphams.push({ 
+        manguonsanpham: nguonsanpham.manguonsanpham, ten: nguonsanpham.ten, sodienthoai: nguonsanpham.sodienthoai, diachi: nguonsanpham.diachi
+    });
+}
+
+//Edit row in table
+function editRowInTable(nguonsanpham) {
+    let oldnguonsanphamRow = getRowInTable(nguonsanpham);
+    tableQuanLynguonsanpham.row(oldnguonsanphamRow).data([
+        nguonsanpham.manguonsanpham, nguonsanpham.ten, nguonsanpham.sodienthoai, nguonsanpham.diachi, nguonsanpham
+    ]).draw();
+
+    //Change in nguonsanphams
+    let nguonsanphamReference = nguonsanphams.find(
+        (item) => item.manguonsanpham == nguonsanpham.manguonsanpham
+    );
+    
+    nguonsanphamReference.manguonsanpham = nguonsanpham.manguonsanpham;
+    nguonsanphamReference.ten = nguonsanpham.ten;
+    nguonsanphamReference.sodienthoai = nguonsanpham.sodienthoai;
+    nguonsanphamReference.diachi = nguonsanpham.diachi;
+    
+}
+
+//Delete row in table
+function deleteRowInTable(nguonsanpham) {
+    let oldnguonsanphamRow = getRowInTable(nguonsanpham);
+    tableQuanLynguonsanpham.row(oldnguonsanphamRow).remove().draw();
+
+    //Change in nguonsanphams
+    nguonsanphams = nguonsanphams.filter(
+        (item) => item.manguonsanpham != nguonsanpham.manguonsanpham
+    );
+}
+    

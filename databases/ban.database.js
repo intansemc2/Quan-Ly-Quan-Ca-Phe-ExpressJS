@@ -7,7 +7,7 @@ const mysql = require('mysql');
 
 //Import Class
 const baseDatabase = require('./base.database');
-const Ban = require('../models/ban');
+const ban = require('../models/ban');
 
 module.exports.createWHEREPart = function (input, isAllowGetAll = false, isPrimarykeyOnly = false) {
 let query = "";
@@ -89,13 +89,13 @@ queryChanges.push(` ten = ${mysql.escape(input.ten)} `);
         
 
 
-if (!input.oldMaban) {
-input.oldMaban = input.maban;
+if (!input.oldmaban) {
+input.oldmaban = input.maban;
 }
         
 
 query += queryChanges.join(',');
-query += module.exports.createWHEREPart({maban: input.oldMaban,ten: input.oldTen});
+query += module.exports.createWHEREPart({maban: input.oldmaban,ten: input.oldten});
 
 
 return query;
@@ -120,7 +120,7 @@ return query;
 };
 
 module.exports.converResultGet = function (input) {
-let output = new Ban();
+let output = new ban();
 
 output.maban = input.maBan;
     
@@ -149,7 +149,7 @@ module.exports.patch = function (input) {
 if (!input) {
 throw new Error("Missing the input");
 }
-if (!input.maban && !input.oldMaban) {
+if (!input.maban && !input.oldmaban) {
 throw new Error("Missing the identity properties");
 }
 return baseDatabase.patch(input, module.exports.createQueryPatch);

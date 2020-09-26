@@ -7,7 +7,7 @@ File: api.taikhoan.controller.js
     
     //Import Databases
     const taikhoanDatabase = require('../../databases/taikhoan.database');
-    const Taikhoan = require('../../models/taikhoan');
+    const taikhoan = require('../../models/taikhoan');
     
     module.exports.get = async function (request, response, next) {
         try {

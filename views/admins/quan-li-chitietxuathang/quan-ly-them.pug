@@ -1,0 +1,30 @@
+
+// Model thêm chi tiết xuất hàng
+#modelThemchitietxuathang.modal.fade(tabindex='-1', role='dialog', aria-labelledby='Model aria-labelledby', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+        form.modal-content
+            .modal-header
+                h5.modal-title Thêm chi tiết xuất hàng 
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+            .modal-body
+                .alerts
+                    // Các alert của phần này
+
+                .form-group
+                    label.small.mb-1(for='maxuathang') mxuthng  
+                    input#maxuathang(type='int', class='form-control py-4 maxuathang' , required='true', placeholder='Nhập mxuthng')
+                .form-group
+                    label.small.mb-1(for='masanpham') msnphm  
+                    input#masanpham(type='int', class='form-control py-4 masanpham' , required='true', placeholder='Nhập msnphm')
+
+
+                .form-group
+                    label.small.mb-1(for='soluong') slng  
+                    input#soluong(type='int', class='form-control py-4 soluong' , placeholder='Nhập slng', required)
+                .form-group
+                    label.small.mb-1(for='dongia') ngi  
+                    input#dongia(type='int', class='form-control py-4 dongia' , placeholder='Nhập ngi', required)
+            .modal-footer
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Thêm chititxuthng')
+                input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')

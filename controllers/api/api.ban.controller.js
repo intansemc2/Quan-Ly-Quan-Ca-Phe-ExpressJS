@@ -7,7 +7,7 @@ File: api.ban.controller.js
     
     //Import Databases
     const banDatabase = require('../../databases/ban.database');
-    const Ban = require('../../models/ban');
+    const ban = require('../../models/ban');
     
     module.exports.get = async function (request, response, next) {
         try {

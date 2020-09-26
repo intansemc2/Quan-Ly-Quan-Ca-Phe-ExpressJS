@@ -7,7 +7,7 @@ const mysql = require('mysql');
 
 //Import Class
 const baseDatabase = require('./base.database');
-const Khachhang = require('../models/khachhang');
+const khachhang = require('../models/khachhang');
 
 module.exports.createWHEREPart = function (input, isAllowGetAll = false, isPrimarykeyOnly = false) {
 let query = "";
@@ -149,13 +149,13 @@ queryChanges.push(` ghiChu = ${mysql.escape(input.ghichu)} `);
         
 
 
-if (!input.oldMakhachhang) {
-input.oldMakhachhang = input.makhachhang;
+if (!input.oldmakhachhang) {
+input.oldmakhachhang = input.makhachhang;
 }
         
 
 query += queryChanges.join(',');
-query += module.exports.createWHEREPart({makhachhang: input.oldMakhachhang,mataikhoan: input.oldMataikhoan,ten: input.oldTen,ngaysinh: input.oldNgaysinh,sodienthoai: input.oldSodienthoai,ghichu: input.oldGhichu});
+query += module.exports.createWHEREPart({makhachhang: input.oldmakhachhang,mataikhoan: input.oldmataikhoan,ten: input.oldten,ngaysinh: input.oldngaysinh,sodienthoai: input.oldsodienthoai,ghichu: input.oldghichu});
 
 
 return query;
@@ -180,7 +180,7 @@ return query;
 };
 
 module.exports.converResultGet = function (input) {
-let output = new Khachhang();
+let output = new khachhang();
 
 output.makhachhang = input.maKhachHang;
     
@@ -221,7 +221,7 @@ module.exports.patch = function (input) {
 if (!input) {
 throw new Error("Missing the input");
 }
-if (!input.makhachhang && !input.oldMakhachhang) {
+if (!input.makhachhang && !input.oldmakhachhang) {
 throw new Error("Missing the identity properties");
 }
 return baseDatabase.patch(input, module.exports.createQueryPatch);

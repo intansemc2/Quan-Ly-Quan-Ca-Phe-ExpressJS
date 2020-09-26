@@ -11,26 +11,21 @@ for (let i = 0; i < datas.length; i += 1) {
     let data = datas[i];
 
     //Pre-process
-    let tablenameFile = ccfs.convertNameToJSClass(data.classname).toLowerCase();
-    let tablenameClass = ccfs.convertNameToJSClass(data.classname);
-    let tablenameObject = ccfs.convertNameToSqlProperty(data.classname);
-
-    let tableNotKeysProperties = data.properties.filter((item) => !data.keys.find((key) => key === item.name));
-    let tableKeysProperties = data.properties.filter((item) => data.keys.find((key) => key === item.name));
+    let tablenameRemoved = ccfs.removeNCharLowercase(data.classname);
 
     //Create controller
     contents += `/*** 
-File: ${tablenameFile}.js 
+File: ${tablenameRemoved}.js 
 ***/
 `;
     contents += `
-class ${tablenameClass} {
-    constructor(${data.properties.map(item =>  `${item.name} = null`).join(', ')}) {
-${data.properties.map(item =>  `this.${item.name} = ${item.name};`).join('\n')}
+class ${tablenameRemoved} {
+    constructor(${data.properties.map(item =>  `${ccfs.removeNCharLowercase(item.name)} = null`).join(', ')}) {
+${data.properties.map(item =>  `this.${ccfs.removeNCharLowercase(item.name)} = ${ccfs.removeNCharLowercase(item.name)};`).join('\n')}
     }
 }
 
-module.exports = ${tablenameClass};
+module.exports = ${tablenameRemoved};
 `;
-    ccfs.writeStringSync(`${__dirname}/results/models`, `${tablenameFile}.js`, contents);
+    ccfs.writeStringSync(`${__dirname}/results/models`, `${tablenameRemoved}.js`, contents);
 }

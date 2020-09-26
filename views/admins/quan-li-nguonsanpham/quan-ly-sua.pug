@@ -1,0 +1,30 @@
+
+// Model sửa nguồn sản phẩm
+#modelSuanguonsanpham.modal.fade(tabindex='-1', role='dialog', aria-labelledby='ModelSuanguonsanpham aria-labelledby', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+        form.modal-content
+            .modal-header
+                h5.modal-title Sửa nguồn sản phẩm 
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+            .modal-body                
+                .alerts
+                    // Các alert của phần này
+                input.idnguonsanpham(type='hidden')
+
+                .form-group
+                    label.small.mb-1(for='manguonsanpham') mngunsnphm  
+                    input#manguonsanpham(type='int', class='form-control py-4 manguonsanpham' , required, placeholder='Nhập mngunsnphm')
+
+                .form-group
+                    label.small.mb-1(for='ten') tn  
+                    input#ten(type='string', class='form-control py-4 ten' , placeholder='Nhập tn', required)
+                .form-group
+                    label.small.mb-1(for='sodienthoai') sinthoi  
+                    input#sodienthoai(type='string', class='form-control py-4 sodienthoai' , placeholder='Nhập sinthoi', required)
+                .form-group
+                    label.small.mb-1(for='diachi') ach  
+                    input#diachi(type='string', class='form-control py-4 diachi' , placeholder='Nhập ach', required)
+            .modal-footer
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa ngunsnphm')
+                input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')

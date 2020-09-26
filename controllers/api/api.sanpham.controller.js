@@ -7,7 +7,7 @@ File: api.sanpham.controller.js
     
     //Import Databases
     const sanphamDatabase = require('../../databases/sanpham.database');
-    const Sanpham = require('../../models/sanpham');
+    const sanpham = require('../../models/sanpham');
     
     module.exports.get = async function (request, response, next) {
         try {

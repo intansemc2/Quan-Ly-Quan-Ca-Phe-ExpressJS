@@ -2,11 +2,11 @@
 File: ban.js 
 ***/
 
-class Ban {
-    constructor(maBan = null, ten = null) {
-this.maBan = maBan;
+class ban {
+    constructor(maban = null, ten = null) {
+this.maban = maban;
 this.ten = ten;
     }
 }
 
-module.exports = Ban;
+module.exports = ban;

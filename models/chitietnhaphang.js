@@ -2,13 +2,13 @@
 File: chitietnhaphang.js 
 ***/
 
-class Chitietnhaphang {
-    constructor(maNhapHang = null, maSanPham = null, soLuong = null, donGia = null) {
-this.maNhapHang = maNhapHang;
-this.maSanPham = maSanPham;
-this.soLuong = soLuong;
-this.donGia = donGia;
+class chitietnhaphang {
+    constructor(manhaphang = null, masanpham = null, soluong = null, dongia = null) {
+this.manhaphang = manhaphang;
+this.masanpham = masanpham;
+this.soluong = soluong;
+this.dongia = dongia;
     }
 }
 
-module.exports = Chitietnhaphang;
+module.exports = chitietnhaphang;

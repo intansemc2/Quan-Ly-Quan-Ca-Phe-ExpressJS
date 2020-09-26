@@ -2,15 +2,15 @@
 File: khachhang.js 
 ***/
 
-class Khachhang {
-    constructor(maKhachHang = null, maTaiKhoan = null, ten = null, ngaySinh = null, soDienThoai = null, ghiChu = null) {
-this.maKhachHang = maKhachHang;
-this.maTaiKhoan = maTaiKhoan;
+class khachhang {
+    constructor(makhachhang = null, mataikhoan = null, ten = null, ngaysinh = null, sodienthoai = null, ghichu = null) {
+this.makhachhang = makhachhang;
+this.mataikhoan = mataikhoan;
 this.ten = ten;
-this.ngaySinh = ngaySinh;
-this.soDienThoai = soDienThoai;
-this.ghiChu = ghiChu;
+this.ngaysinh = ngaysinh;
+this.sodienthoai = sodienthoai;
+this.ghichu = ghichu;
     }
 }
 
-module.exports = Khachhang;
+module.exports = khachhang;

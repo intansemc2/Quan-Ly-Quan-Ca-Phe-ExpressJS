@@ -2,15 +2,15 @@
 File: nhanvien.js 
 ***/
 
-class Nhanvien {
-    constructor(maNhanVien = null, maTaiKhoan = null, ten = null, ngaySinh = null, soDienThoai = null, diaChi = null) {
-this.maNhanVien = maNhanVien;
-this.maTaiKhoan = maTaiKhoan;
+class nhanvien {
+    constructor(manhanvien = null, mataikhoan = null, ten = null, ngaysinh = null, sodienthoai = null, diachi = null) {
+this.manhanvien = manhanvien;
+this.mataikhoan = mataikhoan;
 this.ten = ten;
-this.ngaySinh = ngaySinh;
-this.soDienThoai = soDienThoai;
-this.diaChi = diaChi;
+this.ngaysinh = ngaysinh;
+this.sodienthoai = sodienthoai;
+this.diachi = diachi;
     }
 }
 
-module.exports = Nhanvien;
+module.exports = nhanvien;

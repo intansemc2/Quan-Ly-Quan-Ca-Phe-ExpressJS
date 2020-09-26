@@ -1,0 +1,33 @@
+
+// Model thêm khách hàng
+#modelThemkhachhang.modal.fade(tabindex='-1', role='dialog', aria-labelledby='Model aria-labelledby', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+        form.modal-content
+            .modal-header
+                h5.modal-title Thêm khách hàng 
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+            .modal-body
+                .alerts
+                    // Các alert của phần này
+
+
+
+                .form-group
+                    label.small.mb-1(for='mataikhoan') mã tài khoản  
+                    input#mataikhoan(type='int', class='form-control py-4 mataikhoan' , placeholder='Nhập mã tài khoản', )
+                .form-group
+                    label.small.mb-1(for='ten') tên  
+                    input#ten(type='string', class='form-control py-4 ten' , placeholder='Nhập tên', required)
+                .form-group
+                    label.small.mb-1(for='ngaysinh') ngày sinh  
+                    input#ngaysinh(type='date', class='form-control py-4 ngaysinh' , placeholder='Nhập ngày sinh', required)
+                .form-group
+                    label.small.mb-1(for='sodienthoai') số điện thoại  
+                    input#sodienthoai(type='string', class='form-control py-4 sodienthoai' , placeholder='Nhập số điện thoại', required)
+                .form-group
+                    label.small.mb-1(for='ghichu') ghi chú  
+                    input#ghichu(type='string', class='form-control py-4 ghichu' , placeholder='Nhập ghi chú', )
+            .modal-footer
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Thêm khchhng')
+                input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')

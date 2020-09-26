@@ -2,13 +2,13 @@
 File: taikhoan.js 
 ***/
 
-class Taikhoan {
-    constructor(maTaiKhoan = null, tenDangNhap = null, matKhau = null, loai = null) {
-this.maTaiKhoan = maTaiKhoan;
-this.tenDangNhap = tenDangNhap;
-this.matKhau = matKhau;
+class taikhoan {
+    constructor(mataikhoan = null, tendangnhap = null, matkhau = null, loai = null) {
+this.mataikhoan = mataikhoan;
+this.tendangnhap = tendangnhap;
+this.matkhau = matkhau;
 this.loai = loai;
     }
 }
 
-module.exports = Taikhoan;
+module.exports = taikhoan;

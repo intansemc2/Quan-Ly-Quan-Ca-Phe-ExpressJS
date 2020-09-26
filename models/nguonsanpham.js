@@ -2,13 +2,13 @@
 File: nguonsanpham.js 
 ***/
 
-class Nguonsanpham {
-    constructor(maNguonSanPham = null, ten = null, soDienThoai = null, diaChi = null) {
-this.maNguonSanPham = maNguonSanPham;
+class nguonsanpham {
+    constructor(manguonsanpham = null, ten = null, sodienthoai = null, diachi = null) {
+this.manguonsanpham = manguonsanpham;
 this.ten = ten;
-this.soDienThoai = soDienThoai;
-this.diaChi = diaChi;
+this.sodienthoai = sodienthoai;
+this.diachi = diachi;
     }
 }
 
-module.exports = Nguonsanpham;
+module.exports = nguonsanpham;

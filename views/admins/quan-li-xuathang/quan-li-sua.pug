@@ -1,0 +1,36 @@
+
+// Model sửa xuất hàng
+#modelSuaxuathang.modal.fade(tabindex='-1', role='dialog', aria-labelledby='ModelSuaxuathang aria-labelledby', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+        form.modal-content
+            .modal-header
+                h5.modal-title Sửa xuất hàng 
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+            .modal-body                
+                .alerts
+                    // Các alert của phần này
+                input.idxuathang(type='hidden')
+
+                .form-group
+                    label.small.mb-1(for='maxuathang') mã xuất hàng  
+                    input#maxuathang(type='int', class='form-control py-4 maxuathang' , required, placeholder='Nhập mã xuất hàng')
+
+                .form-group
+                    label.small.mb-1(for='ngaygioxuat') ngày giờ xuất  
+                    input#ngaygioxuat(type='datetime', class='form-control py-4 ngaygioxuat' , placeholder='Nhập ngày giờ xuất', required)
+                .form-group
+                    label.small.mb-1(for='manhanvien') mã nhân viên  
+                    input#manhanvien(type='int', class='form-control py-4 manhanvien' , placeholder='Nhập mã nhân viên', required)
+                .form-group
+                    label.small.mb-1(for='makhachhang') mã khách hàng  
+                    input#makhachhang(type='int', class='form-control py-4 makhachhang' , placeholder='Nhập mã khách hàng', required)
+                .form-group
+                    label.small.mb-1(for='maban') mã bàn  
+                    input#maban(type='int', class='form-control py-4 maban' , placeholder='Nhập mã bàn', required)
+                .form-group
+                    label.small.mb-1(for='ghichu') ghi chú  
+                    input#ghichu(type='int', class='form-control py-4 ghichu' , placeholder='Nhập ghi chú', )
+            .modal-footer
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa xuthng')
+                input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')

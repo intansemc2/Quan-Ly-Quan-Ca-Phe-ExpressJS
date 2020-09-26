@@ -1,0 +1,33 @@
+
+// Model sửa nhập hàng
+#modelSuanhaphang.modal.fade(tabindex='-1', role='dialog', aria-labelledby='ModelSuanhaphang aria-labelledby', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+        form.modal-content
+            .modal-header
+                h5.modal-title Sửa nhập hàng 
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+            .modal-body                
+                .alerts
+                    // Các alert của phần này
+                input.idnhaphang(type='hidden')
+
+                .form-group
+                    label.small.mb-1(for='manhaphang') mã nhập hàng  
+                    input#manhaphang(type='int', class='form-control py-4 manhaphang' , required, placeholder='Nhập mã nhập hàng')
+
+                .form-group
+                    label.small.mb-1(for='manguonsanpham') mã nguồn sản phẩm  
+                    input#manguonsanpham(type='int', class='form-control py-4 manguonsanpham' , placeholder='Nhập mã nguồn sản phẩm', required)
+                .form-group
+                    label.small.mb-1(for='ngaygionhap') ngày giờ nhập  
+                    input#ngaygionhap(type='datetime', class='form-control py-4 ngaygionhap' , placeholder='Nhập ngày giờ nhập', required)
+                .form-group
+                    label.small.mb-1(for='manhanvien') mã nhân viên  
+                    input#manhanvien(type='int', class='form-control py-4 manhanvien' , placeholder='Nhập mã nhân viên', required)
+                .form-group
+                    label.small.mb-1(for='ghichu') ghi chú  
+                    input#ghichu(type='string', class='form-control py-4 ghichu' , placeholder='Nhập ghi chú', )
+            .modal-footer
+                input.confirm.btn.btn-outline-secondary.rounded-0(type='button', value='Sửa nhphng')
+                input.btn.btn-outline-dark.rounded-0(type='reset', value='Cài lại')

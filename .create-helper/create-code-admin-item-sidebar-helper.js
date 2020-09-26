@@ -23,15 +23,10 @@ contents += `
 ${
     datas.map(data => {
         //Pre-process
-        let tablenameFile = ccfs.convertNameToJSClass(data.classname).toLowerCase();
-        let tablenameClass = ccfs.convertNameToJSClass(data.classname);
-        let tablenameObject = ccfs.convertNameToSqlProperty(data.classname);
-
-        let tableNotKeysProperties = data.properties.filter((item) => !data.keys.find((key) => key === item.name));
-        let tableKeysProperties = data.properties.filter((item) => data.keys.find((key) => key === item.name));
+        let tablenameRemoved = ccfs.removeNCharLowercase(data.classname);
 
         return `
-                a.nav-link(class=sidebarActiveQuanly${tablenameFile}, href='/admin/quan-ly-${tablenameFile}')
+                a.nav-link(class=sidebarActiveQuanly${tablenameRemoved}, href='/admin/quan-li-${tablenameRemoved}')
                     .sb-nav-link-icon
                         i.fas.fa-user
                     | Quản lý ${data.speak.toLowerCase()}

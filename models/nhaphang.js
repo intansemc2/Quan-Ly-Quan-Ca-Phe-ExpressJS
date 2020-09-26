@@ -2,14 +2,14 @@
 File: nhaphang.js 
 ***/
 
-class Nhaphang {
-    constructor(maNhapHang = null, maNguonSanPham = null, ngayGioNhap = null, maNhanVien = null, ghiChu = null) {
-this.maNhapHang = maNhapHang;
-this.maNguonSanPham = maNguonSanPham;
-this.ngayGioNhap = ngayGioNhap;
-this.maNhanVien = maNhanVien;
-this.ghiChu = ghiChu;
+class nhaphang {
+    constructor(manhaphang = null, manguonsanpham = null, ngaygionhap = null, manhanvien = null, ghichu = null) {
+this.manhaphang = manhaphang;
+this.manguonsanpham = manguonsanpham;
+this.ngaygionhap = ngaygionhap;
+this.manhanvien = manhanvien;
+this.ghichu = ghichu;
     }
 }
 
-module.exports = Nhaphang;
+module.exports = nhaphang;

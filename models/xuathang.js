@@ -2,15 +2,15 @@
 File: xuathang.js 
 ***/
 
-class Xuathang {
-    constructor(maXuatHang = null, ngayGioXuat = null, maNhanVien = null, maKhachHang = null, maBan = null, ghiChu = null) {
-this.maXuatHang = maXuatHang;
-this.ngayGioXuat = ngayGioXuat;
-this.maNhanVien = maNhanVien;
-this.maKhachHang = maKhachHang;
-this.maBan = maBan;
-this.ghiChu = ghiChu;
+class xuathang {
+    constructor(maxuathang = null, ngaygioxuat = null, manhanvien = null, makhachhang = null, maban = null, ghichu = null) {
+this.maxuathang = maxuathang;
+this.ngaygioxuat = ngaygioxuat;
+this.manhanvien = manhanvien;
+this.makhachhang = makhachhang;
+this.maban = maban;
+this.ghichu = ghichu;
     }
 }
 
-module.exports = Xuathang;
+module.exports = xuathang;

@@ -7,7 +7,7 @@ File: api.nguonsanpham.controller.js
     
     //Import Databases
     const nguonsanphamDatabase = require('../../databases/nguonsanpham.database');
-    const Nguonsanpham = require('../../models/nguonsanpham');
+    const nguonsanpham = require('../../models/nguonsanpham');
     
     module.exports.get = async function (request, response, next) {
         try {

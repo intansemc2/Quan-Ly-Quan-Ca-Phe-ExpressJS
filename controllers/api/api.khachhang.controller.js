@@ -7,7 +7,7 @@ File: api.khachhang.controller.js
     
     //Import Databases
     const khachhangDatabase = require('../../databases/khachhang.database');
-    const Khachhang = require('../../models/khachhang');
+    const khachhang = require('../../models/khachhang');
     
     module.exports.get = async function (request, response, next) {
         try {
