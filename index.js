@@ -26,7 +26,7 @@ app.set('views', './views');
 //Uses
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser(process.env.COOKIES_SECURE, {sameSite: 'Lax', maxAge: 30 * 24 * 3600 * 1000 /* 30 day */, httpOnly: true }));
+app.use(cookieParser(process.env.COOKIES_SECURE));
 
 //Public folders
 app.use(express.static('./publics'));

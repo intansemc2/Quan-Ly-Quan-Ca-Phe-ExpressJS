@@ -7,14 +7,25 @@ const taikhoanDatabase = require('../../databases/taiKhoan.database');
 //Import Models
 const TaiKhoan = require('../../models/taiKhoan');
 
+//Constance
+const COOKIE_OPTIONS = {sameSite: 'Lax', maxAge: 30 * 24 * 3600 * 1000 /* 30 day */, httpOnly: true, signed: true };
+
 //Get login information
 module.exports.get = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = input;
+        let output = {};
 
-        //
+        let tenDangNhap = request.signedCookies.tenDangNhap;
+        let matKhau = request.signedCookies.matKhau;
+
+        if (tenDangNhap && matKhau) {
+            output = {
+                'tenDangNhap': tenDangNhap,
+                'matKhau': matKhau
+            };
+        }
 
         response.json(output);
         next();
