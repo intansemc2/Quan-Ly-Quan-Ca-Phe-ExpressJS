@@ -259,8 +259,8 @@ module.exports.autoLogin = async function (request, response, next) {
         }
 
         if (isHaveInCookie && !isHaveInSession) {
-            if (checkInputLogin(input)) {
-                setLoginInSession(request, response, input);
+            if (checkInputLogin(informationCookie)) {
+                setLoginInSession(request, response, informationCookie);
                 output.session = true;
             } else {
                 return module.exports.delete(request, response, next);
@@ -268,10 +268,10 @@ module.exports.autoLogin = async function (request, response, next) {
         }
 
         if (isHaveInSession) {          
-            if (checkInputLogin(input)) {
+            if (checkInputLogin(informationSession)) {
                 let ghiNho = input.ghiNho;
                 if (ghiNho) {
-                    setLoginInCookie(response, input);
+                    setLoginInCookie(response, informationSession);
                     output.cookie = true;
                 }
                 else {
