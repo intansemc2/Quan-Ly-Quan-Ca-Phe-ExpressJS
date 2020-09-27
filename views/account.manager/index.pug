@@ -18,7 +18,7 @@ block content
         //Content
         .container.mt-auto.mb-auto
             include _page_part_login
-            //- include _page_part_logout
+            include _page_part_logout
             //- include _page_part_sign_in
             //- include _page_part_reset_password
             //- include _page_part_account_information
@@ -32,7 +32,11 @@ block content
         ///Footer
 
 block custom_javascripts    
-    //Custom Javascript libraries 
+    //Javascript library files
+    script(type="text/javascript", src="/liblaries/sweetalert/sweetalert.min.js")
+
+    //Custom Javascript libraries     
 
     //Custom javascript files
     script(type='text/javascript', src="/javascripts/account.manager/_page_part_login.js")
+    script(type='text/javascript', src="/javascripts/account.manager/_page_part_logout.js")
