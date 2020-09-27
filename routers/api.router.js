@@ -107,6 +107,7 @@ router.put('/accountManager', apiaccountManagerController.put);
 router.patch('/accountManager', apiaccountManagerController.patch);
 router.delete('/accountManager', apiaccountManagerController.delete);
 router.use('/accountManager/exists', apiaccountManagerController.exists);
+router.use('/accountManager/autoLogin', apiaccountManagerController.autoLogin);
 
 //Module export
 module.exports = router;

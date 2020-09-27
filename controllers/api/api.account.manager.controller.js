@@ -23,7 +23,7 @@ function getLoginInCookie(request) {
     return output;
 }
 
-function getLoginInSession(request) {
+async function getLoginInSession(request) {
     let output = {};
 
     output = await new Promise(function (resolve, reject) {
@@ -48,7 +48,7 @@ function setLoginInCookie(response, input) {
     return output;
 }
 
-function setLoginInSession(request, input) {
+function setLoginInSession(request, response, input) {
     let output = {};
 
     let sessionID = request.signedCookies.sessionID || request.sessionID;
@@ -81,12 +81,12 @@ function clearLoginInSession(request, response) {
 }
 
 async function checkInputLogin(input) {
-    return input.tenDangNhap && input.matKhau && await taikhoanDatabase.exists({ tenDangNhap: tenDangNhap, matKhau: matKhau });
+    return input.tenDangNhap && input.matKhau && await taikhoanDatabase.exists({ tenDangNhap: input.tenDangNhap, matKhau: input.matKhau });
 }
 
 function preprocessLoginInfo(input) {
-    if (!isHashed) {
-        input.matKhau = crypto.createHash('MD5').update(matKhau).digest('hex');
+    if (!input.isHashed) {
+        input.matKhau = crypto.createHash('MD5').update(input.matKhau).digest('hex');
     }
     return input;
 }
@@ -99,7 +99,7 @@ module.exports.get = async function (request, response, next) {
         let output = {};
 
         let informationCookie = getLoginInCookie(request);
-        let informationSession = getLoginInSession(request);
+        let informationSession = await getLoginInSession(request);
 
         if (informationCookie && informationCookie.tenDangNhap && informationCookie.matKhau) {
             output.cookie = informationCookie;
@@ -131,11 +131,11 @@ module.exports.post = async function (request, response, next) {
                 setLoginInCookie(response, input);
                 output.cookie = true;
             } else {
-                clearLoginInCookie(request);
+                clearLoginInCookie(response);
                 output.cookie = false;
             }
 
-            setLoginInSession(request, input);
+            setLoginInSession(request, response, input);
             output.session = true;
         }
 
@@ -153,7 +153,7 @@ module.exports.put = async function (request, response, next) {
         request.headers.accept = 'application/json';
 
         let informationCookie = getLoginInCookie(request);
-        let informationSession = getLoginInSession(request);
+        let informationSession = await getLoginInSession(request);
 
         if (informationCookie && informationCookie.tenDangNhap && informationCookie.matKhau && informationSession && informationSession.tenDangNhap && informationSession.matKhau) {
             module.exports.patch(request, response, next);
@@ -180,11 +180,11 @@ module.exports.patch = async function (request, response, next) {
                 setLoginInCookie(response, input);
                 output.cookie = true;
             } else {
-                clearLoginInCookie(request);
+                clearLoginInCookie(response);
                 output.cookie = false;
             }
 
-            setLoginInSession(request, input);
+            setLoginInSession(request, response, input);
             output.session = true;
         }
 
@@ -223,7 +223,7 @@ module.exports.exists = async function (request, response, next) {
         let output = {};
 
         let informationCookie = getLoginInCookie(request)
-        let informationSession = getLoginInSession(request);
+        let informationSession = await getLoginInSession(request);
 
         output = {
             cookie: informationCookie && informationCookie.tenDangNhap && informationCookie.matKhau,
@@ -245,7 +245,7 @@ module.exports.autoLogin = async function (request, response, next) {
         let output = {};
 
         let informationCookie = getLoginInCookie(request)
-        let informationSession = getLoginInSession(request);
+        let informationSession = await getLoginInSession(request);
 
         let isHaveInCookie = false;
         let isHaveInSession = false;
@@ -260,7 +260,7 @@ module.exports.autoLogin = async function (request, response, next) {
 
         if (isHaveInCookie && !isHaveInSession) {
             if (checkInputLogin(input)) {
-                setLoginInSession(request, input);
+                setLoginInSession(request, response, input);
                 output.session = true;
             } else {
                 return module.exports.delete(request, response, next);
