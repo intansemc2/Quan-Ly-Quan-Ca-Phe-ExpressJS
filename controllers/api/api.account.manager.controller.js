@@ -13,6 +13,84 @@ const TaiKhoan = require('../../models/taiKhoan');
 //Constance
 const COOKIE_OPTIONS = { sameSite: 'Lax', maxAge: 30 * 24 * 3600 * 1000 /* 30 day */, httpOnly: true, signed: true };
 
+//Functions
+function getLoginInCookie(request) {
+    let output = {};
+
+    output.tenDangNhap = request.signedCookies.tenDangNhap;
+    output.matKhau = request.signedCookies.matKhau;
+
+    return output;
+}
+
+function getLoginInSession(request) {
+    let output = {};
+
+    output = await new Promise(function (resolve, reject) {
+        request.sessionStore.get(request.signedCookies.sessionID, function (error, session) {
+            if (session) {
+                resolve({ tenDangNhap: session.tenDangNhap, matKhau: session.matKhau });
+            } else {
+                resolve(session);
+            }
+        });
+    });
+
+    return output;
+}
+
+function setLoginInCookie(response, input) {
+    let output = {};
+
+    response.cookie('tenDangNhap', input.tenDangNhap, COOKIE_OPTIONS);
+    response.cookie('matKhau', input.matKhau, COOKIE_OPTIONS);
+
+    return output;
+}
+
+function setLoginInSession(request, input) {
+    let output = {};
+
+    let sessionID = request.signedCookies.sessionID || request.sessionID;
+    response.cookie('sessionID', sessionID, COOKIE_OPTIONS);
+    request.sessionStore.set(sessionID, { tenDangNhap: input.tenDangNhap, matKhau: input.matKhau }, function (error) {
+        output.session = error;
+    });
+
+    return output;
+}
+
+function clearLoginInCookie(response) {
+    let output = {};
+
+    response.clearCookie('tenDangNhap');
+    response.clearCookie('matKhau');
+
+    return output;
+}
+
+function clearLoginInSession(request, response) {
+    let output = {};
+
+    request.sessionStore.destroy(request.signedCookies.sessionID, function (error) {
+        output.session = error;
+    });
+    response.clearCookie('sessionID');
+
+    return output;
+}
+
+async function checkInputLogin(input) {
+    return input.tenDangNhap && input.matKhau && await taikhoanDatabase.exists({ tenDangNhap: tenDangNhap, matKhau: matKhau });
+}
+
+function preprocessLoginInfo(input) {
+    if (!isHashed) {
+        input.matKhau = crypto.createHash('MD5').update(matKhau).digest('hex');
+    }
+    return input;
+}
+
 //Get login information
 module.exports.get = async function (request, response, next) {
     try {
@@ -20,13 +98,15 @@ module.exports.get = async function (request, response, next) {
         let input = request.body;
         let output = {};
 
-        let tenDangNhap = request.signedCookies.tenDangNhap;
-        let matKhau = request.signedCookies.matKhau;
+        let informationCookie = getLoginInCookie(request);
+        let informationSession = getLoginInSession(request);
 
-        if (tenDangNhap && matKhau) {
-            output = {
-                cookie: { tenDangNhap: tenDangNhap, matKhau: matKhau },
-            };
+        if (informationCookie && informationCookie.tenDangNhap && informationCookie.matKhau) {
+            output.cookie = informationCookie;
+        }
+
+        if (informationSession && informationSession.tenDangNhap && informationSession.matKhau) {
+            output.session = { tenDangNhap: informationSession.tenDangNhap, matKhau: informationSession.matKhau };
         }
 
         response.json(output);
@@ -41,29 +121,22 @@ module.exports.post = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = input;
+        let output = {};
+        let ghiNho = input.ghiNho;
 
-        let tenDangNhap = input.tenDangNhap;
-        let matKhau = input.matKhau;
-        let isHashed = input.isHashed;
+        input = preprocessLoginInfo(input);
 
-        if (!isHashed) {
-            matKhau = crypto.createHash('MD5').update(matKhau).digest('hex');
-        }
+        if (checkInputLogin(input)) {
+            if (ghiNho) {
+                setLoginInCookie(response, input);
+                output.cookie = true;
+            } else {
+                clearLoginInCookie(request);
+                output.cookie = false;
+            }
 
-        let right = await taikhoanDatabase.exists({ tenDangNhap: tenDangNhap, matKhau: matKhau });
-
-        if (right) {
-            response.cookie('tenDangNhap', tenDangNhap, COOKIE_OPTIONS);
-            response.cookie('matKhau', matKhau, COOKIE_OPTIONS);
-
-            output = {
-                cookie: true,
-            };
-        } else {
-            output = {
-                cookie: false,
-            };
+            setLoginInSession(request, input);
+            output.session = true;
         }
 
         response.json(output);
@@ -78,13 +151,11 @@ module.exports.post = async function (request, response, next) {
 module.exports.put = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
-        let input = request.body;
-        let output = input;
 
-        let tenDangNhap = request.signedCookies.tenDangNhap;
-        let matKhau = request.signedCookies.matKhau;
+        let informationCookie = getLoginInCookie(request);
+        let informationSession = getLoginInSession(request);
 
-        if (tenDangNhap && matKhau) {
+        if (informationCookie && informationCookie.tenDangNhap && informationCookie.matKhau && informationSession && informationSession.tenDangNhap && informationSession.matKhau) {
             module.exports.patch(request, response, next);
         } else {
             module.exports.post(request, response, next);
@@ -99,22 +170,23 @@ module.exports.patch = async function (request, response, next) {
     try {
         request.headers.accept = 'application/json';
         let input = request.body;
-        let output = input;
+        let output = {};
+        let ghiNho = input.ghiNho;
 
-        let tenDangNhap = request.signedCookies.tenDangNhap;
-        let matKhau = request.signedCookies.matKhau;
-        let isHashed = input.isHashed;
+        input = preprocessLoginInfo(input);
 
-        if (!isHashed) {
-            matKhau = crypto.createHash('MD5').update(matKhau).digest('hex');
+        if (checkInputLogin(input)) {
+            if (ghiNho) {
+                setLoginInCookie(response, input);
+                output.cookie = true;
+            } else {
+                clearLoginInCookie(request);
+                output.cookie = false;
+            }
+
+            setLoginInSession(request, input);
+            output.session = true;
         }
-
-        response.cookie('tenDangNhap', tenDangNhap, COOKIE_OPTIONS);
-        response.cookie('matKhau', matKhau, COOKIE_OPTIONS);
-
-        output = {
-            cookie: true,
-        };
 
         response.json(output);
         next();
@@ -130,12 +202,11 @@ module.exports.delete = async function (request, response, next) {
         let input = request.body;
         let output = {};
 
-        response.clearCookie('tenDangNhap');
-        response.clearCookie('matKhau');
+        clearLoginInCookie(response);
+        output.cookie = true;
 
-        output = {
-            cookie: true,
-        };
+        clearLoginInSession(request, response);
+        output.session = true;
 
         response.json(output);
         next();
@@ -151,12 +222,63 @@ module.exports.exists = async function (request, response, next) {
         let input = request.body;
         let output = {};
 
-        let tenDangNhap = request.signedCookies.tenDangNhap;
-        let matKhau = request.signedCookies.matKhau;
+        let informationCookie = getLoginInCookie(request)
+        let informationSession = getLoginInSession(request);
 
         output = {
-            cookie: tenDangNhap && matKhau,
+            cookie: informationCookie && informationCookie.tenDangNhap && informationCookie.matKhau,
+            session: informationSession && informationSession.tenDangNhap && informationSession.matKhau,
         };
+
+        response.json(output);
+        next();
+    } catch (error) {
+        errorController.handle500(error, request, response, next);
+    }
+};
+
+//Check login information
+module.exports.autoLogin = async function (request, response, next) {
+    try {
+        request.headers.accept = 'application/json';
+        let input = request.body;
+        let output = {};
+
+        let informationCookie = getLoginInCookie(request)
+        let informationSession = getLoginInSession(request);
+
+        let isHaveInCookie = false;
+        let isHaveInSession = false;
+
+        if (informationCookie && informationCookie.tenDangNhap && informationCookie.matKhau) {
+            isHaveInCookie = true;
+        }
+
+        if (informationSession && informationSession.tenDangNhap && informationSession.matKhau) {
+            isHaveInSession = true;
+        }
+
+        if (isHaveInCookie && !isHaveInSession) {
+            if (checkInputLogin(input)) {
+                setLoginInSession(request, input);
+                output.session = true;
+            } else {
+                return module.exports.delete(request, response, next);
+            }
+        }
+
+        if (isHaveInSession) {          
+            if (checkInputLogin(input)) {
+                let ghiNho = input.ghiNho;
+                if (ghiNho) {
+                    setLoginInCookie(response, input);
+                    output.cookie = true;
+                }
+                else {
+                    clearLoginInCookie(response);
+                }
+            }
+        }
 
         response.json(output);
         next();
